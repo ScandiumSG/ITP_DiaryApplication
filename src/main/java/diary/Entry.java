@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Entry {
     private String username;
+    // Potential rework, use UNIX time to store time as a long.
     private String entryDate;
     private String entryContent;
 
