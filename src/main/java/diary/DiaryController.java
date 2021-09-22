@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.event.ActionEvent;
 
 public class DiaryController {
 
@@ -24,12 +25,12 @@ public class DiaryController {
     private DatePicker dateInput;
 
     @FXML
-    public void saveDateEntry() {
+    public void saveDateEntry(event ActionEvent) {
         return;
     }
 
     @FXML
-    public void retrieveDateEntry() {
+    public void retrieveDateEntry(event ActionEvent) {
         return;
     }
 
