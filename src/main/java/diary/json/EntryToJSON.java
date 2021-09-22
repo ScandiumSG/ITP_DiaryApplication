@@ -11,13 +11,12 @@ public class EntryToJSON {
     // https://github.com/FasterXML/jackson-jr
 
     public void write(Entry entry, Boolean append) throws IOException {
-        File filePath = new File(System.getProperty("user.home") + "\\Documents\\Diary\\lib");
+        File filePath = new File("./src/main/resources/DiaryEntries");
 
         if (!filePath.exists()) {
             if (!filePath.mkdirs()) {
-                throw new IOException("Could not find chosen path to USER\\Diary");
+                throw new IOException("Could not find chosen path to " + filePath.getName());
             }
-
         }
 
         File jsonFile = new File(filePath + "\\" + makeFileName(entry.getUsername()) + ".json");
