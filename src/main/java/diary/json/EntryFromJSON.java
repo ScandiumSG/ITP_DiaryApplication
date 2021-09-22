@@ -22,10 +22,10 @@ public class EntryFromJSON {
      */
     @SuppressWarnings("unchecked")
     public ArrayList<Entry> read(String username) throws IOException {
-        File filePath = new File(System.getProperty("user.home") + "\\Documents\\Diary\\lib");
+        File filePath = new File("./src/main/resources/DiaryEntries");
 
         if (!filePath.exists()) {
-            throw new IOException("Could not find chosen path to USER\\Documents\\Diary\\lib");
+            throw new IOException("Could not find chosen path to " + filePath.getName());
         }
 
         String jsonContent = JSONtoString(filePath, username);
