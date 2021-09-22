@@ -25,12 +25,12 @@ public class DiaryController {
     private DatePicker dateInput;
 
     @FXML
-    public void saveDateEntry(event ActionEvent) {
+    public void saveDateEntry(ActionEvent event) {
         return;
     }
 
     @FXML
-    public void retrieveDateEntry(event ActionEvent) {
+    public void retrieveDateEntry(ActionEvent event) {
         return;
     }
 
