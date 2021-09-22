@@ -51,17 +51,17 @@
         </dependency>
 
         <!-- test javafx with TextFX -->
-		<dependency>
-			<groupId>org.testfx</groupId>
-			<artifactId>testfx-core</artifactId>
-			<version>4.0.16-alpha</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testfx</groupId>
-			<artifactId>testfx-junit5</artifactId>
-			<version>4.0.16-alpha</version>
-			<scope>test</scope>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -69,7 +69,15 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- JSON utilities using jackson jr (lightweight version of jackson) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.jr</groupId>
+            <artifactId>jackson-jr-objects</artifactId>
+            <version>2.12.0</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
@@ -98,18 +106,22 @@
                 <configuration>
                     <!-- Uncomment to run on iOS: -->
                     <!-- <target>ios</target>-->
-                    <mainClass>${mainClassName}</mainClass>
-                </configuration>
-            </plugin>
+                        <mainClass>
+                    ${mainClassName}
+                </mainClass>
+            </configuration>
+        </plugin>
 
-        </plugins>
+    </plugins>
     </build>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>gluon-releases</id>
-            <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-</project>
+        <pluginRepositories>
+            <pluginRepository>
+                <id>
+            gluon-releases
+            </id>
+                <url>
+            https://nexus.gluonhq.com/nexus/content/repositories/releases/
+        </url>
+    </pluginRepository>
+</pluginRepositories></project>

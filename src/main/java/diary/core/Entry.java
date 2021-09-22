@@ -1,4 +1,4 @@
-package diary;
+package diary.core;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -89,5 +89,10 @@ public class Entry {
      */
     public String getDate() {
         return entryDate;
+    }
+
+    public static void main(String[] args) {
+        Entry entry = new Entry("Ola nordmann", "Innhold");
+        System.out.println(entry.getUsername() + " - " + entry.getContent());
     }
 }
