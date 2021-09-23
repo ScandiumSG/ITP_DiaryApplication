@@ -1,4 +1,4 @@
 # Kildekode for persistenslag
 
 ======
-Implementasjonen av persistens benytter [Jackson Jr.-biblioteket](https://github.com/FasterXML/jackson-jr) for å lagre og lese JSON objekter. Jackson Jr. ble valgt for å redusere persistens laget sin overhead.
+Implementasjonen av persistens benytter [GSON](https://github.com/google/gson) for å lagre og lese JSON objekter. GSON ble valgt for dette formålet fordi det er et open-source, populært, og lett å bruke rammeverk for å lese og skrive JSON i java.
