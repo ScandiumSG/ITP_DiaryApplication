@@ -23,11 +23,24 @@ Here's an illustration of how it would look, for now.
 
 <br/>
 
-We are glad to see you
-<br/>
-We have created a diary for the user. <br/>
-By typing your name you may personlize the book for your own use. 
-By entring gr2172/src/main/java may two classes be found. One entry class and one diary class. The entry is for the user to define themself by endtring their name. <br/>
-The diary class is the diary logics. <br/>
+# Brukerhistorier
+
+## Diary
+
+Som en person med mange tanker ønsker jeg å holde oversikt over alle tanker og føleleser jeg opplever om dagen. Derfor må jeg skrive ned alt jeg føler et sted for å kunne se tilbake på hendelser i livet mitt.
+
+Brukeren trenger å vite hva han eller hun heter. Derfor er det fint om en kan skrive navnet sitt et sted i boken, hvor det er lett å finne igjen. 
+
+Brukeren ønsker å kunne velge å skrive om dagens tanmker og historie. Da er det fint om man kan velge en ny, blank side til å skrive på. 
+
+Brukeren liker også å kunne gå tilbake for å se hva han eller hun følte en dag. Da er det greit å kunne bla tilbake. 
+
+### Viktig for brukeren
+    - når en vil skrive skriver: Tydelig knapp for å lage en ny side.
+    - om en vil se tilbake: Tydelig knapp for å bla tilbake med markering for hvilken dag det er.
+
+
+
+
 
 
