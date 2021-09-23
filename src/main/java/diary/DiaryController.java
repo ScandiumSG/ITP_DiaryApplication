@@ -35,7 +35,6 @@ public class DiaryController {
     @FXML
     private DatePicker dateInput;
 
-
     /**
      * Saves the current page context as a json entry
      * 
@@ -47,15 +46,15 @@ public class DiaryController {
         Entry entry = new Entry(activeUser, getText(), getDate());
 
         try {
-            write.write(entry, true);
-        } catch (IOException e){
+            write.write(entry);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
     /**
-     * Updates the page context using the values linked to the currently selected date on dateInput
+     * Updates the page context using the values linked to the currently selected
+     * date on dateInput
      * 
      * @param event (tror ikke denne trengs)
      */
@@ -68,48 +67,45 @@ public class DiaryController {
 
         try {
             entries = fetch.read(activeUser);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
         for (Entry entry : entries) {
-            if (entry.getDate() == date){
+            if (entry.getDate() == date) {
                 updateGraphics(entry);
                 break;
             }
         }
     }
 
-
     /**
      * @return the currently displayed text
      */
-    private String getText(){
+    private String getText() {
         return textEntry.getText();
     }
-
 
     /**
      * @return the currently displayed date
      */
-    private String getDate(){
+    private String getDate() {
         String[] datelabel = dateId.getText().split(" ");
 
-        if (datelabel.length < 2){
+        if (datelabel.length < 2) {
             throw new IllegalStateException("Something went wrong while accessing the current date");
         }
 
         return datelabel[1];
     }
 
-
     /**
      * Sets the context of the diary page to match a given entry
      * 
      * @param entry The entry to show
      */
-    private void updateGraphics(Entry entry){
+    private void updateGraphics(Entry entry) {
         dateId.setText("Current date: " + entry.getDate());
         textEntry.setText(entry.getContent());
     }

@@ -30,6 +30,7 @@ public class EntryFromJSON {
 
         String jsonContent = JSONtoString(filePath, username);
         Map<String, Object> map = JSON.std.mapFrom(jsonContent);
+
         ArrayList<Entry> readEntries = new ArrayList<Entry>();
         for (String date : map.keySet()) {
             if (map.get(date) instanceof Map<?, ?>) {
