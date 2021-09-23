@@ -11,10 +11,23 @@ Welcome to the project of group 2172 Fall 2021.
 
 <br/>
 <br/>
+This project creates a simple diary-application that allowes the user to write diary entries, save and load them. 
+<br/>
+The root-folder of the project is the toplevel of the repository. Because of this we have combined the two README-files. 
+<br/>
+
+Here's an illustration of how it would look, for now. 
+<br/>
+
+![illustration](unknown.png) 
+
+<br/>
 
 We are glad to see you
 <br/>
 We have created a diary for the user. <br/>
 By typing your name you may personlize the book for your own use. 
 By entring gr2172/src/main/java may two classes be found. One entry class and one diary class. The entry is for the user to define themself by endtring their name. <br/>
-The diary class is the diary logics. 
+The diary class is the diary logics. <br/>
+
+
