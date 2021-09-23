@@ -46,7 +46,7 @@ public class Entry {
      * @return A string of the date and time on the format "dd-mm-yyyy".
      */
     private String parseCurrentTime() {
-        DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDateTime currentTime = LocalDateTime.now();
         return currentTime.format(dft);
     }
@@ -60,19 +60,18 @@ public class Entry {
     private Boolean validateDateInput(String input) {
         String[] date = input.split("-", 3);
 
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             if (isNumerical(date[i]) && date[i].length() != 2) {
                 return false;
             }
         }
 
-        if (isNumerical(date[2]) && date[2].length() != 4){
+        if (isNumerical(date[2]) && date[2].length() != 4) {
             return false;
         }
 
         return true;
     }
-
 
     /**
      * Returns true if inputstring only contains numbers, else returns false
@@ -80,7 +79,7 @@ public class Entry {
      * @param input The string to check
      * @return Boolean
      */
-    private Boolean isNumerical(String input){
+    private Boolean isNumerical(String input) {
         return input.matches("[0-9]+");
     }
 
