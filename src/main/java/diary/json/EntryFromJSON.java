@@ -56,7 +56,7 @@ public class EntryFromJSON {
     public static void main(String[] args) {
         EntryFromJSON reader = new EntryFromJSON();
         try {
-            ArrayList<Entry> entries = reader.read("John");
+            ArrayList<Entry> entries = reader.read("Ola");
             for (Entry entry : entries) {
                 System.out.println(entry.getUsername() + " - " + entry.getDate() + " -- " + entry.getContent());
             }
