@@ -22,7 +22,7 @@ public class EntryTest {
 
     @Test
     void testTimestamp() {
-        DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:MM");
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd-mm-yyyy");
         LocalDateTime currentTime = LocalDateTime.now();
         String thisTime = currentTime.format(dft);
 

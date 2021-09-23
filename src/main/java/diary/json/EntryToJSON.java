@@ -19,7 +19,7 @@ public class EntryToJSON {
             }
         }
 
-        File jsonFile = new File(filePath + "\\" + makeFileName(entry.getUsername()) + ".json");
+        File jsonFile = new File(filePath + "/" + makeFileName(entry.getUsername()) + ".json");
 
         String jsonString = JSON.std.with(JSON.Feature.PRETTY_PRINT_OUTPUT)
                 .without(JSON.Feature.FAIL_ON_DUPLICATE_MAP_KEYS).composeString().startObject()
