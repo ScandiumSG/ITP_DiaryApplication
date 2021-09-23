@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import diary.core.Entry;
 import diary.json.EntryFromJSON;
@@ -63,7 +63,7 @@ public class DiaryController {
         EntryFromJSON fetch = new EntryFromJSON();
         String date = dateInput.getValue().toString();
 
-        ArrayList<Entry> entries = null;
+        List<Entry> entries = null;
 
         try {
             entries = fetch.read(activeUser);
