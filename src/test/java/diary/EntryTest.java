@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class EntryTest {
 
     @Test
-    void testNameAndContent() {
+    public void testNameAndContent() {
         String user = new String("Ola Nordmann");
         String content = new String("Dette er en teststreng.");
         Entry entry = new Entry(user, content);
@@ -21,8 +21,8 @@ public class EntryTest {
     }
 
     @Test
-    void testTimestamp() {
-        DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+    public void testTimestamp() {
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd.mm.yyyy");
         LocalDateTime currentTime = LocalDateTime.now();
         String thisTime = currentTime.format(dft);
 
