@@ -29,9 +29,7 @@ Here's an illustration of how it would look, for now.
 
 Som en person med mange tanker ønsker jeg å holde oversikt over alle tanker og føleleser jeg opplever om dagen. Derfor må jeg skrive ned alt jeg føler et sted for å kunne se tilbake på hendelser i livet mitt.
 
-Brukeren trenger å vite hva han eller hun heter. Derfor er det fint om en kan skrive navnet sitt et sted i boken, hvor det er lett å finne igjen. 
-
-Brukeren ønsker å kunne velge å skrive om dagens tanmker og historie. Da er det fint om man kan velge en ny, blank side til å skrive på. 
+Brukeren ønsker å kunne velge å skrive om dagens tanker og historie. Da er det fint om man kan velge en ny, blank side til å skrive på. 
 
 Brukeren liker også å kunne gå tilbake for å se hva han eller hun følte en dag. Da er det greit å kunne bla tilbake. 
 
