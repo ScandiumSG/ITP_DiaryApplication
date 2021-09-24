@@ -45,7 +45,7 @@ public class Entry {
      * 
      * @return A string of the date and time on the format "dd-mm-yyyy".
      */
-    private String parseCurrentTime() {
+    public static String parseCurrentTime() {
         DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDateTime currentTime = LocalDateTime.now();
         return currentTime.format(dft);
