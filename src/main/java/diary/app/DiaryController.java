@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 
@@ -17,13 +17,10 @@ public class DiaryController {
     private String activeUser;
 
     @FXML
-    private TextField textEntry;
+    private TextArea textEntry;
 
     @FXML
     private Label dateId;
-
-    @FXML
-    private Button dateSubmit;
 
     @FXML
     private Button entrySubmit;
