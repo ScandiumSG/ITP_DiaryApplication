@@ -14,15 +14,15 @@
             <Font size="36.0" />
          </font>
       </Text>
-      <TextField fx:id="textEntry" alignment="TOP_LEFT" layoutX="59.0" layoutY="73.0" prefHeight="412.0" prefWidth="494.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </TextField>
       <Label fx:id="dateId" layoutX="59.0" layoutY="52.0" text="Current date:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
+      <TextArea fx:id="textEntry" layoutX="59.0" layoutY="73.0" prefHeight="412.0" prefWidth="494.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextArea>
    </children>
 </Pane>
