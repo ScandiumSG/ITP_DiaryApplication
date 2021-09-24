@@ -1,4 +1,4 @@
-package diary;
+package diary.app;
 
 import java.io.IOException;
 
