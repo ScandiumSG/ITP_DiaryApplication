@@ -9,7 +9,7 @@
    <children>
       <Button fx:id="entrySubmit" layoutX="482.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#saveDateEntry" text="Save entry" />
       <DatePicker fx:id="dateInput" layoutX="59.0" layoutY="506.0" onAction="#retrieveDateEntry" />
-      <Text layoutX="234.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dagbok" wrappingWidth="131.13671875">
+      <Text layoutX="230.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dagbok" wrappingWidth="151.13671875">
          <font>
             <Font size="36.0" />
          </font>
