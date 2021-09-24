@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="diary.app.DiaryController">
+    <children>
+        <Button fx:id="entrySubmit" layoutX="482.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#saveDateEntry" text="Save entry"/>
+        <DatePicker fx:id="dateInput" layoutX="59.0" layoutY="506.0"/>
+        <Button fx:id="dateSubmit" layoutX="244.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#retrieveDateEntry" text="Get date"/>
+        <Text layoutX="234.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dagbok" wrappingWidth="131.13671875">
+            <font>
+                <Font size="36.0"/>
+            </font>
+        </Text>
+        <TextField fx:id="textEntry" alignment="TOP_LEFT" layoutX="59.0" layoutY="73.0" prefHeight="412.0" prefWidth="494.0">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </TextField>
+        <Label fx:id="dateId" layoutX="59.0" layoutY="52.0" text="Current date:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+    </children>
+</Pane>
