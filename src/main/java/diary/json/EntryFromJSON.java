@@ -22,7 +22,7 @@ public class EntryFromJSON {
      * @return List of all found Entry's stored under the provided username.
      * @throws IOException
      */
-    public List<Entry> read(String username) throws IOException {
+    public static List<Entry> read(String username) throws IOException {
         File filePath = new File("./src/main/resources/DiaryEntries");
 
         if (!filePath.exists()) {
@@ -50,18 +50,22 @@ public class EntryFromJSON {
      * @param username  A string that indicate user identify. Used to locate
      *                  corresponding json file.
      * @param date      The date to check
-     * @return          The Entry object, if found
+     * @return          The Entry object if found, otherwise return a new Entry object
      */
-    public Entry read(String username, String date){
+    public static Entry read(String username, String date){
         try {
             List<Entry> entries = read(username);
 
+            if (entries == null){
+                return new Entry(username, "", date);
+            }
+
             for (Entry entry : entries) {
-                if (entry.getDate() == date){
+                if (entry.getDate().equals(date)){
                     return entry;
                 }
             }
-            return null;
+            return new Entry(username, "", date);
 
         } catch (Exception e) {
 
@@ -70,18 +74,20 @@ public class EntryFromJSON {
         }
     }
 
-    private String interpretName(String input) {
+    private static String interpretName(String input) {
         // Would make it easy to obfuscate these names in the future
         return input;
     }
 
     public static void main(String[] args) {
-        EntryFromJSON reader = new EntryFromJSON();
         try {
-            List<Entry> entries = reader.read("Ola");
+            Entry entry = EntryFromJSON.read("Ola", "15-09-2021");
+            System.out.println(entry.getUsername() + " - " + entry.getDate() + " -- " + entry.getContent());
+
+            /*
             for (Entry entry : entries) {
                 System.out.println(entry.getUsername() + " - " + entry.getDate() + " -- " + entry.getContent());
-            }
+            } */
         } catch (Exception e) {
             e.printStackTrace();
         }

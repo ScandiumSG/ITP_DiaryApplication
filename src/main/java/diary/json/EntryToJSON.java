@@ -13,7 +13,7 @@ public class EntryToJSON {
     // Use GSON to read/write the JSON files
     // https://github.com/google/gson
 
-    public void write(Entry entry) throws IOException, FileNotFoundException {
+    public static void write(Entry entry) throws IOException, FileNotFoundException {
         File filePath = new File("./src/main/resources/DiaryEntries");
 
         if (!filePath.exists()) {
@@ -26,8 +26,7 @@ public class EntryToJSON {
         List<Entry> Entries = new ArrayList<Entry>();
 
         if (jsonFile.exists()) {
-            EntryFromJSON reader = new EntryFromJSON();
-            Entries.addAll(reader.read(entry.getUsername()));
+            Entries.addAll(EntryFromJSON.read(entry.getUsername()));
             jsonFile.delete();
             Entries.removeIf(d -> d.getDate().equals(entry.getDate()));
 
@@ -40,7 +39,7 @@ public class EntryToJSON {
         fw.close();
     }
 
-    private String interpretName(String input) {
+    private static String interpretName(String input) {
         // Would make it easy to obfuscate these names in the future
         return input;
     }
@@ -51,11 +50,10 @@ public class EntryToJSON {
         Entry entry3 = new Entry("Ola", "Post-overwrite of content this day", "10-09-2021");
         Entry entry4 = new Entry("Ola", "3rd Entry to file", "15-09-2021");
         try {
-            EntryToJSON saver = new EntryToJSON();
-            saver.write(entry);
-            saver.write(entry2);
-            saver.write(entry3);
-            saver.write(entry4);
+            EntryToJSON.write(entry);
+            EntryToJSON.write(entry2);
+            EntryToJSON.write(entry3);
+            EntryToJSON.write(entry4);
         } catch (IOException e) {
             e.printStackTrace();
         }

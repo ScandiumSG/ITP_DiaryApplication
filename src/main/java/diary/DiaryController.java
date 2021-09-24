@@ -7,18 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.util.List;
 
 import diary.core.Entry;
 import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
-import javafx.event.ActionEvent;
 
 public class DiaryController {
 
-    private Entry activeEntry;
-
-    private String activeUser = "Per";
+    private String activeUser;
 
     @FXML
     private TextField textEntry;
@@ -35,50 +31,68 @@ public class DiaryController {
     @FXML
     private DatePicker dateInput;
 
+
     /**
-     * Saves the current page context as a json entry
-     * 
-     * @param event (tror ikke denne trengs)
+     * Initializes the diary to display todays date
      */
     @FXML
-    public void saveDateEntry(ActionEvent event) {
-        EntryToJSON write = new EntryToJSON();
+    public void initialize(){
+        Entry entry = EntryFromJSON.read(this.activeUser, Entry.parseCurrentTime());
+        updateGraphics(entry);
+    }
+
+
+    /**
+     * Sets the active user to "Ola"
+     * TODO implement a way to change between users
+     */
+    public DiaryController(){
+        this.activeUser = "Ola";
+    }
+
+
+    /**
+     * Saves the current page context as a json entry
+     */
+    @FXML
+    public void saveDateEntry() {
         Entry entry = new Entry(activeUser, getText(), getDate());
 
         try {
-            write.write(entry);
+            EntryToJSON.write(entry);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Updates the page context using the values linked to the currently selected
      * date on dateInput
-     * 
-     * @param event (tror ikke denne trengs)
      */
     @FXML
-    public void retrieveDateEntry(ActionEvent event) {
-        EntryFromJSON fetch = new EntryFromJSON();
-        String date = dateInput.getValue().toString();
+    public void retrieveDateEntry() {
+        String date = dateFormatConverter(dateInput.getValue().toString());
 
-        List<Entry> entries = null;
+        Entry entry = EntryFromJSON.read(this.activeUser, date);
 
-        try {
-            entries = fetch.read(activeUser);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
+        if  (entry == null){
+            entry = new Entry(this.activeUser, "", date);
         }
 
-        for (Entry entry : entries) {
-            if (entry.getDate() == date) {
-                updateGraphics(entry);
-                break;
-            }
-        }
+        updateGraphics(entry);    
     }
+
+
+    /**
+     * Converts datestring from yyyy-mm-dd to dd-mm-yyyy format
+     */
+    private String dateFormatConverter(String date){
+        String[] dates = date.split("-");
+
+        return dates[2] + "-" + dates[1] + "-" + dates[0];
+    }
+
 
     /**
      * @return the currently displayed text
@@ -87,19 +101,21 @@ public class DiaryController {
         return textEntry.getText();
     }
 
+
     /**
      * @return the currently displayed date
      */
     private String getDate() {
         String[] datelabel = dateId.getText().split(" ");
 
-        if (datelabel.length < 2) {
+        if (datelabel.length < 3) {
             throw new IllegalStateException("Something went wrong while accessing the current date");
         }
 
-        return datelabel[1];
+        return datelabel[2];
     }
 
+    
     /**
      * Sets the context of the diary page to match a given entry
      * 
