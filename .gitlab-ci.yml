@@ -12,8 +12,10 @@ build:
   stage: build
   script:
     - mvn compile -B
+    - mvn test -B
 
 tests:
   stage: test
   script:
     - mvn test -B
+  only: [merge_requests]
