@@ -23,9 +23,6 @@ public class DiaryController {
     private Label dateId;
 
     @FXML
-    private Button dateSubmit;
-
-    @FXML
     private Button entrySubmit;
 
     @FXML
