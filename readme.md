@@ -19,7 +19,7 @@ The root-folder of the project is the toplevel of the repository. Because of thi
 Here's an illustration of how it would look, for now. 
 <br/>
 
-![illustration 1](Illustrasjon 1.png) 
+![illustration 1](Illustrasjon_1.png) 
 
 <br/>
 
