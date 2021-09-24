@@ -31,25 +31,21 @@ public class DiaryController {
     @FXML
     private DatePicker dateInput;
 
-
     /**
      * Initializes the diary to display todays date
      */
     @FXML
-    public void initialize(){
+    public void initialize() {
         Entry entry = EntryFromJSON.read(this.activeUser, Entry.parseCurrentTime());
         updateGraphics(entry);
     }
 
-
     /**
-     * Sets the active user to "Ola"
-     * TODO implement a way to change between users
+     * Sets the active user to "Ola" TODO implement a way to change between users
      */
-    public DiaryController(){
+    public DiaryController() {
         this.activeUser = "Ola";
     }
-
 
     /**
      * Saves the current page context as a json entry
@@ -65,34 +61,32 @@ public class DiaryController {
         }
     }
 
-
     /**
      * Updates the page context using the values linked to the currently selected
      * date on dateInput
      */
     @FXML
     public void retrieveDateEntry() {
-        String date = dateFormatConverter(dateInput.getValue().toString());
+        if (dateInput.getValue() != null) {
+            String date = dateFormatConverter(dateInput.getValue().toString());
 
-        Entry entry = EntryFromJSON.read(this.activeUser, date);
+            Entry entry = EntryFromJSON.read(this.activeUser, date);
 
-        if  (entry == null){
-            entry = new Entry(this.activeUser, "", date);
+            if (entry == null) {
+                entry = new Entry(this.activeUser, "", date);
+            }
+            updateGraphics(entry);
         }
-
-        updateGraphics(entry);    
     }
-
 
     /**
      * Converts datestring from yyyy-mm-dd to dd-mm-yyyy format
      */
-    private String dateFormatConverter(String date){
+    private String dateFormatConverter(String date) {
         String[] dates = date.split("-");
 
         return dates[2] + "-" + dates[1] + "-" + dates[0];
     }
-
 
     /**
      * @return the currently displayed text
@@ -100,7 +94,6 @@ public class DiaryController {
     private String getText() {
         return textEntry.getText();
     }
-
 
     /**
      * @return the currently displayed date
@@ -115,7 +108,6 @@ public class DiaryController {
         return datelabel[2];
     }
 
-    
     /**
      * Sets the context of the diary page to match a given entry
      * 
