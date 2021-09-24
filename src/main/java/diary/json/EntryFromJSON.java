@@ -14,7 +14,7 @@ public class EntryFromJSON {
     // https://github.com/google/gson
 
     /**
-     * Read any json file with provided username from Documents\Diary\lib and
+     * Read any json file with provided username from main/resources/DiaryEntries and
      * returns as a unsorted ArrayList<Entry>
      * 
      * @param username A string that indicate user identify. Used to locate
@@ -40,7 +40,34 @@ public class EntryFromJSON {
         } else {
             return null;
         }
+    }
 
+
+    /**
+     * Read any json file with provided username and date from main/resources/DiaryEntries
+     * and returns an Entry object if found
+     * 
+     * @param username  A string that indicate user identify. Used to locate
+     *                  corresponding json file.
+     * @param date      The date to check
+     * @return          The Entry object, if found
+     */
+    public Entry read(String username, String date){
+        try {
+            List<Entry> entries = read(username);
+
+            for (Entry entry : entries) {
+                if (entry.getDate() == date){
+                    return entry;
+                }
+            }
+            return null;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private String interpretName(String input) {
