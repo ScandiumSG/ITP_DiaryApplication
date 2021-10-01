@@ -33,7 +33,7 @@ jacocoReport:
         - cat target/site/jacoco/index.html | grep -o '<tfoot>.*</tfoot>'
     artifacts:
         paths:
-            - target/site/jacoco/jacoco.xml
+            - target/site/jacoco/
 
 coverage-Jacoco:
     # Must be in a stage later than jacocoReport's stage.
