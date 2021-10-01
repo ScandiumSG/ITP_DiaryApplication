@@ -23,7 +23,6 @@ TestsAndStyle:
     stage: test
     script:
         - mvn test -B checkstyle:check
-    only: [merge_requests]
 
 jacocoReport:
     # Jacoco added based on https://docs.gitlab.com/ee/user/project/merge_requests/test_coverage_visualization.html
@@ -34,6 +33,10 @@ jacocoReport:
     artifacts:
         paths:
             - target/site/jacoco/
+    interruptible: true
+    only:
+        - master
+        - merge_requests
 
 coverage-Jacoco:
     # Must be in a stage later than jacocoReport's stage.
@@ -50,4 +53,4 @@ coverage-Jacoco:
     artifacts:
         reports:
             cobertura: target/site/cobertura.xml
-            
+    interruptible: true
