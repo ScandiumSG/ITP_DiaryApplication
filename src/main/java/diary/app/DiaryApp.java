@@ -11,14 +11,19 @@ import javafx.stage.Stage;
 public class DiaryApp extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Diary.fxml"));
+    public final void start(final Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+            this.getClass().getResource("Diary.fxml"));
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
         stage.show();
     }
 
-    public static void main(String[] args) {
+    /**
+     * Lauch method for DiaryApp.
+     * @param args
+     */
+    public static void main(final String[] args) {
         launch();
     }
 }

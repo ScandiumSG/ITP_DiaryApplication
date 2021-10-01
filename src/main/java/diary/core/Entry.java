@@ -11,30 +11,29 @@ public class Entry {
 
     /**
      * Constructor that utilize a provided name and content of the entry.
-     * 
      * @param user    A string of the name of whoever made the entry.
      * @param content A string containing the diary entry.
      */
-    public Entry(String user, String content) {
+    public Entry(final String user, final String content) {
         this.username = user;
         this.entryContent = content;
         this.entryDate = parseCurrentTime();
     }
 
     /**
-     * Constructor that utilize a provided name and content of the entry, as well as
-     * a userprovided time string
-     * 
+     * Constructor that utilize a provided name and content of the entry,
+     * as well as a userprovided time string.
      * @param user    A string of the name of whoever made the entry.
      * @param content A string containing the diary entry.
      * @param date    A date string. Has to be in the format "dd-mm-yyyy"
      */
-    public Entry(String user, String content, String date) {
+    public Entry(final String user, final String content, final String date) {
         this.username = user;
         this.entryContent = content;
 
         if (!validateDateInput(date)) {
-            throw new IllegalArgumentException("Invalid format of input date for new entry: " + date);
+            throw new IllegalArgumentException(
+                "Invalid format of input date for new entry: " + date);
         } else {
             this.entryDate = date;
         }
@@ -42,7 +41,6 @@ public class Entry {
 
     /**
      * Makes and returns a string of the current systems time and date.
-     * 
      * @return A string of the date and time on the format "dd-mm-yyyy".
      */
     public static String parseCurrentTime() {
@@ -51,22 +49,27 @@ public class Entry {
         return currentTime.format(dft);
     }
 
+
     /**
-     * Returns true if inputstring is on format "dd-mm-yyyy", else returns false.
-     * 
+     * Returns true if inputstring is on format "dd-mm-yyyy",
+     * else returns false.
      * @param input A string of the user provided date.
      * @return Boolean
      */
-    private Boolean validateDateInput(String input) {
-        String[] date = input.split("-", 3);
+    private Boolean validateDateInput(final String input) {
+        final int splitAmount = 3;
+        final int dayAndMonthLength = 2;
+        final int maxDayMonthLength = 4;
 
-        for (int i = 0; i < 2; i++) {
-            if (isNumerical(date[i]) && date[i].length() != 2) {
+        String[] date = input.split("-", splitAmount);
+
+        for (int i = 0; i < dayAndMonthLength; i++) {
+            if (isNumerical(date[i]) && date[i].length() != dayAndMonthLength) {
                 return false;
             }
         }
 
-        if (isNumerical(date[2]) && date[2].length() != 4) {
+        if (isNumerical(date[2]) && date[2].length() != maxDayMonthLength) {
             return false;
         }
 
@@ -74,29 +77,24 @@ public class Entry {
     }
 
     /**
-     * Returns true if inputstring only contains numbers, else returns false
-     * 
+     * Verify is input string is numerical
      * @param input The string to check
-     * @return Boolean
+     * @return Boolean true if inputstring only contains numbers,
+     * else returns false.
      */
-    private Boolean isNumerical(String input) {
+    private Boolean isNumerical(final String input) {
         return input.matches("[0-9]+");
     }
 
-    public String getUsername() {
-        return this.username;
+    public final String getUsername() {
+        return new String(this.username);
     }
 
-    public String getContent() {
-        return this.entryContent;
+    public final String getContent() {
+        return new String(this.entryContent);
     }
 
-    public String getDate() {
-        return entryDate;
-    }
-
-    public static void main(String[] args) {
-        Entry entry = new Entry("Ola nordmann", "Innhold", "11-02-1999");
-        System.out.println(entry.getUsername() + " - " + entry.getDate() + " - " + entry.getContent());
+    public final String getDate() {
+        return new String(this.entryDate);
     }
 }

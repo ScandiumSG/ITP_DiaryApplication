@@ -29,23 +29,25 @@ public class DiaryController {
     private DatePicker dateInput;
 
     /**
-     * Initializes the diary to display todays date
+     * Initializes the diary to display todays date.
      */
     @FXML
     public void initialize() {
-        Entry entry = EntryFromJSON.read(this.activeUser, Entry.parseCurrentTime());
+        Entry entry = EntryFromJSON.read(
+            this.activeUser, Entry.parseCurrentTime());
         updateGraphics(entry);
     }
 
     /**
-     * Sets the active user to "Ola" TODO implement a way to change between users
+     * Sets the active user to "Ola".
      */
+    // TODO implement a way to change between users.
     public DiaryController() {
         this.activeUser = "Ola";
     }
 
     /**
-     * Saves the current page context as a json entry
+     * Saves the current page context as a json entry.
      */
     @FXML
     public void saveDateEntry() {
@@ -59,8 +61,8 @@ public class DiaryController {
     }
 
     /**
-     * Updates the page context using the values linked to the currently selected
-     * date on dateInput
+     * Updates the page context using the values linked to
+     * the currently selected date on dateInput.
      */
     @FXML
     public void retrieveDateEntry() {
@@ -77,9 +79,11 @@ public class DiaryController {
     }
 
     /**
-     * Converts datestring from yyyy-mm-dd to dd-mm-yyyy format
+     * Converts datestring from yyyy-MM-dd to dd-MM-yyyy format.
+     * @param date A datestring in format yyyy-MM-dd.
+     * @return datestring of the dd-MM-yyyy format.
      */
-    private String dateFormatConverter(String date) {
+    private String dateFormatConverter(final String date) {
         String[] dates = date.split("-");
 
         return dates[2] + "-" + dates[1] + "-" + dates[0];
@@ -96,21 +100,22 @@ public class DiaryController {
      * @return the currently displayed date
      */
     private String getDate() {
+        final int minDateLength = 3;
         String[] datelabel = dateId.getText().split(" ");
 
-        if (datelabel.length < 3) {
-            throw new IllegalStateException("Something went wrong while accessing the current date");
+        if (datelabel.length < minDateLength) {
+            throw new IllegalStateException(
+                "Something went wrong while accessing the current date");
         }
 
         return datelabel[2];
     }
 
     /**
-     * Sets the context of the diary page to match a given entry
-     * 
+     * Sets the context of the diary page to match a given entry.
      * @param entry The entry to show
      */
-    private void updateGraphics(Entry entry) {
+    private void updateGraphics(final Entry entry) {
         dateId.setText("Current date: " + entry.getDate());
         textEntry.setText(entry.getContent());
     }
