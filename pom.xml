@@ -78,7 +78,6 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <plugins>
             <plugin>
@@ -86,8 +85,43 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>11</release>
+                    <encoding>UTF-8</encoding>
+                    <release>16</release>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                </configuration>
+            </plugin>
+            <!-- Run the checkstyle code quality tool -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>8.36.1</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configLocation>google_checks.xml</configLocation>
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>false</failsOnError>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>checkstyle-check</id>
+                        <phase>verify</phase>
+                        <goals><goal>check</goal></goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -106,22 +140,51 @@
                 <configuration>
                     <!-- Uncomment to run on iOS: -->
                     <!-- <target>ios</target>-->
-                        <mainClass>
-                    ${mainClassName}
-                </mainClass>
-            </configuration>
-        </plugin>
-
-    </plugins>
+                        <mainClass>${mainClassName}</mainClass>
+                </configuration>
+            </plugin>
+            <!-- Configure jacoco code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.6</version>
+                <executions>
+                    <execution>
+                        <id>jacoco-prepare-agent</id>
+                        <phase>process-test-classes</phase>
+                        <goals><goal>prepare-agent</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-report</id>
+                        <phase>verify</phase>
+                        <goals><goal>report</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+            <pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>3.1.2</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.puppycrawl.tools</groupId>
+                                <artifactId>checkstyle</artifactId>
+                                <version>8.31</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </pluginManagement>
     </build>
 
-        <pluginRepositories>
-            <pluginRepository>
-                <id>
-            gluon-releases
-            </id>
-                <url>
-            https://nexus.gluonhq.com/nexus/content/repositories/releases/
-        </url>
+<pluginRepositories>
+    <pluginRepository>
+        <id>gluon-releases</id>
+        <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
     </pluginRepository>
-</pluginRepositories></project>
+</pluginRepositories>
+
+</project>
