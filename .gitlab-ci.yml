@@ -19,15 +19,19 @@ CompileCheck:
     script:
         - mvn compile
 
-TestsAndStyle:
+BranchTests:
     stage: test
     script:
         - mvn test -B checkstyle:check
+    except: 
+        - master
+        - merge_requests
 
 jacocoReport:
     # Jacoco added based on https://docs.gitlab.com/ee/user/project/merge_requests/test_coverage_visualization.html
     stage: test
     script:
+        - mvn test -B checkstyle:check
         - mvn $MAVEN_CLI_OPTS clean org.jacoco:jacoco-maven-plugin:prepare-agent test jacoco:report
         - cat target/site/jacoco/index.html | grep -o '<tfoot>.*</tfoot>'
     artifacts:
