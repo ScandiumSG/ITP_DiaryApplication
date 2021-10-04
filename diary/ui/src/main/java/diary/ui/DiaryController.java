@@ -1,4 +1,4 @@
-package diary.app;
+package diary.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
