@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>diary</groupId>
-    <artifactId>Diary</artifactId>
+    <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>Diary</name>
 
@@ -14,39 +14,41 @@
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
         <javafx.version>14.0.2.1</javafx.version>
+        <junit.version>5.7.2</junit.version>
         <mainClassName>diary.app.DiaryApp</mainClassName>
     </properties>
 
+    <dependencyManagement>
     <dependencies>
         <!-- javafx -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>16</version>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>16</version>
+            <version>${javafx.version}</version>
         </dependency>
 
         <!-- junit testing with jupiter -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>5.7.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -74,9 +76,10 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.8</version>
-        </dependency>
-    </dependencies>
+                <version>2.8.8</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -180,11 +183,15 @@
             </pluginManagement>
     </build>
 
-<pluginRepositories>
-    <pluginRepository>
-        <id>gluon-releases</id>
-        <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
-    </pluginRepository>
-</pluginRepositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>gluon-releases</id>
+            <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
+    <modules>
+        <module>core</module>
+        <module>ui</module>
+    </modules>
 </project>

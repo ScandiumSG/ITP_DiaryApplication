@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>diary</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ui</artifactId>
+
+    <properties>
+        <skipUiTests>false</skipUiTests>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>diary</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+
+        <!-- Test with TextFX -->
+		<dependency>
+			<groupId>org.testfx</groupId>
+		    <artifactId>testfx-core</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.testfx</groupId>
+			<artifactId>testfx-junit5</artifactId>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>fontawesome</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.openjfx</groupId>
+                        <artifactId>javafx-maven-plugin</artifactId>
+                        <version>0.0.6</version>
+                        <configuration>
+                            <mainClass>de.jensd.fx.glyphs.fontawesome.demo.FontAwesomeIconsDemoApp</mainClass>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>DiaryApp</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.openjfx</groupId>
+                        <artifactId>javafx-maven-plugin</artifactId>
+                        <version>0.0.6</version>
+                        <configuration>
+                            <mainClass>diary.ui.DiaryApp</mainClass>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>jpro</id>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>jpro - sandec repository</id>
+                    <url>https://sandec.bintray.com/repo</url>
+                </pluginRepository>
+            </pluginRepositories>
+            <repositories>
+                <repository>
+                    <id>jpro - sandec repository</id>
+                    <url>https://sandec.bintray.com/repo</url>
+                </repository>
+            </repositories>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.sandec.jpro</groupId>
+                        <artifactId>jpro-maven-plugin</artifactId>
+                        <version>2020.1.5</version>
+                        <configuration>
+                            <visible>false</visible>
+                            <JVMArgs>
+                                <!-- <JVMArg>your-args</JVMArg> -->
+                            </JVMArgs>
+                            <mainClassName>diary.ui.DiaryApp</mainClassName>
+                            <openingPath>/</openingPath>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipUiTests}</skipTests>
+                    <argLine>
+                    --add-opens diary.ui/diary.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    </argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.6</version>
+                <configuration>
+                    <mainClass>diary.ui.DiaryApp</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- Run the checkstyle code quality tool -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <!-- Run the spotbugs code quality tool -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Configure jacoco code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
