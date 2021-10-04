@@ -12,10 +12,10 @@ public class JSONTest {
     public void testMakingNewFile() throws IOException {
         String user = new String("TestWriting");
         File jsonFile = new File("./src/main/resources/DiaryEntries/" + interpretName(user) + ".json");
-        jsonFile.deleteOnExit();
         Assertions.assertFalse(jsonFile.exists());
         Entry entry = new Entry(user, "TestFile - Should auto delete");
         EntryToJSON.write(entry);
+        jsonFile.delete();
     }
 
     @Test
@@ -37,11 +37,11 @@ public class JSONTest {
         Assertions.assertEquals(overwriteEntry.getContent(), readOverwriteEntry.getContent());
         Assertions.assertEquals(overwriteEntry.getDate(), readOverwriteEntry.getDate());
 
-        File jsonFile = new File(
-                "./src/main/resources/DiaryEntries/" + interpretName(overwriteEntry.getUsername()) + ".json");
-        jsonFile.deleteOnExit();
-
-    }
+        File writtenFile = new File("./src/main/resources/DiaryEntries/"
+            + interpretName(overwriteEntry.getUsername())
+            + ".json");
+            writtenFile.delete();
+        }
 
     private static String interpretName(String input) {
         // Would make it easy to obfuscate these names in the future
