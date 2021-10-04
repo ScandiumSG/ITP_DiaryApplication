@@ -1,10 +1,9 @@
-package diary;
+package diary.json;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import diary.core.Entry;
-import diary.json.*;
 import java.io.IOException;
 
 public class JSONTest {

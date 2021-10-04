@@ -1,10 +1,7 @@
-package diary;
+package diary.core;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import diary.core.Entry;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
