@@ -1,7 +1,6 @@
 package diary.ui;
 
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +20,7 @@ public class DiaryApp extends Application {
 
     /**
      * Lauch method for DiaryApp.
-     * @param args
+     * @param args No input parameters
      */
     public static void main(final String[] args) {
         launch();

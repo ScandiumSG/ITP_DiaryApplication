@@ -16,6 +16,7 @@
         <javafx.version>14.0.2.1</javafx.version>
         <junit.version>5.7.2</junit.version>
         <mainClassName>diary.app.DiaryApp</mainClassName>
+        <checkstyle.config.location>config/custom_checkstyle.xml</checkstyle.config.location>
     </properties>
 
     <dependencyManagement>
@@ -112,11 +113,12 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configLocation>google_checks.xml</configLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>false</failsOnError>
                     <linkXRef>false</linkXRef>
+                    <indentSize>4</indentSize>
+                    <lineLength>80</lineLength>
                 </configuration>
                 <executions>
                     <execution>
@@ -126,7 +128,26 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <!-- Run the spotbugs code quality tool -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.4.1</version>
+                <configuration>
+                    <xmlOutput>false</xmlOutput>
+                    <htmlOutput>true</htmlOutput>
+                    <excludeFilterFile>config/spotbugs_exclude.xml</excludeFilterFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>spotbugs-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        </execution>
+                    </executions>
+            </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>

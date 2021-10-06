@@ -87,14 +87,14 @@ public class Entry {
     }
 
     public final String getUsername() {
-        return new String(this.username);
+        return (this.username);
     }
 
     public final String getContent() {
-        return new String(this.entryContent);
+        return (this.entryContent);
     }
 
     public final String getDate() {
-        return new String(this.entryDate);
+        return (this.entryDate);
     }
 }
