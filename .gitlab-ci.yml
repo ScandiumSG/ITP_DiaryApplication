@@ -24,7 +24,7 @@ BranchTests:
     stage: test
     script:
         - cd diary
-        - mvn test -B checkstyle:check
+        - mvn verify
     except:
         - master
         - merge_requests
@@ -35,10 +35,10 @@ jacocoReport:
     script:
         - cd diary
         - mvn $MAVEN_CLI_OPTS clean org.jacoco:jacoco-maven-plugin:prepare-agent test jacoco:report
-        - cat target/site/jacoco/index.html | grep -o '<tfoot>.*</tfoot>'
+        - cat core/target/site/jacoco/index.html | grep -o '<tfoot>.*</tfoot>'
     artifacts:
         paths:
-            - target/site/jacoco/
+            - diary/core/target/site/jacoco/
     interruptible: true
     allow_failure: true
     only:
@@ -53,11 +53,14 @@ coverage-Jacoco:
     image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.7
     script:
         # convert report from jacoco to cobertura, using relative project path
-        - python /opt/cover2cover.py target/site/jacoco/jacoco.xml $CI_PROJECT_DIR/src/main/java/ > target/site/cobertura.xml
+        - python /opt/cover2cover.py diary/core/target/site/jacoco/jacoco.xml $CI_PROJECT_DIR/src/main/java/ > target/site/cobertura.xml
     needs: [jacocoReport]
     dependencies:
         - jacocoReport
     artifacts:
         reports:
-            cobertura: target/site/cobertura.xml
+            cobertura: diary/core/target/site/cobertura.xml
     interruptible: true
+    only:
+        - master
+        - merge_requests

@@ -1,12 +1,14 @@
 package diary.json;
 
-import diary.core.Entry;
-import java.io.IOException;
-import java.io.File;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diary.core.Entry;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,11 +27,11 @@ public final class EntryFromJSON {
 
     /**
      * Read any json file with provided username from
-     * main/resources/DiaryEntries and returns as a unsorted ArrayList<Entry>.
+     * main/resources/DiaryEntries and returns as a unsorted ArrayList of Entry.
      * @param username A string that indicate user identify.
-     * Used to locate corresponding json file.
+     *  Used to locate corresponding json file.
      * @return List of all found Entry's stored under the provided username.
-     * @throws IOException
+     * @throws IOException If filepath to resources is nonexistant.
      */
     public static List<Entry> read(final String username) throws IOException {
         File filePath = new File("./src/main/resources/DiaryEntries");
@@ -43,7 +45,8 @@ public final class EntryFromJSON {
             filePath + "/" + interpretName(username) + ".json");
         if (jsonFile.exists()) {
             BufferedReader bufferedReader = new BufferedReader(
-                new FileReader(jsonFile.getAbsolutePath()));
+                new InputStreamReader(
+                    new FileInputStream(jsonFile), StandardCharsets.UTF_8));
 
             Gson gson = new GsonBuilder().setLenient().create();
             Entry[] entries = gson
@@ -92,7 +95,7 @@ public final class EntryFromJSON {
 
     /**
      * Basic test reading of 1 set .JSON file on specific date.
-     * @param args
+     * @param args No input parameters
      */
     public static void main(final String[] args) {
         try {

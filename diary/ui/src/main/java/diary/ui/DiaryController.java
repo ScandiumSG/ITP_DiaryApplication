@@ -1,14 +1,14 @@
 package diary.ui;
 
+import diary.core.Entry;
+import diary.json.EntryFromJSON;
+import diary.json.EntryToJSON;
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import java.io.IOException;
-import diary.json.EntryFromJSON;
-import diary.json.EntryToJSON;
-import diary.core.Entry;
 
 
 public class DiaryController {

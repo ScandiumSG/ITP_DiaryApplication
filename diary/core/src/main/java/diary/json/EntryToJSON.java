@@ -1,13 +1,18 @@
 package diary.json;
 
-import diary.core.Entry;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileWriter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.util.List;
+import diary.core.Entry;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
+
+
 
 /**
  * Classes containing static methods to read and write to/from JSON.
@@ -31,7 +36,21 @@ public final class EntryToJSON {
      * @throws IOException .JSON location does not exist.
      */
     public static void write(final Entry entry)
-    throws IOException {
+        throws IOException {
+        write(entry, false);
+    }
+
+    /**
+     * EntryToJSON.write() will only write the content of a single entry to
+     * a file, either appending new content or overwriting existing content
+     * at the specified date.
+     * @param entry A diary.Entry object to be added to the users .JSON storage
+     * @param testWrite Boolean specifying if write is a testwrite, if true
+     * file is deleted after completed write.
+     * @throws IOException .JSON location does not exist.
+     */
+    public static boolean write(final Entry entry, boolean testWrite)
+        throws IOException {
         File filePath = new File(
             "./src/main/resources/DiaryEntries");
 
@@ -52,18 +71,30 @@ public final class EntryToJSON {
 
         if (jsonFile.exists()) {
             entries.addAll(EntryFromJSON.read(entry.getUsername()));
-            jsonFile.delete();
+            boolean fileDeleted = jsonFile.delete();
             entries.removeIf(d -> d.getDate().equals(entry.getDate()));
-
         }
         entries.add(entry);
 
         Gson gson = new GsonBuilder()
+            .disableHtmlEscaping()
             .setPrettyPrinting()
             .create();
-        FileWriter fw = new FileWriter(jsonFile, false);
-        gson.toJson(entries, fw);
-        fw.close();
+        // FileWriter fw = new FileWriter(jsonFile, false);
+        FileOutputStream sm = new FileOutputStream(jsonFile);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
+        gson.toJson(entries, bw);
+        sm.flush();
+        bw.flush();
+        sm.close();
+        bw.close();
+
+        if (testWrite == true) {
+            boolean fileDeleted = jsonFile.delete();
+            return fileDeleted;
+        } else {
+            return false;
+        }
     }
 
     private static String interpretName(final String input) {
@@ -73,7 +104,7 @@ public final class EntryToJSON {
 
     /**
      * Basic test writing of some .JSON file.
-     * @param args
+     * @param args No input parameters
      */
     public static void main(final String[] args) {
         Entry entry = new Entry(
