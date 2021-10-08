@@ -214,5 +214,6 @@
     <modules>
         <module>core</module>
         <module>ui</module>
+        <module>testing</module>
     </modules>
 </project>
