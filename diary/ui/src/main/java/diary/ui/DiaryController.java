@@ -13,8 +13,6 @@ import javafx.scene.control.TextArea;
 
 public class DiaryController {
 
-    private String activeUser;
-
     @FXML
     private TextArea textEntry;
 
@@ -32,17 +30,8 @@ public class DiaryController {
      */
     @FXML
     public void initialize() {
-        Entry entry = EntryFromJSON.read(
-            this.activeUser, Entry.parseCurrentTime());
+        Entry entry = EntryFromJSON.read(Entry.parseCurrentTime());
         updateGraphics(entry);
-    }
-
-    /**
-     * Sets the active user to "Ola".
-     */
-    // TODO implement a way to change between users.
-    public DiaryController() {
-        this.activeUser = "Ola";
     }
 
     /**
@@ -50,7 +39,7 @@ public class DiaryController {
      */
     @FXML
     public void saveDateEntry() {
-        Entry entry = new Entry(activeUser, getText(), getDate());
+        Entry entry = new Entry(getText(), getDate());
 
         try {
             EntryToJSON.write(entry);
@@ -68,10 +57,10 @@ public class DiaryController {
         if (dateInput.getValue() != null) {
             String date = dateFormatConverter(dateInput.getValue().toString());
 
-            Entry entry = EntryFromJSON.read(this.activeUser, date);
+            Entry entry = EntryFromJSON.read(date);
 
             if (entry == null) {
-                entry = new Entry(this.activeUser, "", date);
+                entry = new Entry("", date);
             }
             updateGraphics(entry);
         }

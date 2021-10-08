@@ -4,4 +4,7 @@
         <Bug pattern="SA_LOCAL_SELF_COMPARISON" />
     </Match>
 -->
+    <Match>
+        <Bug pattern="DLS_DEAD_LOCAL_STORE" />
+    </Match>
 </FindBugsFilter>

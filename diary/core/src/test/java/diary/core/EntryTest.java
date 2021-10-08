@@ -8,12 +8,10 @@ import java.time.format.DateTimeFormatter;
 public class EntryTest {
 
     @Test
-    public void testNameAndContent() {
-        String user = new String("Ola Nordmann");
+    public void testContent() {
         String content = new String("Dette er en teststreng.");
-        Entry entry = new Entry(user, content);
+        Entry entry = new Entry(content);
 
-        Assertions.assertEquals(user, entry.getUsername());
         Assertions.assertEquals(content, entry.getContent());
     }
 
@@ -23,7 +21,7 @@ public class EntryTest {
         LocalDateTime currentTime = LocalDateTime.now();
         String thisTime = currentTime.format(dft);
 
-        Entry entry = new Entry("Name", "content", thisTime);
+        Entry entry = new Entry("content", thisTime);
         Assertions.assertEquals(thisTime, entry.getDate());
     }
 }
