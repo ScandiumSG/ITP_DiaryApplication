@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +19,10 @@ import java.util.List;
  * @author Stian K. Gaustad, Lars Overskeid
  */
 public final class EntryFromJSON {
+
+    private static File filePath = EntryToJSON.getJsonFile();
+
+
     // Use GSON to read/write the JSON files
     // https://github.com/google/gson
 
@@ -25,89 +30,96 @@ public final class EntryFromJSON {
         // Not called
     }
 
+
     /**
      * Read any json file with provided username from
      * main/resources/DiaryEntries and returns as a unsorted ArrayList of Entry.
-     * @param username A string that indicate user identify.
-     *  Used to locate corresponding json file.
+     * @param overridePath path to testFile.
+     * @return List of all found Entry's stored under the provided username.
+     * @throws IOException If filepath to resources is nonexistant.
+     *
+     * @see diary.json#read()
+     */
+    public static List<Entry> read(final File overridePath) throws IOException {
+        File orgFilePath = filePath;
+        filePath = overridePath;
+        List<Entry> result = read();
+        filePath = orgFilePath;
+        return result;
+    }
+
+
+    /**
+     * Read any json file with provided username and date from
+     * main/resources/DiaryEntries and returns an Entry object if found.
+     * @param overridePath path to testFile.
+     * @param date     The date to check
+     * @return The Entry object if found, otherwise return a new Entry object
+     *
+     * @see diary.json#read(String date)
+     */
+    public static Entry read(final String date, final File overridePath) {
+        File orgFilePath = filePath;
+        filePath = overridePath;
+        Entry result = read(date);
+        filePath = orgFilePath;
+        return result;
+    }
+
+
+    /**
+     * Read any json file with provided username from
+     * main/resources/DiaryEntries and returns as a unsorted ArrayList of Entry.
      * @return List of all found Entry's stored under the provided username.
      * @throws IOException If filepath to resources is nonexistant.
      */
-    public static List<Entry> read(final String username) throws IOException {
-        File filePath = new File("./src/main/resources/DiaryEntries");
+    public static List<Entry> read() throws IOException {
+
+        List<Entry> readEntries = new ArrayList<Entry>();
 
         if (!filePath.exists()) {
-            throw new IOException(
-                "Could not find chosen path to " + filePath.getName());
-        }
-
-        File jsonFile = new File(
-            filePath + "/" + interpretName(username) + ".json");
-        if (jsonFile.exists()) {
-            BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(
-                    new FileInputStream(jsonFile), StandardCharsets.UTF_8));
-
-            Gson gson = new GsonBuilder().setLenient().create();
-            Entry[] entries = gson
-                .fromJson(bufferedReader, Entry[].class);
-            List<Entry> readEntries = Arrays.asList(entries);
             return readEntries;
-        } else {
-            return null;
         }
+
+        BufferedReader bufferedReader = new BufferedReader(
+            new InputStreamReader(
+                new FileInputStream(filePath), StandardCharsets.UTF_8));
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        Entry[] entries = gson
+            .fromJson(bufferedReader, Entry[].class);
+
+        if (entries != null) {
+            readEntries = Arrays.asList(entries);
+        }
+
+        return readEntries;
     }
 
     /**
      * Read any json file with provided username and date from
      * main/resources/DiaryEntries and returns an Entry object if found.
-     * @param username A string that indicate user identify. Used to locate
-     *                 corresponding json file.
      * @param date     The date to check
      * @return The Entry object if found, otherwise return a new Entry object
      */
-    public static Entry read(final String username, final String date) {
+    public static Entry read(final String date) {
         try {
-            List<Entry> entries = read(username);
+            List<Entry> entries = read();
 
-            if (entries == null) {
-                return new Entry(username, "", date);
-            }
-
-            for (Entry entry : entries) {
-                if (entry.getDate().equals(date)) {
-                    return entry;
+            if (entries != null) {
+                for (Entry entry : entries) {
+                    if (entry.getDate().equals(date)) {
+                        return entry;
+                    }
                 }
             }
-            return new Entry(username, "", date);
+
+            return new Entry("", date);
 
         } catch (Exception e) {
 
             e.printStackTrace();
             return null;
-        }
-    }
-
-    private static String interpretName(final String input) {
-        // Would make it easy to obfuscate these names in the future
-        return input;
-    }
-
-    /**
-     * Basic test reading of 1 set .JSON file on specific date.
-     * @param args No input parameters
-     */
-    public static void main(final String[] args) {
-        try {
-            Entry entry = EntryFromJSON.read("Ola", "15-09-2021");
-            System.out.println(
-                entry.getUsername()
-                + " - "
-                + entry.getDate()
-                + " -- "
-                + entry.getContent());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

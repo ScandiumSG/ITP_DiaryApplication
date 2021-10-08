@@ -1,3 +1,1 @@
-# Ignore diary .json files
-DiaryEntries/*
-!DiaryEntries/.gitkeep
+DiaryEntries.json

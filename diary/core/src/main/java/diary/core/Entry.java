@@ -4,18 +4,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Entry {
-    private String username;
-    // Potential rework, use UNIX time to store time as a long.
     private String entryDate;
     private String entryContent;
 
     /**
      * Constructor that utilize a provided name and content of the entry.
-     * @param user    A string of the name of whoever made the entry.
      * @param content A string containing the diary entry.
      */
-    public Entry(final String user, final String content) {
-        this.username = user;
+    public Entry(final String content) {
         this.entryContent = content;
         this.entryDate = parseCurrentTime();
     }
@@ -23,12 +19,10 @@ public class Entry {
     /**
      * Constructor that utilize a provided name and content of the entry,
      * as well as a userprovided time string.
-     * @param user    A string of the name of whoever made the entry.
      * @param content A string containing the diary entry.
      * @param date    A date string. Has to be in the format "dd-mm-yyyy"
      */
-    public Entry(final String user, final String content, final String date) {
-        this.username = user;
+    public Entry(final String content, final String date) {
         this.entryContent = content;
 
         if (!validateDateInput(date)) {
@@ -84,10 +78,6 @@ public class Entry {
      */
     private Boolean isNumerical(final String input) {
         return input.matches("[0-9]+");
-    }
-
-    public final String getUsername() {
-        return (this.username);
     }
 
     public final String getContent() {
