@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import diary.core.Entry;
@@ -22,15 +21,6 @@ import javafx.stage.Stage;
 public class DiaryControllerTest extends ApplicationTest{
 
     private DiaryController controller;
-
-    @Override
-    public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("Diary.fxml"));
-        final Parent root = loader.load();
-        this.controller = loader.getController();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
     private List<Entry> diaryList= new ArrayList<>();
     private Entry i1, i2, i3;
 

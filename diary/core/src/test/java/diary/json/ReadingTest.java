@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import diary.core.Entry;
 import java.io.IOException;
-import java.util.List;
 
 public class ReadingTest {
 
