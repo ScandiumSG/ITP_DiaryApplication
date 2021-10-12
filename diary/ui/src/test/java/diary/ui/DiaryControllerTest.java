@@ -44,19 +44,25 @@ public class DiaryControllerTest extends ApplicationTest{
     @Test
     public void testInitialize() {
     // initial diary items
-
     }
+
     @Test
     public void testSaveDateEntry()
     {
-        for(int i=0; i<diaryList.size();i++)
-        {
-            Entry temp =i(getText(), getDate());
-            assertNotNull(temp);
 
-        }
 
     }
+    @Test
+    public void testRetrieveDateEntry(){
+
+    }
+
+    @Test
+    public void testRobot(){
+        clickOn("#textEntry").write("Test");
+        clickOn("#entrySubmit");
+    }
+
 
 }
 
