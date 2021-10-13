@@ -1,5 +1,6 @@
 package diary.ui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
@@ -10,57 +11,55 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import diary.core.Entry;
-import diary.json.EntryFromJSON;
-import diary.json.EntryToJSON;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 
 public class DiaryControllerTest extends ApplicationTest{
 
     private DiaryController controller;
-    private List<Entry> diaryList= new ArrayList<>();
-    private Entry i1, i2, i3;
+    private Parent root;
 
-
-    @BeforeEach
-    public void setupItems() {
-        Iterator<Entry> entry = diaryList.iterator();
-        i1 = new Entry("name1").as(entry.next());
-        i2 = new Entry("name2").as(entry.next());
-        i3 = new Entry("name3").as(entry.next());
-        diaryList.add(i1);
-        diaryList.add(i2);
-        diaryList.add(i3);
+    @Override
+  public void start(final Stage stage) throws Exception {
+    final FXMLLoader loader = new FXMLLoader(getClass().getResource("Diary.fxml"));
+    final Parent root = loader.load();
+    controller = loader.getController();
+    stage.setScene(new Scene(root));
+    stage.show();
   }
-    @Test
-    public void testControllerDiary() {
-        assertNotNull(this.controller);
-        assertNotNull(this.diaryList);
-        // initial todo items
-    }
-    @Test
-    public void testInitialize() {
-    // initial diary items
-    }
 
-    @Test
-    public void testSaveDateEntry()
-    {
+  public Parent getText()
+{
+    return root;
+}
 
-
-    }
-    @Test
-    public void testRetrieveDateEntry(){
-
-    }
+private String root(){
+    return ((TextArea) getText().lookup("#textArea")).getText();
+}
 
     @Test
     public void testRobot(){
         clickOn("#textEntry").write("Test");
+        assertEquals("test", (TextArea) getText().lookup("#textArea"));
         clickOn("#entrySubmit");
+
+       /*
+Bytte til en dato som ikke er i dag
+Sjekke at tekstfelt er tom
+Sjekke at dato er den valgte dagen
+Skrive noe annet i tekstfeltet
+Submitte
+Skrive en tredje ting i tekstfeltet
+Submitte
+Bytte tilbake til dagens dato
+Sjekke at teksten har blitt det du lagret først
+Sjekke at datoen er riktig
+Bytte tilbake til den andre datoen
+Sjekke at teksten er det du lagret andre gang på denne dagen*/
     }
 
 
