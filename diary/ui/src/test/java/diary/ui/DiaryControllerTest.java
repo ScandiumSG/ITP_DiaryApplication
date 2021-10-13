@@ -3,11 +3,6 @@ package diary.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -32,26 +27,26 @@ public class DiaryControllerTest extends ApplicationTest{
     stage.show();
   }
 
-  public Parent getText()
+  public Parent getRoot()
 {
     return root;
 }
 
-private String root(){
-    return ((TextArea) getText().lookup("#textArea")).getText();
+private String getText(){
+    return ((TextEntry) getRoot().lookup("#textArea")).getText();
 }
 
     @Test
     public void testRobot(){
         clickOn("#textEntry").write("Test");
-        assertEquals("test", (TextArea) getText().lookup("#textArea"));
+        assertEquals("test", getText());
         clickOn("#entrySubmit");
 
        /*
 Bytte til en dato som ikke er i dag
 Sjekke at tekstfelt er tom
 Sjekke at dato er den valgte dagen
-Skrive noe annet i tekstfeltet
+Skrive noe annet i tekstfeltetD
 Submitte
 Skrive en tredje ting i tekstfeltet
 Submitte
