@@ -22,9 +22,14 @@ The root-folder of the project is the toplevel of the repository. Because of thi
 Here's an illustration of how it would look, for now.
 <br/>
 
-![illustration 1](Illustrasjon_1.jpg)
+![illustration 1](docs/Illustrasjon_1.jpg)
 
 <br/>
+
+Here's an illustration of the current architecture:
+<br/>
+
+![Architecture.png](docs/release2/Architecture.png)
 
 # How to build and run applicaiton
 This project utilize maven to build and run the code.
