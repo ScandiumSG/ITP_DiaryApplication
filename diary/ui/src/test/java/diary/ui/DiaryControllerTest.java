@@ -3,6 +3,7 @@ package diary.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -12,13 +13,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.scene.control.DatePicker;
-
-
+import java.io.File;
 
 public class DiaryControllerTest extends ApplicationTest{
 
     private DiaryController controller;
     private Parent root;
+    private final File testFilePath = new File("diary/ui/src/main/resources/DiaryEntries.json");
+
+    @BeforeEach
+    public void deleteJson(){
+        testFilePath.delete();
+    }
 
     @Override
     public void start(final Stage stage) throws Exception {
