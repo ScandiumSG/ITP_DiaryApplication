@@ -77,23 +77,6 @@ public class DiaryControllerTest extends ApplicationTest{
         assertNotNull(getText());
     }
 
-
-       /*
-Bytte til en dato som ikke er i dag
-Sjekke at tekstfelt er tom
-Sjekke at dato er den valgte dagen
-Skrive noe annet i tekstfeltetD
-Submitte
-Skrive en tredje ting i tekstfeltet
-Submitte
-Bytte tilbake til dagens dato
-Sjekke at teksten har blitt det du lagret først
-Sjekke at datoen er riktig
-Bytte tilbake til den andre datoen
-Sjekke at teksten er det du lagret andre gang på denne dagen*/
-
-
-
 }
 
 
