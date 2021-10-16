@@ -46,20 +46,19 @@ mvn clean install
 mvn javafx:run -f ui/pom.xml
 ~~~
 
-# Brukerhistorier
+# Userhistory
 
 ## Diary
 
-Som en person med mange tanker ønsker jeg å holde oversikt over alle tanker og føleleser jeg opplever om dagen. Derfor må jeg skrive ned alt jeg føler et sted for å kunne se tilbake på hendelser i livet mitt.
+As an imagianry and emotional person is collecting my thoughts somewhere necessary. With that would I like to write down my thought in  order to look back at them in the future.
 
-Brukeren ønsker å kunne velge å skrive om dagens tanker og historie. Da er det fint om man kan velge en ny, blank side til å skrive på.
+The product offers teh ability to create a new page for the curent date. This page is blank and ready for new content.
 
-Brukeren liker også å kunne gå tilbake for å se hva han eller hun følte en dag. Da er det greit å kunne bla tilbake.
+Users are able to choose dates from the past in order to read earlier content written by themself.
 
-### Viktig for brukeren
-    - når en vil skrive skriver: Tydelig knapp for å lage en ny side.
-    - om en vil se tilbake: Tydelig knapp for å bla tilbake med markering for hvilken dag det er.
-
+### Important for the user
+    - When writing a new page is a wish: Visible button to create a new page.
+    - If the user wishes to read old content: Visible area to set a suggested date.
 
 
 
