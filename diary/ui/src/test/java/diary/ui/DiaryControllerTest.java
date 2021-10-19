@@ -19,13 +19,12 @@ public class DiaryControllerTest extends ApplicationTest{
 
     private DiaryController controller;
     private Parent root;
-    private final File testFilePath = new File("../../../../main/resources/DiaryEntries.json");
+    private final File testFilePath = new File("/workspace/gr2172/diary/ui/src/main/resources/DiaryEntries.json");
 
     @AfterEach
     public void deleteJson(){
         testFilePath.delete();
     }
-
     @Override
     public void start(final Stage stage) throws Exception {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("Diary.fxml"));
@@ -40,7 +39,6 @@ public class DiaryControllerTest extends ApplicationTest{
     return root;
 
 }
-
     private String getText(){
         return ((TextArea)getRoot().lookup("#textEntry")).getText();
 }
@@ -48,7 +46,6 @@ public class DiaryControllerTest extends ApplicationTest{
     @Test
     public void testController() {
         assertNotNull(this.controller);
-        System.out.println("1");
     }
 
     @Test
@@ -56,7 +53,6 @@ public class DiaryControllerTest extends ApplicationTest{
         clickOn("#textEntry").write("Test");
         assertEquals("Test", getText());
         clickOn("#entrySubmit");
-        System.out.println("2");
     }
 
     @Test
@@ -65,7 +61,6 @@ public class DiaryControllerTest extends ApplicationTest{
         clickOn("#textEntry").write("Test2");
         clickOn("#entrySubmit");
         assertEquals("Test2", getText());
-        System.out.println("3");
     }
 
     @Test
@@ -74,20 +69,17 @@ public class DiaryControllerTest extends ApplicationTest{
         clickOn("#textEntry").write(" Test3");
         assertEquals("Test2 Test3", getText());
         clickOn("#entrySubmit");
-        System.out.println("4");
     }
 
     @Test
     public void testBackToCurrentDate(){
         assertNotNull(getText());
-        System.out.println("5");
     }
 
     @Test
     public void testBackToDifferDate(){
         clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10/11/2021"+"\n");
         assertNotNull(getText());
-        System.out.println("6");
     }
 
 }
