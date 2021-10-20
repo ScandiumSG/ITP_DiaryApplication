@@ -3,17 +3,17 @@ package diary.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.AfterEach;
+import java.io.File;
+
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import javafx.scene.control.DatePicker;
-import java.io.File;
 
 public class DiaryControllerTest extends ApplicationTest{
 
@@ -21,27 +21,23 @@ public class DiaryControllerTest extends ApplicationTest{
     private Parent root;
     private final File testFilePath = new File("/workspace/gr2172/diary/ui/src/main/resources/DiaryEntries.json");
 
-    @AfterEach
-    public void deleteJson(){
-        testFilePath.delete();
-    }
     @Override
-    public void start(final Stage stage) throws Exception {
+    public void start(final Stage stage) throws Exception{
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("Diary.fxml"));
         this.root = loader.load();
         this.controller = loader.getController();
         stage.setScene(new Scene(root));
         stage.show();
-  }
+    }
 
-  public Parent getRoot()
-{
-    return root;
+    public Parent getRoot()
+    {
+        return root;
 
-}
+    }
     private String getText(){
         return ((TextArea)getRoot().lookup("#textEntry")).getText();
-}
+    }
 
     @Test
     public void testController() {
@@ -61,11 +57,6 @@ public class DiaryControllerTest extends ApplicationTest{
         clickOn("#textEntry").write("Test2");
         clickOn("#entrySubmit");
         assertEquals("Test2", getText());
-    }
-
-    @Test
-    public void testMoreText(){
-        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10/11/2021"+"\n");
         clickOn("#textEntry").write(" Test3");
         assertEquals("Test2 Test3", getText());
         clickOn("#entrySubmit");
@@ -74,12 +65,14 @@ public class DiaryControllerTest extends ApplicationTest{
     @Test
     public void testBackToCurrentDate(){
         assertNotNull(getText());
+        testFilePath.delete();
     }
 
     @Test
     public void testBackToDifferDate(){
         clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10/11/2021"+"\n");
         assertNotNull(getText());
+        testFilePath.delete();
     }
 
 }
