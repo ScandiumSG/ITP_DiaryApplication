@@ -54,17 +54,11 @@ mvn javafx:run -f ui/pom.xml
 
 ## Diary
 
-As an imagianry and emotional person is collecting my thoughts somewhere necessary. With that would I like to write down my thought in  order to look back at them in the future.
+As an imaginative and emotional person I find it necessary to collect my thoughts somewhere. That's why I need some place where I can write down my thoughts and look back at them in the future.
 
-The product offers teh ability to create a new page for the curent date. This page is blank and ready for new content.
-
-Users are able to choose dates from the past in order to read earlier content written by themself.
+That's why i would like a diary capable of storing my thoughts over extended periods of time, with the option to view and edit them later.
 
 ### Important for the user
-    - When writing a new page is a wish: Visible button to create a new page.
-    - If the user wishes to read old content: Visible area to set a suggested date.
-
-
-
-
+    - The submit button saves your current entry to the selected date. (Today by default)
+    - Use the datepicker to edit or read the entry for a different date.
 
