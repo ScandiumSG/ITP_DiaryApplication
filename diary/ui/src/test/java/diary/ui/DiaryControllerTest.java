@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -19,7 +21,7 @@ public class DiaryControllerTest extends ApplicationTest{
 
     private DiaryController controller;
     private Parent root;
-    private final File testFilePath = new File("/workspace/gr2172/diary/ui/src/main/resources/DiaryEntries.json");
+    private final static File testFilePath = new File("src/main/resources/DiaryEntries.json");
 
     @Override
     public void start(final Stage stage) throws Exception{
@@ -28,6 +30,14 @@ public class DiaryControllerTest extends ApplicationTest{
         this.controller = loader.getController();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    @BeforeAll
+    public static void delteFileIfExists(){
+        if(testFilePath.exists()){
+            testFilePath.delete();
+        }
+        else;
     }
 
     public Parent getRoot()
@@ -73,6 +83,14 @@ public class DiaryControllerTest extends ApplicationTest{
         clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10/11/2021"+"\n");
         assertNotNull(getText());
         testFilePath.delete();
+    }
+
+    @AfterAll
+    public static void deleteIfStillExists(){
+        if(testFilePath.exists()){
+            testFilePath.delete();
+        }
+        else;
     }
 
 }
