@@ -22,19 +22,23 @@ The root-folder of the project is the toplevel of the repository. Because of thi
 Here's an illustration of how it would look, for now.
 <br/>
 
-![illustration 1](Illustrasjon_1.jpg)
+![illustration 1](docs/Illustrasjon_1.jpg)
 
 <br/>
 
-# How to build and run applicaiton
+Here's an illustration of the current architecture:
+<br/>
+
+![Architecture.png](docs/release2/Architecture.png)
+
+# How to build and run application
 This project utilize maven to build and run the code.
 Build the project by using `mvn clean install` inside the diary folder, then the UI can be initialized using the `mvn javafx:run -f ui/pom.xml` command.
 
 ## Running the application
 ### **Gitpod**
-Gitpod is configured to automatically select the diary directory, application will run using the following:
+Gitpod is configured to automatically select the diary directory and run `mvn clean install`, application will run using the following:
 ~~~
-mvn clean install
 mvn javafx:run -f ui/pom.xml
 ~~~
 
