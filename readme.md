@@ -14,27 +14,30 @@ Welcome to the project of group 2172 Fall 2021.
 
 <br/>
 <br/>
-This project creates a simple diary-application that allowes the user to write diary entries, save and load them.
+This project creates a simple diary-application that allows the user to write diary entries, save and load them. 
 <br/>
-The root-folder of the project is the toplevel of the repository. Because of this we have combined the two README-files.
+The root-folder of the project is the top level of the repository. Because of this we have combined the two README-files. 
 <br/>
 
 Here's an illustration of how it would look, for now.
 <br/>
 
-![illustration 1](Illustrasjon_1.jpg)
+![illustration 1](docs/Illustrasjon_1.jpg)
 
 <br/>
+Here's an illustration of the current architecture:
+<br/>
 
-# How to build and run applicaiton
-This project utilize maven to build and run the code.
+![Architecture.png](docs/release2/Architecture.png)
+
+# How to build and run application
+This project utilize maven to build and run the code. 
 Build the project by using `mvn clean install` inside the diary folder, then the UI can be initialized using the `mvn javafx:run -f ui/pom.xml` command.
 
 ## Running the application
 ### **Gitpod**
-Gitpod is configured to automatically select the diary directory, application will run using the following:
+Gitpod is configured to automatically select the diary directory and run `mvn clean install`, application will run using the following:
 ~~~
-mvn clean install
 mvn javafx:run -f ui/pom.xml
 ~~~
 
@@ -46,22 +49,15 @@ mvn clean install
 mvn javafx:run -f ui/pom.xml
 ~~~
 
-# Brukerhistorier
+# Userhistory
 
 ## Diary
 
-Som en person med mange tanker ønsker jeg å holde oversikt over alle tanker og føleleser jeg opplever om dagen. Derfor må jeg skrive ned alt jeg føler et sted for å kunne se tilbake på hendelser i livet mitt.
+As an imaginative and emotional person I find it necessary to collect my thoughts somewhere. That's why I need some place where I can write down my thoughts and look back at them in the future.
 
-Brukeren ønsker å kunne velge å skrive om dagens tanker og historie. Da er det fint om man kan velge en ny, blank side til å skrive på.
+That's why I would like a diary capable of storing my thoughts over extended periods of time, with the option to view and edit them later.
 
-Brukeren liker også å kunne gå tilbake for å se hva han eller hun følte en dag. Da er det greit å kunne bla tilbake.
-
-### Viktig for brukeren
-    - når en vil skrive skriver: Tydelig knapp for å lage en ny side.
-    - om en vil se tilbake: Tydelig knapp for å bla tilbake med markering for hvilken dag det er.
-
-
-
-
-
+### Important for the user
+    - The submit button saves your current entry to the selected date. (Today by default)
+    - Use the datepicker to edit or read the entry for a different date.
 
