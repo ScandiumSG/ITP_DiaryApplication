@@ -14,9 +14,9 @@ Welcome to the project of group 2172 Fall 2021.
 
 <br/>
 <br/>
-This project creates a simple diary-application that allowes the user to write diary entries, save and load them.
+This project creates a simple diary-application that allows the user to write diary entries, save and load them. 
 <br/>
-The root-folder of the project is the toplevel of the repository. Because of this we have combined the two README-files.
+The root-folder of the project is the top level of the repository. Because of this we have combined the two README-files. 
 <br/>
 
 Here's an illustration of how it would look, for now.
@@ -25,14 +25,13 @@ Here's an illustration of how it would look, for now.
 ![illustration 1](docs/Illustrasjon_1.jpg)
 
 <br/>
-
 Here's an illustration of the current architecture:
 <br/>
 
 ![Architecture.png](docs/release2/Architecture.png)
 
 # How to build and run application
-This project utilize maven to build and run the code.
+This project utilize maven to build and run the code. 
 Build the project by using `mvn clean install` inside the diary folder, then the UI can be initialized using the `mvn javafx:run -f ui/pom.xml` command.
 
 ## Running the application
@@ -56,7 +55,7 @@ mvn javafx:run -f ui/pom.xml
 
 As an imaginative and emotional person I find it necessary to collect my thoughts somewhere. That's why I need some place where I can write down my thoughts and look back at them in the future.
 
-That's why i would like a diary capable of storing my thoughts over extended periods of time, with the option to view and edit them later.
+That's why I would like a diary capable of storing my thoughts over extended periods of time, with the option to view and edit them later.
 
 ### Important for the user
     - The submit button saves your current entry to the selected date. (Today by default)
