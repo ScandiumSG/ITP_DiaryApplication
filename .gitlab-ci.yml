@@ -24,10 +24,7 @@ BranchTests:
     stage: test
     script:
         - cd diary
-        - mvn verify -DskipUiTests=true
-    except:
-        - master
-        - merge_requests
+        - mvn test -DskipUiTests=true
 
 jacocoReport:
     # Jacoco added based on https://docs.gitlab.com/ee/user/project/merge_requests/test_coverage_visualization.html
