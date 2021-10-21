@@ -30,16 +30,15 @@ public class DiaryController {
     @FXML
     private DatePicker dateInput;
 
-    
+
     /**
-     * Initializes the diary to display todays date.
-     * Also sets the DatePickers date format
+     * Sets the DatePickers date format and
+     * initializes the diary to display todays date.
      */
     @FXML
     public void initialize() {
         setDateConverter();
-        Entry entry = EntryFromJSON.read(Entry.parseCurrentTime());
-        updateGraphics(entry);
+        updateGraphics(EntryFromJSON.read(Entry.parseCurrentTime()));
     }
 
 
@@ -48,7 +47,7 @@ public class DiaryController {
      */
     @FXML
     public void saveDateEntry() {
-        Entry entry = new Entry(getDisplayedText(), getChosenDate());
+        Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
             EntryToJSON.write(entry);
@@ -64,52 +63,30 @@ public class DiaryController {
      */
     @FXML
     public void retrieveDateEntry() {
-        if (dateInput.getValue() != null) {
-            String date = dateFormatConverter(dateInput.getValue().toString());
+        String date = getDateInput();
 
-            Entry entry = EntryFromJSON.read(date);
+        Entry entry = EntryFromJSON.read(date);
 
-            if (entry == null) {
-                entry = new Entry("", date);
-            }
-            updateGraphics(entry);
+        if (entry == null) {
+            entry = new Entry("", date);
         }
+        updateGraphics(entry);
     }
 
 
     /**
-     * Converts datestring from yyyy-MM-dd to dd-MM-yyyy format.
-     * @param date A datestring in format yyyy-MM-dd.
-     * @return datestring of the dd-MM-yyyy format.
+     * Gets the chosen date from the datepicker. Returns todays date if the datepicker is empty.
+     * @return Datestring on the dd-MM-yyyy format.
      */
-    private String dateFormatConverter(final String date) {
-        String[] dates = date.split("-");
-
-        return dates[2] + "-" + dates[1] + "-" + dates[0];
-    }
-
-
-    /**
-     * @return the currently displayed text
-     */
-    private String getDisplayedText() {
-        return textEntry.getText();
-    }
-
-
-    /**
-     * @return the currently displayed date
-     */
-    private String getChosenDate() {
-        final int minDateLength = 3;
-        String[] datelabel = dateId.getText().split(" ");
-
-        if (datelabel.length < minDateLength) {
-            throw new IllegalStateException(
-                "Something went wrong while accessing the current date");
+    private String getDateInput(){
+        if  (dateInput.getValue() == null){
+            return Entry.parseCurrentTime();
         }
 
-        return datelabel[2];
+        String date = dateInput.getValue().toString();
+        String[] dateSplit = date.split("-");
+
+        return dateSplit[2] + "-" + dateSplit[1] + "-" + dateSplit[0];
     }
 
 
@@ -129,7 +106,7 @@ public class DiaryController {
      * which can be confusing if you're switching between different systems
      */
     private void setDateConverter(){
-        dateInput.setConverter( new StringConverter<LocalDate>() {
+        dateInput.setConverter(new StringConverter<LocalDate>() {
             String pattern = "dd-MM-yyyy";
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
 
