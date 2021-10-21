@@ -37,7 +37,6 @@ public class DiaryControllerTest extends ApplicationTest{
         if(testFilePath.exists()){
             testFilePath.delete();
         }
-        else;
     }
 
     public Parent getRoot()
@@ -63,7 +62,7 @@ public class DiaryControllerTest extends ApplicationTest{
 
     @Test
     public void testDifferentDate(){
-        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10/11/2021"+"\n");
+        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10-11-2021"+"\n");
         clickOn("#textEntry").write("Test2");
         clickOn("#entrySubmit");
         assertEquals("Test2", getText());
@@ -80,7 +79,7 @@ public class DiaryControllerTest extends ApplicationTest{
 
     @Test
     public void testBackToDifferDate(){
-        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10/11/2021"+"\n");
+        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10-11-2021"+"\n");
         assertNotNull(getText());
         testFilePath.delete();
     }
@@ -90,9 +89,7 @@ public class DiaryControllerTest extends ApplicationTest{
         if(testFilePath.exists()){
             testFilePath.delete();
         }
-        else;
     }
-
 }
 
 
