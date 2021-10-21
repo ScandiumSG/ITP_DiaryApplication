@@ -24,7 +24,7 @@ BranchTests:
     stage: test
     script:
         - cd diary
-        - mvn verify
+        - mvn verify -DskipUiTests=true
     except:
         - master
         - merge_requests
@@ -34,7 +34,7 @@ jacocoReport:
     stage: test
     script:
         - cd diary
-        - mvn $MAVEN_CLI_OPTS clean verify
+        - mvn $MAVEN_CLI_OPTS clean verify -DskipUiTests=true
         - cat testing/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
     artifacts:
         paths:
