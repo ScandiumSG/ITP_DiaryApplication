@@ -24,17 +24,14 @@ BranchTests:
     stage: test
     script:
         - cd diary
-        - mvn verify
-    except:
-        - master
-        - merge_requests
+        - mvn test -DskipUiTests=true
 
 jacocoReport:
     # Jacoco added based on https://docs.gitlab.com/ee/user/project/merge_requests/test_coverage_visualization.html
     stage: test
     script:
         - cd diary
-        - mvn $MAVEN_CLI_OPTS clean verify
+        - mvn $MAVEN_CLI_OPTS clean verify -DskipUiTests=true
         - cat testing/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
     artifacts:
         paths:
