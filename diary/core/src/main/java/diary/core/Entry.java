@@ -87,8 +87,4 @@ public class Entry {
     public final String getDate() {
         return (this.entryDate);
     }
-
-    public Entry as(Entry next) {
-        return null;
-    }
 }
