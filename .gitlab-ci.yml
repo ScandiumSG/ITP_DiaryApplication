@@ -40,6 +40,7 @@ jacocoReport:
     allow_failure: false
     only:
         - master
+        - develop
         - merge_requests
 
 coverage-Jacoco:
@@ -60,4 +61,5 @@ coverage-Jacoco:
     interruptible: true
     only:
         - master
+        - develop
         - merge_requests
