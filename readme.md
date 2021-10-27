@@ -66,9 +66,9 @@
   </ol>
 </details>
 
-  <p align="right">
+  <div align="right">
     <a href="#top">back to top</a>
-  </p>
+  </div>
 
 <!-- ABOUT THE PROJECT -->
 
@@ -105,7 +105,10 @@ Interface:
 
 -   [Maven](https://maven.apache.org/)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+ <div align="right">
+    <a href="#top">back to top</a>
+  </div>
+
 
 <!-- GETTING STARTED -->
 
@@ -166,7 +169,10 @@ Theres no need to set the environment to use the application as it is already se
 mvn javafx:run -f ui/pom.xml
 ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+ <div align="right">
+    <a href="#top">back to top</a>
+  </div>
+
 
 <!-- USAGE EXAMPLES -->
 
@@ -205,7 +211,10 @@ That's why I would like a diary capable of storing my thoughts over extended per
 -   The submit button saves your current entry to the selected date. (Today by default)
 -   Use the datepicker to edit or read the entry for a different date.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+ <div align="right">
+    <a href="#top">back to top</a>
+  </div>
+
 
 <!-- Work habits -->
 
@@ -231,7 +240,10 @@ The prefered working method is pair-programming or pair-review before attempting
 
 Information about guidelines for writing tests, compliance with checkstyle, and preferred test coverage can be found in the specific project readme within the diary directory.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+ <div align="right">
+    <a href="#top">back to top</a>
+  </div>
+
 <!-- CONTACT -->
 
 ## Contact
@@ -255,7 +267,10 @@ Information about guidelines for writing tests, compliance with checkstyle, and 
 
 Project Link: [https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+ <div align="right">
+    <a href="#top">back to top</a>
+  </div>
+
 
 <!-- ACKNOWLEDGMENTS -->
 
@@ -272,4 +287,7 @@ These sources have actively been used during this project. Therefor would we lov
 -   [Maven](https://maven.apache.org/)
 -   [GSON](https://github.com/google/gson/blob/master/UserGuide.md)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+ <div align="right">
+    <a href="#top">back to top</a>
+  </div>
+
