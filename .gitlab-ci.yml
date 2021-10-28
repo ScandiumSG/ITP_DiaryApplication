@@ -52,6 +52,8 @@ premerge_jacoco:
     retry:
         max: 1
     only:   
+        refs:
+            - merge_requests
         variables:
             - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
 
@@ -73,6 +75,8 @@ premerge_coberature:
     retry:
         max: 1
     only:   
+        refs:
+            - merge_requests
         variables:
             - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
 
