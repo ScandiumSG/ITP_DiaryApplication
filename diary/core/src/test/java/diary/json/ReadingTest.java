@@ -10,55 +10,52 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 
 public class ReadingTest {
-
-    private final static File testFilePath = new File("src/main/resources/TestEntries.json");
+    private final static String testFileName = "TestEntires";
+    private final static File testFilePath = new File("src/main/resources/" + testFileName + ".json");
 
     @BeforeAll
     public static void deleteFileIfExists() {
-        if(testFilePath.exists()){
+        if (testFilePath.exists()) {
             testFilePath.delete();
-        }
-        else;
+        } else
+            ;
     }
 
     @Test
     public void testReading() throws IOException {
         // Check if a non-existant filepath will return a empty list object
-        List<Entry> output = EntryFromJSON.read(testFilePath);
+        List<Entry> output = EntryFromJSON.read(testFileName);
         Assertions.assertTrue(output.isEmpty());
         Assertions.assertTrue(output instanceof List<Entry>);
 
         // Check if entry's can be successfully written and read
         Entry entry = new Entry("Testinnhold_B", "11-11-2011");
-        EntryToJSON.write(entry, testFilePath);
-        Entry readEntry = EntryFromJSON.read(entry.getDate(), testFilePath);
+        EntryToJSON.write(testFileName, entry);
+        Entry readEntry = EntryFromJSON.read(testFileName, entry.getDate());
         Assertions.assertEquals(entry.getContent(), readEntry.getContent());
         Assertions.assertEquals(entry.getDate(), readEntry.getDate());
 
         // Check if writing a entry on same date as previous entry successfully
         // overwrites
         Entry overwriteEntry = new Entry("Testinnhold_C", "11-11-2011");
-        EntryToJSON.write(overwriteEntry, testFilePath);
-        Entry readOverwriteEntry = EntryFromJSON.read(overwriteEntry.getDate(), testFilePath);
-        Assertions.assertEquals(
-            overwriteEntry.getContent(), readOverwriteEntry.getContent());
-        Assertions.assertEquals(
-            overwriteEntry.getDate(), readOverwriteEntry.getDate());
-
-        }
+        EntryToJSON.write(testFileName, overwriteEntry);
+        Entry readOverwriteEntry = EntryFromJSON.read(testFileName, overwriteEntry.getDate());
+        Assertions.assertEquals(overwriteEntry.getContent(), readOverwriteEntry.getContent());
+        Assertions.assertEquals(overwriteEntry.getDate(), readOverwriteEntry.getDate());
+    }
 
     @Test
     public void testReadEmptyFile() throws IOException {
-        Entry emptyFile = EntryFromJSON.read("15-10-1990", testFilePath);
+        Entry emptyFile = EntryFromJSON.read(testFileName, "15-10-1990");
         Assertions.assertEquals("", emptyFile.getContent());
         Assertions.assertEquals("15-10-1990", emptyFile.getDate());
     }
 
     @AfterAll
-    public static void deleteIfStillExists(){
-        if(testFilePath.exists()){
+    public static void deleteIfStillExists() {
+        if (testFilePath.exists()) {
             testFilePath.delete();
-        }
-        else;
+        } else
+            ;
     }
 }

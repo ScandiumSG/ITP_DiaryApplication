@@ -13,9 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.util.StringConverter;
 
-
-
 public class DiaryController {
+    private static final String tempUserName = "per";
 
     @FXML
     private TextArea textEntry;
@@ -29,17 +28,15 @@ public class DiaryController {
     @FXML
     private DatePicker dateInput;
 
-
     /**
-     * Sets the DatePickers date format and
-     * initializes the diary to display todays date.
+     * Sets the DatePickers date format and initializes the diary to display todays
+     * date.
      */
     @FXML
     public void initialize() {
         setDateConverter();
-        updateGraphics(EntryFromJSON.read(Entry.parseCurrentTime()));
+        updateGraphics(EntryFromJSON.read(tempUserName, Entry.parseCurrentTime()));
     }
-
 
     /**
      * Saves the current page context as a json entry.
@@ -49,22 +46,21 @@ public class DiaryController {
         Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
-            EntryToJSON.write(entry);
+            EntryToJSON.write(tempUserName, entry);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
     /**
-     * Updates the page context using the values linked to
-     * the currently selected date on dateInput.
+     * Updates the page context using the values linked to the currently selected
+     * date on dateInput.
      */
     @FXML
     public void retrieveDateEntry() {
         String date = getDateInput();
 
-        Entry entry = EntryFromJSON.read(date);
+        Entry entry = EntryFromJSON.read(tempUserName, date);
 
         if (entry == null) {
             entry = new Entry("", date);
@@ -72,13 +68,14 @@ public class DiaryController {
         updateGraphics(entry);
     }
 
-
     /**
-     * Gets the chosen date from the datepicker. Returns todays date if the datepicker is empty.
+     * Gets the chosen date from the datepicker. Returns todays date if the
+     * datepicker is empty.
+     * 
      * @return Datestring on the dd-MM-yyyy format.
      */
     private String getDateInput() {
-        if  (dateInput.getValue() == null) {
+        if (dateInput.getValue() == null) {
             return Entry.parseCurrentTime();
         }
 
@@ -88,9 +85,9 @@ public class DiaryController {
         return dateSplit[2] + "-" + dateSplit[1] + "-" + dateSplit[0];
     }
 
-
     /**
      * Sets the context of the diary page to match a given entry.
+     * 
      * @param entry The entry to show
      */
     private void updateGraphics(final Entry entry) {
@@ -98,11 +95,10 @@ public class DiaryController {
         textEntry.setText(entry.getContent());
     }
 
-
     /**
      * Updates the datepicker to only accept input date on the format "dd-MM-yyyy".
-     * Datepicker uses the windows system date format by default,
-     * which can be confusing if you're switching between different systems
+     * Datepicker uses the windows system date format by default, which can be
+     * confusing if you're switching between different systems
      */
     private void setDateConverter() {
         dateInput.setConverter(new StringConverter<LocalDate>() {
@@ -113,7 +109,8 @@ public class DiaryController {
                 dateInput.setPromptText(pattern.toLowerCase());
             }
 
-            @Override public String toString(LocalDate date) {
+            @Override
+            public String toString(LocalDate date) {
                 if (date != null) {
                     return dateFormatter.format(date);
                 } else {
@@ -121,7 +118,8 @@ public class DiaryController {
                 }
             }
 
-            @Override public LocalDate fromString(String string) {
+            @Override
+            public LocalDate fromString(String string) {
                 if (string != null && !string.isEmpty()) {
                     return LocalDate.parse(string, dateFormatter);
                 } else {
