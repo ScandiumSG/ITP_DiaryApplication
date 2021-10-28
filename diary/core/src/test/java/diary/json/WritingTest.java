@@ -27,6 +27,12 @@ public class WritingTest {
         Assertions.assertTrue(testFilePath.exists());
     }
 
+    @Test
+    public void testGetJsonFile() {
+        Object output = EntryToJSON.getJsonFile(testFileName);
+        Assertions.assertTrue(output instanceof File);
+    }
+
     @AfterAll
     public static void deleteIfStillExists() {
         if (testFilePath.exists()) {
