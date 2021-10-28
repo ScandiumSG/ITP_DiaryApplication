@@ -20,8 +20,7 @@ import java.util.List;
  */
 
 public final class EntryToJSON {
-
-    private static File filePath = new File("src/main/resources/DiaryEntries.json");
+    private static String baseFilePath = "src/main/resources/";
 
     // Use GSON to read/write the JSON files
     // https://github.com/google/gson
@@ -30,46 +29,30 @@ public final class EntryToJSON {
         // Not called
     }
 
-
-    /**
-     * EntryToJSON.write() will only write the content of a single entry to a file,
-     * either appending new content or overwriting existing content at the specified
-     * date.
-     * @param entry A diary.Entry object to be added to the users .JSON storage file
-     *              is deleted after completed write.
-     * @param overrideFile new testfilepath.
-     * @throws IOException .JSON location does not exist.
-     */
-    public static void write(final Entry entry, final File overrideFile) throws IOException {
-        File orgFilePath = filePath;
-        filePath = overrideFile;
-        write(entry);
-
-        filePath = orgFilePath;
-    }
-
     /**
      * EntryToJSON.write() will only write the content of a single entry to a file,
      * either appending new content or overwriting existing content at the specified
      * date.
      *
-     * @param entry A diary.Entry object to be added to the users .JSON storage file
-     *              is deleted after completed write.
+     * @param fileName A string of the name of diary/.json file to be written to.
+     * @param entry    A diary.Entry object to be added to the users .JSON storage
+     *                 file is deleted after completed write.
      * @throws IOException .JSON location does not exist.
      */
-    public static void write(final Entry entry) throws IOException {
+    public static void write(final String fileName, final Entry entry) throws IOException {
 
         List<Entry> entries = new ArrayList<Entry>();
+        File fullFilePath = new File(baseFilePath + fileName + ".json");
 
-        if (!filePath.exists()) {
-            if (!filePath.createNewFile()) {
-                throw new IOException("Could not find chosen path to " + filePath.getName());
+        if (!fullFilePath.exists()) {
+            if (!fullFilePath.createNewFile()) {
+                throw new IOException("Could not find chosen path to " + fullFilePath.getName());
             }
         }
 
-        entries.addAll(EntryFromJSON.read());
+        entries.addAll(EntryFromJSON.read(fileName));
 
-        Boolean del = filePath.delete();
+        Boolean del = fullFilePath.delete();
 
         if (entries.size() > 0) {
             entries.removeIf(d -> d.getDate().equals(entry.getDate()));
@@ -79,7 +62,7 @@ public final class EntryToJSON {
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         // FileWriter fw = new FileWriter(jsonFile, false);
-        FileOutputStream sm = new FileOutputStream(filePath);
+        FileOutputStream sm = new FileOutputStream(fullFilePath);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
         gson.toJson(entries, bw);
         sm.flush();
@@ -88,7 +71,7 @@ public final class EntryToJSON {
         bw.close();
     }
 
-    public static File getJsonFile() {
-        return filePath;
+    public static File getJsonFile(final String fileName) {
+        return new File(baseFilePath + fileName + ".json");
     }
 }
