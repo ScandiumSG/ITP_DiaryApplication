@@ -57,13 +57,14 @@ public class Entry {
 
         String[] date = input.split("-", splitAmount);
 
+        // Check to make sure numerical value and 2 digits
         for (int i = 0; i < dayAndMonthLength; i++) {
-            if (isNumerical(date[i]) && date[i].length() != dayAndMonthLength) {
+            if (!isNumerical(date[i]) || date[i].length() != dayAndMonthLength) {
                 return false;
             }
         }
 
-        if (isNumerical(date[2]) && date[2].length() != maxDayMonthLength) {
+        if (!isNumerical(date[2]) || date[2].length() != maxDayMonthLength) {
             return false;
         }
 
