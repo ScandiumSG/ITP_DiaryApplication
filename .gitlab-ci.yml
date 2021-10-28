@@ -29,8 +29,6 @@ JUnitTests:
     script:
         - cd diary
         - mvn test -DskipUiTests=true
-    needs:
-        
     retry: 
         max: 2
         when:
@@ -52,7 +50,7 @@ premerge_jacoco:
     interruptible: true
     allow_failure: false
     retry:
-        max: 2
+        max: 1
     only:   
         variables:
             - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
@@ -64,7 +62,6 @@ premerge_coberature:
     stage: visualize
     image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.7
     script:
-        # convert report from jacoco to cobertura, using relative project path
         - python /opt/cover2cover.py diary/testing/target/site/jacoco-aggregate/jacoco.xml $CI_PROJECT_DIR/src/main/java/ > diary/testing/target/site/cobertura.xml
     needs: [premerge_jacoco]
     dependencies:
@@ -74,11 +71,10 @@ premerge_coberature:
             cobertura: diary/testing/target/site/cobertura.xml
     interruptible: true
     retry:
-        max: 2
-    only:
-        - master
-        - develop
-        - merge_requests
+        max: 1
+    only:   
+        variables:
+            - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
 
 jacocoReport:
     # Jacoco added based on https://docs.gitlab.com/ee/user/project/merge_requests/test_coverage_visualization.html
