@@ -92,6 +92,8 @@ jacocoReport:
             - diary/testing/target/site/jacoco-aggregate/
     interruptible: true
     allow_failure: false
+    retry:
+        max: 2
     only:
         - master
         - develop
@@ -112,6 +114,8 @@ coberatureReport:
         reports:
             cobertura: diary/testing/target/site/cobertura.xml
     interruptible: true
+    retry:
+        max: 2
     only:
         - master
         - develop
