@@ -1,0 +1,3 @@
+If struggling with the Tomcat extention for vscode giving error message "C:/program is not an operable program", install an earlier version of tomcat for java, 11.2 worked for me. This is because the newest version doesn't handle spaces in the path to the tomcat package directory. 
+
+For this part of the project, the build/compile command is "mvn clean package". To start the server locally with Tomcat, rightclick on the api.war file in the target directory(the one in the api module, not the one potentially in the diary folder), and select Run on Tomcat Server. After which, you can go to http://localhost:8080/api/getDiary/* and replace the starsign with the diary to retrieve. 
