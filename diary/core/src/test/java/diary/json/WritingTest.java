@@ -9,29 +9,35 @@ import diary.core.Entry;
 import java.io.IOException;
 
 public class WritingTest {
-
-    private final static File testFilePath = new File("src/main/resources/TestEntries.json");
+    private final static String testFileName = "TestEntires";
+    private final static File testFilePath = new File("src/main/resources/" + testFileName + ".json");
 
     @BeforeAll
-    public static void deleteFileIfExists(){
-        if(testFilePath.exists()){
+    public static void deleteFileIfExists() {
+        if (testFilePath.exists()) {
             testFilePath.delete();
-        }
-        else;
+        } else
+            ;
     }
 
     @Test
     public void testWriting() throws IOException {
         Entry entry = new Entry("TestFile - Should auto delete");
-        EntryToJSON.write(entry, testFilePath);
+        EntryToJSON.write(testFileName, entry);
         Assertions.assertTrue(testFilePath.exists());
     }
 
+    @Test
+    public void testGetJsonFile() {
+        Object output = EntryToJSON.getJsonFile(testFileName);
+        Assertions.assertTrue(output instanceof File);
+    }
+
     @AfterAll
-    public static void deleteIfStillExists(){
-        if(testFilePath.exists()){
+    public static void deleteIfStillExists() {
+        if (testFilePath.exists()) {
             testFilePath.delete();
-        }
-        else;
+        } else
+            ;
     }
 }
