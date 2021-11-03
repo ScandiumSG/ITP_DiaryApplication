@@ -2,40 +2,44 @@ package diary.api;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 // import java.net.HttpURLConnection;
-import java.net.URL;
 
 public final class Client {
-    private static final String charset = "UTF-8";
+    private static final Charset charset = StandardCharsets.UTF_8;
 
-    private static String inputStreamToString(InputStream inputStream){
+    private static String inputStreamToString(InputStream inputStream) {
         String responseBody = "";
-        try (Scanner scanner = new Scanner(inputStream)) {
+        try (Scanner scanner = new Scanner(inputStream, charset)) {
             responseBody += scanner.useDelimiter("\\A").next();
         }
-        responseBody.trim();
-        return responseBody;
+        return responseBody.trim();
     }
 
-    public static String sendGET(String url){
-        try{
+    public static String sendGET(String url) {
+        try {
             URLConnection connection = new URL(url).openConnection();
-            connection.setRequestProperty("Accept-Charset", charset);
+            connection.setRequestProperty("Accept-Charset", charset.toString());
             InputStream response = connection.getInputStream();
             return inputStreamToString(response);
             
-        }catch(Exception e){}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "";
     }
 
-    public static void sendPOST(String url, String content){
-        try{
+    public static void sendPOST(String url, String content) {
+        try {
             URLConnection connection = new URL(url).openConnection();
             connection.setDoOutput(true); // Triggers POST.
-            connection.setRequestProperty("Accept-Charset", charset);
-            //connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+            connection.setRequestProperty("Accept-Charset", charset.toString());
+            //connection.setRequestProperty(
+            //"Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
     
             try (OutputStream output = connection.getOutputStream()) {
                 output.write(content.getBytes(charset));
@@ -50,7 +54,9 @@ public final class Client {
             // System.out.println(inputStreamToString(response));
             // System.out.println("-----------End of request");
             // ...
-        }catch(Exception e){}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
