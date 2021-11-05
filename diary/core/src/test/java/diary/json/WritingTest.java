@@ -6,11 +6,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import diary.core.Entry;
+import diary.core.User;
 import java.io.IOException;
 
 public class WritingTest {
     private final static String testFileName = "TestEntires";
-    private final static File testFilePath = new File("src/main/resources/" + testFileName + ".json");
+    private final static User user = new User("TestUser", 2425);
+    private final static File testFilePath =
+        EntryToJSON.getJsonFile(user, testFileName);
 
     @BeforeAll
     public static void deleteFileIfExists() {
@@ -23,13 +26,13 @@ public class WritingTest {
     @Test
     public void testWriting() throws IOException {
         Entry entry = new Entry("TestFile - Should auto delete");
-        EntryToJSON.write(testFileName, entry);
+        EntryToJSON.write(user, testFileName, entry);
         Assertions.assertTrue(testFilePath.exists());
     }
 
     @Test
     public void testGetJsonFile() {
-        Object output = EntryToJSON.getJsonFile(testFileName);
+        Object output = EntryToJSON.getJsonFile(user, testFileName);
         Assertions.assertTrue(output instanceof File);
     }
 

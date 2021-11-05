@@ -18,7 +18,7 @@ public final class EntrySearch {
      * at least 60% of provided keywords .
      * @throws IOException If EntryFromJSON cannot access storage device.
      */
-    public static List<Entry> searchEntries(final String diaryName,
+    public static List<Entry> searchEntries(final User user, final String diaryName,
         String... keywords) throws IOException {
         List<Entry> matchingEntries = new ArrayList<Entry>();
         // Add all searchWords into a separate list
@@ -27,7 +27,7 @@ public final class EntrySearch {
             searchWords.add(word);
         }
         // Retrieve every entry from the specified diary
-        List<Entry> fullDiary = EntryFromJSON.read(diaryName);
+        List<Entry> fullDiary = EntryFromJSON.read(user, diaryName);
 
         double matchFit = 0;
         // Check each entry in the retrieved diary
