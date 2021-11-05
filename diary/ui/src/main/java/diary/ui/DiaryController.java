@@ -7,11 +7,14 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class DiaryController {
     private static final String tempUserName = "per";
@@ -23,7 +26,7 @@ public class DiaryController {
     private Label dateId;
 
     @FXML
-    private Button entrySubmit;
+    private Text title;
 
     @FXML
     private DatePicker dateInput;
@@ -35,6 +38,7 @@ public class DiaryController {
     @FXML
     public void initialize() {
         setDateConverter();
+        setDatePickerValue(Entry.parseCurrentTime());
         updateGraphics(EntryFromJSON.read(tempUserName, Entry.parseCurrentTime()));
     }
 
@@ -57,15 +61,52 @@ public class DiaryController {
      * date on dateInput.
      */
     @FXML
-    public void retrieveDateEntry() {
+    public void getChosenDate() {
         String date = getDateInput();
 
+        updateGraphicsByDate(date);
+    }
+
+
+    @FXML
+    public void getPreviousDate(){
+        String date = incrementDate(getDateInput(), -1);
+
+        setDatePickerValue(date);
+        updateGraphicsByDate(date);
+    }
+
+    @FXML
+    public void getNextDate(){
+        String date = incrementDate(getDateInput(), 1);
+
+        setDatePickerValue(date);
+        updateGraphicsByDate(date);
+    }
+
+    private void updateGraphicsByDate(String date){
         Entry entry = EntryFromJSON.read(tempUserName, date);
 
         if (entry == null) {
             entry = new Entry("", date);
         }
         updateGraphics(entry);
+    }
+
+    private String incrementDate(String date, int increment){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+        Calendar c = Calendar.getInstance();
+
+        try {
+            c.setTime(formatter.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        c.add(Calendar.DATE, increment);
+
+        return formatter.format(c.getTime());
     }
 
     /**
@@ -127,5 +168,13 @@ public class DiaryController {
                 }
             }
         });
+    }
+
+    private void setDatePickerValue(String date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+      
+        LocalDate localDate = LocalDate.parse(date, formatter);
+
+        dateInput.setValue(localDate);
     }
 }
