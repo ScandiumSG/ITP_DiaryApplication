@@ -15,6 +15,7 @@ import javafx.util.StringConverter;
 import java.util.Calendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javafx.scene.control.Button;
 
 public class DiaryController {
     private static final String tempUserName = "per";
@@ -30,6 +31,15 @@ public class DiaryController {
 
     @FXML
     private DatePicker dateInput;
+
+    @FXML
+    private Button entrySubmit;
+
+    @FXML
+    private Button leftButton;
+
+    @FXML
+    private Button rightButton;
 
     /**
      * Sets the DatePickers date format and initializes the diary to display todays
