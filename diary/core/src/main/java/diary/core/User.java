@@ -58,8 +58,10 @@ public class User {
 
     /**
      * A getter method for the full ID of the user. This method combines the
-     * getters for username and user-pin.
-     * @return A string of username and user-pin separated by a "+".
+     * getters for username and user-pin. Any spaces in the username will be
+     * replaced by "_".
+     * @return A string of username and user-pin separated by a "+". Spaces
+     * in username replaced by "_".
      */
     public String getUserID() {
         return this.userName + "+" + String.valueOf(getUserPin());
