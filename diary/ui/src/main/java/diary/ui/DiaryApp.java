@@ -9,13 +9,16 @@ import javafx.stage.Stage;
 
 public class DiaryApp extends Application {
 
+    public static DiaryApp diaryApp;
+
+    private Stage stage;
+
     @Override
     public final void start(final Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-            this.getClass().getResource("Diary.fxml"));
-        Parent parent = fxmlLoader.load();
-        stage.setScene(new Scene(parent));
-        stage.show();
+        this.stage = stage;
+        diaryApp = this;
+
+        changeScene("Login.fxml");
     }
 
     /**
@@ -24,5 +27,13 @@ public class DiaryApp extends Application {
      */
     public static void main(final String[] args) {
         launch();
+    }
+
+    public void changeScene(String sceneName) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(
+            this.getClass().getResource(sceneName));
+        Parent parent = fxmlLoader.load();
+        stage.setScene(new Scene(parent));
+        stage.show();
     }
 }

@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import javafx.scene.control.Button;
 
 public class DiaryController {
-    private static final String tempUserName = "per";
+    private static String userName;
 
     @FXML
     private TextArea textEntry;
@@ -47,9 +47,17 @@ public class DiaryController {
      */
     @FXML
     public void initialize() {
+        if (userName == null || userName == ""){
+            throw new IllegalStateException("No username has been selected");
+        }
+
         setDateConverter();
         setDatePickerValue(Entry.parseCurrentTime());
-        updateGraphics(EntryFromJSON.read(tempUserName, Entry.parseCurrentTime()));
+        updateGraphics(EntryFromJSON.read(userName, Entry.parseCurrentTime()));
+    }
+
+    public static void setUsername(String name){
+        userName = name;
     }
 
     /**
@@ -60,7 +68,7 @@ public class DiaryController {
         Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
-            EntryToJSON.write(tempUserName, entry);
+            EntryToJSON.write(userName, entry);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,7 +103,7 @@ public class DiaryController {
     }
 
     private void updateGraphicsByDate(String date){
-        Entry entry = EntryFromJSON.read(tempUserName, date);
+        Entry entry = EntryFromJSON.read(userName, date);
 
         if (entry == null) {
             entry = new Entry("", date);
