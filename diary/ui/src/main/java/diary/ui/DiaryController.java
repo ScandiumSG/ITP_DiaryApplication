@@ -41,6 +41,9 @@ public class DiaryController {
     @FXML
     private Button rightButton;
 
+    @FXML
+    private Button logoutButton;
+
     /**
      * Sets the DatePickers date format and initializes the diary to display todays
      * date.
@@ -100,6 +103,11 @@ public class DiaryController {
 
         setDatePickerValue(date);
         updateGraphicsByDate(date);
+    }
+
+    @FXML
+    public void logout() throws IOException{
+        DiaryApp.diaryApp.changeScene("Login.fxml");
     }
 
     private void updateGraphicsByDate(String date){
