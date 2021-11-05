@@ -53,6 +53,7 @@ public class DiaryController {
         if (userName == null || userName == ""){
             throw new IllegalStateException("No username has been selected");
         }
+        setTitleText();
 
         setDateConverter();
         setDatePickerValue(Entry.parseCurrentTime());
@@ -108,6 +109,10 @@ public class DiaryController {
     @FXML
     public void logout() throws IOException{
         DiaryApp.diaryApp.changeScene("Login.fxml");
+    }
+
+    private void setTitleText(){
+        title.setText(userName + "'s diary");
     }
 
     private void updateGraphicsByDate(String date){
