@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * EntryFromJSON returns a list or specific entry from JSON.
@@ -41,15 +42,23 @@ public final class EntryFromJSON {
     public static List<Entry> read(final User user, final String fileName) throws IOException {
 
         List<Entry> readEntries = new ArrayList<Entry>();
-
-        String jsonString = retrieveJsonString(
+        File chosenFile = new File(
             PersistanceUtil.makeResourcesPathString(user, fileName));
 
+        if (!chosenFile.exists()) {
+            return readEntries;
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(
+            new InputStreamReader(
+                new FileInputStream(chosenFile), StandardCharsets.UTF_8));
+
         Gson gson = new GsonBuilder().setLenient().create();
-        Entry[] entries = gson.fromJson(jsonString, Entry[].class);
+        Entry[] entries = gson.fromJson(bufferedReader, Entry[].class);
         if (entries != null) {
             readEntries = Arrays.asList(entries);
         }
+        bufferedReader.close();
         return readEntries;
     }
 
@@ -96,7 +105,7 @@ public final class EntryFromJSON {
         BufferedReader bufferedReader = new BufferedReader(
             new InputStreamReader(new FileInputStream(chosenFile), StandardCharsets.UTF_8));
 
-        String retrievedString = bufferedReader.toString();
+        String retrievedString = bufferedReader.lines().collect(Collectors.joining());
         bufferedReader.close();
 
         return retrievedString;

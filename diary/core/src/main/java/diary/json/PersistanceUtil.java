@@ -1,14 +1,14 @@
 package diary.json;
 
+import diary.core.User;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import diary.core.User;
 
 public final class PersistanceUtil {
 
-    public static String ResourcesFilePath() {
+    public static String resourcesFilePath() {
         return "src/main/resources/";
     }
 
@@ -17,7 +17,7 @@ public final class PersistanceUtil {
     }
 
     public static String makeResourcesPathString(final String fileName) {
-        String filePath = PersistanceUtil.ResourcesFilePath()
+        String filePath = PersistanceUtil.resourcesFilePath()
             + sanitizeFilename(fileName)
             + ".json";
         return filePath;
@@ -31,20 +31,20 @@ public final class PersistanceUtil {
     }
 
     public static String makeResourcesPathString(final User user, final String fileName) {
-        String filePath = PersistanceUtil.ResourcesFilePath()
-        + user.getUserID()
-        + "+"
-        + sanitizeFilename(fileName)
-        + ".json";
+        String filePath = PersistanceUtil.resourcesFilePath()
+            + user.getUserID()
+            + "+"
+            + sanitizeFilename(fileName)
+            + ".json";
         return filePath;
     }
 
     public static String makeCurrentDirectoryPathString(final User user, final String fileName) {
         String filePath = PersistanceUtil.curDirFilePath()
-        + user.getUserID()
-        + "+"
-        + sanitizeFilename(fileName)
-        + ".json";
+            + user.getUserID()
+            + "+"
+            + sanitizeFilename(fileName)
+            + ".json";
         return filePath;
     }
 
@@ -55,14 +55,17 @@ public final class PersistanceUtil {
 
     public static List<String> getFilesStartingWith(final String fileName, boolean relPath) {
         List<String> foundFiles = new ArrayList<>();
-        File chosenDir;
-        if (relPath) {
-            chosenDir = new File(ResourcesFilePath());
-        } else {
+
+        File chosenDir = new File(resourcesFilePath());
+        if (!relPath) {
             chosenDir = new File(curDirFilePath());
         }
 
         String[] files = chosenDir.list();
+        if (files == null) {
+            return null;
+        }
+
         for (String name : files) {
             if (fileName.startsWith(name)) {
                 foundFiles.add(name);

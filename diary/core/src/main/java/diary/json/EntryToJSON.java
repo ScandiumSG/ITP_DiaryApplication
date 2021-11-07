@@ -44,7 +44,7 @@ public final class EntryToJSON {
         File writeLocation = new File(
             PersistanceUtil.makeResourcesPathString(user, fileName));
 
-        fileWrite(user, fileName,entry, writeLocation);
+        fileWrite(user, fileName, entry, writeLocation);
     }
 
     public static void write(final String fileName, final String content,
@@ -52,13 +52,13 @@ public final class EntryToJSON {
         File writeLocation;
 
         String personalInfo = fileName.substring(
-            0, fileName.lastIndexOf("+")+1);
+            0, fileName.lastIndexOf("+") + 1);
         String diaryName = fileName.substring(
-            fileName.lastIndexOf("+")+1, fileName.length());
+            fileName.lastIndexOf("+") + 1, fileName.length());
         String userName = fileName.substring(
-            0, fileName.indexOf("+")+1);
+            0, fileName.indexOf("+") + 1);
         String userPin = fileName.substring(
-            fileName.indexOf("+")+1, personalInfo.length());
+            fileName.indexOf("+") + 1, personalInfo.length());
         User user = new User(userName, Integer.valueOf(userPin));
         Entry entry = new Entry(content, date);
         if (relPath) {
@@ -101,6 +101,8 @@ public final class EntryToJSON {
     }
 
     public static File getJsonFile(final User user, final String fileName) {
-        return new File(PersistanceUtil.makeResourcesPathString(user, fileName));
+        String testString = PersistanceUtil.makeResourcesPathString(user, fileName);
+        File currentLocation = new File("");
+        return new File(currentLocation.getAbsolutePath() + "\\" + testString);
     }
 }

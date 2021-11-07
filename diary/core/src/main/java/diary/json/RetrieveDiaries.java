@@ -14,7 +14,7 @@ public final class RetrieveDiaries {
         throws IOException {
         HashMap<String, List<Entry>> foundDiaries = new HashMap<>();
 
-        File fileDir = new File(PersistanceUtil.ResourcesFilePath());
+        File fileDir = new File(PersistanceUtil.resourcesFilePath());
 
         // File.list() returns a String array of all filenames within a dir.
         String[] allLocalDiaries = fileDir.list();
