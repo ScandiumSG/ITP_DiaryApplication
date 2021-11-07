@@ -29,7 +29,7 @@ public class DiaryApp extends Application {
         launch();
     }
 
-    public void changeScene(String sceneName) throws IOException{
+    public void changeScene(String sceneName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
             this.getClass().getResource(sceneName));
         Parent parent = fxmlLoader.load();

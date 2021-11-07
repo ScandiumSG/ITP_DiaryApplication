@@ -6,16 +6,17 @@ import diary.json.EntryToJSON;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
-import javafx.util.StringConverter;
-import java.util.Calendar;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javafx.scene.control.Button;
+import javafx.util.StringConverter;
+
 
 public class DiaryController {
     private static String userName;
@@ -50,7 +51,7 @@ public class DiaryController {
      */
     @FXML
     public void initialize() {
-        if (userName == null || userName == ""){
+        if (userName == null || userName == "") {
             throw new IllegalStateException("No username has been selected");
         }
         setTitleText();
@@ -60,7 +61,7 @@ public class DiaryController {
         updateGraphics(EntryFromJSON.read(userName, Entry.parseCurrentTime()));
     }
 
-    public static void setUsername(String name){
+    public static void setUsername(String name) {
         userName = name;
     }
 
@@ -91,7 +92,7 @@ public class DiaryController {
 
 
     @FXML
-    public void getPreviousDate(){
+    public void getPreviousDate() {
         String date = incrementDate(getDateInput(), -1);
 
         setDatePickerValue(date);
@@ -99,7 +100,7 @@ public class DiaryController {
     }
 
     @FXML
-    public void getNextDate(){
+    public void getNextDate() {
         String date = incrementDate(getDateInput(), 1);
 
         setDatePickerValue(date);
@@ -107,15 +108,15 @@ public class DiaryController {
     }
 
     @FXML
-    public void logout() throws IOException{
+    public void logout() throws IOException {
         DiaryApp.diaryApp.changeScene("Login.fxml");
     }
 
-    private void setTitleText(){
+    private void setTitleText() {
         title.setText(userName + "'s diary");
     }
 
-    private void updateGraphicsByDate(String date){
+    private void updateGraphicsByDate(String date) {
         Entry entry = EntryFromJSON.read(userName, date);
 
         if (entry == null) {
@@ -124,7 +125,7 @@ public class DiaryController {
         updateGraphics(entry);
     }
 
-    private String incrementDate(String date, int increment){
+    private String incrementDate(String date, int increment) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         Calendar c = Calendar.getInstance();
@@ -201,7 +202,7 @@ public class DiaryController {
         });
     }
 
-    private void setDatePickerValue(String date){
+    private void setDatePickerValue(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
       
         LocalDate localDate = LocalDate.parse(date, formatter);
