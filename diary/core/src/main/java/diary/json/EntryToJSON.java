@@ -51,11 +51,11 @@ public final class EntryToJSON {
         File writeLocation;
 
         String personalInfo = fileName.substring(
-            0, fileName.lastIndexOf("+") + 1);
+            0, fileName.lastIndexOf("+"));
         String diaryName = fileName.substring(
             fileName.lastIndexOf("+") + 1, fileName.length());
         String userName = fileName.substring(
-            0, fileName.indexOf("+") + 1);
+            0, fileName.indexOf("+"));
         String userPin = fileName.substring(
             fileName.indexOf("+") + 1, personalInfo.length());
         User user = new User(userName, Integer.valueOf(userPin));

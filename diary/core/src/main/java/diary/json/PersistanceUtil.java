@@ -13,7 +13,8 @@ public final class PersistanceUtil {
     }
 
     public static String curDirFilePath() {
-        return "";
+        File curDirFile = new File("");
+        return curDirFile.getAbsolutePath();
     }
 
     public static String makeResourcesPathString(final String fileName) {
@@ -67,7 +68,7 @@ public final class PersistanceUtil {
         }
 
         for (String name : files) {
-            if (fileName.startsWith(name)) {
+            if (name.startsWith(fileName)) {
                 foundFiles.add(name);
             }
         }
