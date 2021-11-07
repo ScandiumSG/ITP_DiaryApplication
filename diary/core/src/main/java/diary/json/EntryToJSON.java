@@ -21,7 +21,6 @@ import java.util.List;
  */
 
 public final class EntryToJSON {
-    private static String baseFilePath = "src/main/resources/";
 
     // Use GSON to read/write the JSON files
     // https://github.com/google/gson
@@ -71,6 +70,7 @@ public final class EntryToJSON {
         fileWrite(user, diaryName, entry, writeLocation);
     }
 
+    @SuppressWarnings("unused")
     private static void fileWrite(final User user, final String fileName,
         final Entry entry, final File writeLocation) throws IOException {
         List<Entry> entries = new ArrayList<Entry>();
