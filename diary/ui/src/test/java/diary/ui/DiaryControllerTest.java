@@ -33,11 +33,13 @@ public class DiaryControllerTest extends ApplicationTest{
     }
 
     @BeforeAll
-    public static void delteFileIfExists(){
+    public static void delteFileAndSupportHeadless(){
         if(testFilePath.exists()){
             testFilePath.delete();
         }
+        DiaryApp.supportHeadless();  
     }
+
 
     public Parent getRoot()
     {
