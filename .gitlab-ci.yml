@@ -1,4 +1,4 @@
-image: krissrex/docker-java8-maven-testfxmonocle:1.0
+image: maven:latest
 
 variables:
     MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
