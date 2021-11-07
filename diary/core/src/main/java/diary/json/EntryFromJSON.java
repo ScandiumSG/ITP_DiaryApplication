@@ -21,7 +21,6 @@ import java.util.List;
  * @author Stian K. Gaustad, Lars Overskeid
  */
 public final class EntryFromJSON {
-    private static String baseFilePath = "src/main/resources/";
 
     // Use GSON to read/write the JSON files
     // https://github.com/google/gson
@@ -42,16 +41,12 @@ public final class EntryFromJSON {
     public static List<Entry> read(final User user, final String fileName) throws IOException {
 
         List<Entry> readEntries = new ArrayList<Entry>();
-        File fullFilePath = new File(baseFilePath + user.getUserID() + "+" + sanitizeFilename(fileName) + ".json");
 
-        if (!fullFilePath.exists()) {
-            return readEntries;
-        }
+        String jsonString = retrieveJsonString(
+            PersistanceUtil.makeResourcesPathString(user, fileName));
 
-        BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(fullFilePath), StandardCharsets.UTF_8));
         Gson gson = new GsonBuilder().setLenient().create();
-        Entry[] entries = gson.fromJson(bufferedReader, Entry[].class);
+        Entry[] entries = gson.fromJson(jsonString, Entry[].class);
         if (entries != null) {
             readEntries = Arrays.asList(entries);
         }
@@ -84,8 +79,26 @@ public final class EntryFromJSON {
         }
     }
 
-    private static String sanitizeFilename(final String fileName) {
-        String sanString = fileName.replace(" ", "_");
-        return sanString;
+    public static String readToString(final String fileName, boolean relPath)
+        throws IOException {
+        String filePath;
+        if (relPath) {
+            filePath = PersistanceUtil.makeResourcesPathString(fileName);
+        } else
+            filePath = PersistanceUtil.makeCurrentDirectoryPathString(fileName);
+        return retrieveJsonString(filePath);
+    }
+
+    private static String retrieveJsonString(final String fullFilePath)
+        throws IOException {
+        File chosenFile = new File(fullFilePath);
+
+        BufferedReader bufferedReader = new BufferedReader(
+            new InputStreamReader(new FileInputStream(chosenFile), StandardCharsets.UTF_8));
+
+        String retrievedString = bufferedReader.toString();
+        bufferedReader.close();
+
+        return retrievedString;
     }
 }

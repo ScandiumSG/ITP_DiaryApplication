@@ -41,29 +41,57 @@ public final class EntryToJSON {
      * @throws IOException .JSON location does not exist.
      */
     public static void write(final User user, final String fileName, final Entry entry) throws IOException {
+        File writeLocation = new File(
+            PersistanceUtil.makeResourcesPathString(user, fileName));
 
+        fileWrite(user, fileName,entry, writeLocation);
+    }
+
+    public static void write(final String fileName, final String content,
+        final String date, boolean relPath) throws IOException {
+        File writeLocation;
+
+        String personalInfo = fileName.substring(
+            0, fileName.lastIndexOf("+")+1);
+        String diaryName = fileName.substring(
+            fileName.lastIndexOf("+")+1, fileName.length());
+        String userName = fileName.substring(
+            0, fileName.indexOf("+")+1);
+        String userPin = fileName.substring(
+            fileName.indexOf("+")+1, personalInfo.length());
+        User user = new User(userName, Integer.valueOf(userPin));
+        Entry entry = new Entry(content, date);
+        if (relPath) {
+            writeLocation = new File(
+                PersistanceUtil.makeResourcesPathString(fileName));
+        } else {
+            writeLocation = new File(
+                PersistanceUtil.makeCurrentDirectoryPathString(fileName));
+        }
+        fileWrite(user, diaryName, entry, writeLocation);
+    }
+
+    private static void fileWrite(final User user, final String fileName,
+        final Entry entry, final File writeLocation) throws IOException {
         List<Entry> entries = new ArrayList<Entry>();
-        File fullFilePath = new File(baseFilePath + user.getUserID() + "+" + sanitizeFilename(fileName) + ".json");
-
-        if (!fullFilePath.exists()) {
-            if (!fullFilePath.createNewFile()) {
-                throw new IOException("Could not find chosen path to " + fullFilePath.getName());
+        if (!writeLocation.exists()) {
+            if (!writeLocation.createNewFile()) {
+                throw new IOException("Could not find chosen path to "
+                    + writeLocation.getName());
             }
         }
 
         entries.addAll(EntryFromJSON.read(user, fileName));
-
-        Boolean del = fullFilePath.delete();
+        Boolean del = writeLocation.delete();
 
         if (entries.size() > 0) {
             entries.removeIf(d -> d.getDate().equals(entry.getDate()));
         }
-
         entries.add(entry);
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         // FileWriter fw = new FileWriter(jsonFile, false);
-        FileOutputStream sm = new FileOutputStream(fullFilePath);
+        FileOutputStream sm = new FileOutputStream(writeLocation);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
         gson.toJson(entries, bw);
         sm.flush();
@@ -73,11 +101,6 @@ public final class EntryToJSON {
     }
 
     public static File getJsonFile(final User user, final String fileName) {
-        return new File(baseFilePath + user.getUserID() + "+" + sanitizeFilename(fileName) + ".json");
-    }
-
-    private static String sanitizeFilename(final String fileName) {
-        String sanString = fileName.replace(" ", "_");
-        return sanString;
+        return new File(PersistanceUtil.makeResourcesPathString(user, fileName));
     }
 }
