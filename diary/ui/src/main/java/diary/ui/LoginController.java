@@ -32,10 +32,6 @@ public class LoginController {
         String pin = pinField.getText();
 
         User user = new User(name, pin);
-        
-        if (userExists(name) && !userMatchesPin(user.getUserID())) {
-            return;
-        }
     
         DiaryController.setUser(user);
         DiaryApp.getDiaryApp().changeScene("Diary.fxml");
@@ -77,25 +73,6 @@ public class LoginController {
                 return true;
             }
         }
-        return false;
-    }
-
-    private boolean userMatchesPin(String userID) {
-        String[] diaryNames = RetrieveDiaries.getDiaryNames();
-
-        if (diaryNames == null) {
-            return false;
-        }
-
-        for (String diary : diaryNames) {
-            if (!diary.contains("+")) {
-                continue;
-            }
-            if (diary.substring(0, diary.lastIndexOf("+")).equals(userID)) {
-                return true;
-            }
-        }
-
         return false;
     }
 }

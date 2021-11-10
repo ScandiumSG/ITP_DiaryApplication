@@ -37,7 +37,7 @@ public class DiaryApp extends Application {
         stage.show();
     }
 
-        public static DiaryApp getDiaryApp() {
+    public static DiaryApp getDiaryApp() {
         return cheatMethodWillRemove();
     }
 
