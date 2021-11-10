@@ -1,7 +1,5 @@
 package diary.core;
 
-import java.lang.Object.StringUtils
-
 public class User {
     private String userName;
     private String userPin;
