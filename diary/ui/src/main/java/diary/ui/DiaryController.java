@@ -19,8 +19,8 @@ import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 public class DiaryController {
-    private static final String tempDiaryName = "diary1";
-    private static final User tempUser = new User("User1", 1234);
+    private static String diaryName = "diary1";
+    private static User user;
 
     @FXML
     private TextArea textEntry;
@@ -52,18 +52,15 @@ public class DiaryController {
      */
     @FXML
     public void initialize() {
-        if (userName.isBlank()) {
-            throw new IllegalStateException("No username has been selected");
-        }
         setTitleText();
 
         setDateConverter();
         setDatePickerValue(Entry.parseCurrentTime());
-        updateGraphics(EntryFromJSON.read(userName, Entry.parseCurrentTime()));
+        updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
     }
 
-    public static void setUsername(String name) {
-        userName = name;
+    public static void setUser(User user) {
+        DiaryController.user = user;
     }
 
     /**
@@ -74,7 +71,7 @@ public class DiaryController {
         Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
-            EntryToJSON.write(tempUser, tempDiaryName, entry);
+            EntryToJSON.write(user, diaryName, entry);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -114,11 +111,11 @@ public class DiaryController {
     }
 
     private void setTitleText() {
-        title.setText(userName + "'s diary");
+        title.setText(user.getUserName() + "'s diary");
     }
 
     private void updateGraphicsByDate(String date) {
-        Entry entry = EntryFromJSON.read(userName, date);
+        Entry entry = EntryFromJSON.read(user, diaryName, date);
 
         if (entry == null) {
             entry = new Entry("", date);

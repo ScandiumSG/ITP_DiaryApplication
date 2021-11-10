@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class WritingTest {
     private final static String testFileName = "TestEntires";
-    private final static User user = new User("TestUser", 2425);
+    private final static User user = new User("TestUser", "2425");
     private final static File testFilePath =
         EntryToJSON.getJsonFile(user, testFileName);
 

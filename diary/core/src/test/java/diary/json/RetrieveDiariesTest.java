@@ -39,11 +39,11 @@ public class RetrieveDiariesTest {
 
         String username = "testUser";
         Integer userpin = ThreadLocalRandom.current().nextInt(1000, 9999+1);
-        user = new User(username, userpin);
+        user = new User(username,  String.valueOf(userpin));
 
         String username2 = "testOtherUser";
         Integer userpin2 = ThreadLocalRandom.current().nextInt(1000, 9999+1);
-        user2 = new User(username2, userpin2);
+        user2 = new User(username2,  String.valueOf(userpin2));
 
         testFile1 = EntryToJSON.getJsonFile(user, diary1);
         testFile2 = EntryToJSON.getJsonFile(user, diary2);
@@ -73,7 +73,7 @@ public class RetrieveDiariesTest {
 
     @Test
     public void testInvalidUser() throws IOException {
-        User invalidUser = new User("S+K", 1234);
+        User invalidUser = new User("S+K", "1234");
         Entry testEntry = new Entry("test123");
         String invalidUserFileName = "invalid User Diary";
         EntryToJSON.write(invalidUser, invalidUserFileName, testEntry);
