@@ -11,8 +11,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 
 public class ReadingTest {
-    private final static String testFileName = "ReadingTest";
-    private final static User user = new User("TestUser", 2425);
+    private final static String testFileName = "TestEntires";
+    private final static User user = new User("TestUser", "2425");
     private final static File testFilePath =
         EntryToJSON.getJsonFile(user, testFileName);
 

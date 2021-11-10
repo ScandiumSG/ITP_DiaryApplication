@@ -5,18 +5,22 @@ import diary.core.User;
 import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 public class DiaryController {
-    private static final String tempDiaryName = "diary1";
-    private static final User tempUser = new User("User1", 1234);
+    private static String diaryName = "diary1";
+    private static User user;
 
     @FXML
     private TextArea textEntry;
@@ -25,10 +29,22 @@ public class DiaryController {
     private Label dateId;
 
     @FXML
-    private Button entrySubmit;
+    private Text title;
 
     @FXML
     private DatePicker dateInput;
+
+    @FXML
+    private Button entrySubmit;
+
+    @FXML
+    private Button leftButton;
+
+    @FXML
+    private Button rightButton;
+
+    @FXML
+    private Button logoutButton;
 
     /**
      * Sets the DatePickers date format and initializes the diary to display todays
@@ -36,8 +52,15 @@ public class DiaryController {
      */
     @FXML
     public void initialize() {
+        setTitleText();
+
         setDateConverter();
-        updateGraphics(EntryFromJSON.read(tempUser, tempDiaryName, Entry.parseCurrentTime()));
+        setDatePickerValue(Entry.parseCurrentTime());
+        updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
+    }
+
+    public static void setUser(User user) {
+        DiaryController.user = user;
     }
 
     /**
@@ -48,7 +71,7 @@ public class DiaryController {
         Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
-            EntryToJSON.write(tempUser, tempDiaryName, entry);
+            EntryToJSON.write(user, diaryName, entry);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,15 +82,61 @@ public class DiaryController {
      * date on dateInput.
      */
     @FXML
-    public void retrieveDateEntry() {
+    public void getChosenDate() {
         String date = getDateInput();
 
-        Entry entry = EntryFromJSON.read(tempUser, tempDiaryName, date);
+        updateGraphicsByDate(date);
+    }
+
+
+    @FXML
+    public void getPreviousDate() {
+        String date = incrementDate(getDateInput(), -1);
+
+        setDatePickerValue(date);
+        updateGraphicsByDate(date);
+    }
+
+    @FXML
+    public void getNextDate() {
+        String date = incrementDate(getDateInput(), 1);
+
+        setDatePickerValue(date);
+        updateGraphicsByDate(date);
+    }
+
+    @FXML
+    public void logout() throws IOException {
+        DiaryApp.getDiaryApp().changeScene("Login.fxml");
+    }
+
+    private void setTitleText() {
+        title.setText(user.getUserName() + "'s diary");
+    }
+
+    private void updateGraphicsByDate(String date) {
+        Entry entry = EntryFromJSON.read(user, diaryName, date);
 
         if (entry == null) {
             entry = new Entry("", date);
         }
         updateGraphics(entry);
+    }
+
+    private String incrementDate(String date, int increment) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+        Calendar c = Calendar.getInstance();
+
+        try {
+            c.setTime(formatter.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        c.add(Calendar.DATE, increment);
+
+        return formatter.format(c.getTime());
     }
 
     /**
@@ -129,5 +198,13 @@ public class DiaryController {
                 }
             }
         });
+    }
+
+    private void setDatePickerValue(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+      
+        LocalDate localDate = LocalDate.parse(date, formatter);
+
+        dateInput.setValue(localDate);
     }
 }
