@@ -9,7 +9,7 @@ import java.util.List;
 public final class PersistanceUtil {
 
     public static String resourcesFilePath() {
-        return "src/main/resources/";
+        return curDirFilePath() + "/" + "src/main/resources/";
     }
 
     public static String curDirFilePath() {
@@ -24,17 +24,17 @@ public final class PersistanceUtil {
         return filePath;
     }
 
-    public static String makeCurrentDirectoryPathString(final String fileName) {
-        String filePath = PersistanceUtil.curDirFilePath()
+    public static String makeResourcesPathString(final User user, final String fileName) {
+        String filePath = PersistanceUtil.resourcesFilePath()
+            + user.getUserID()
+            + "+"
             + sanitizeFilename(fileName)
             + ".json";
         return filePath;
     }
 
-    public static String makeResourcesPathString(final User user, final String fileName) {
-        String filePath = PersistanceUtil.resourcesFilePath()
-            + user.getUserID()
-            + "+"
+    public static String makeCurrentDirectoryPathString(final String fileName) {
+        String filePath = PersistanceUtil.curDirFilePath()
             + sanitizeFilename(fileName)
             + ".json";
         return filePath;
@@ -54,6 +54,13 @@ public final class PersistanceUtil {
         return sanString;
     }
 
+    /**
+     * A utility method to get all filesnames that STARTS with the provided string. 
+     * @param fileName String we wish all retrieved files to start with.
+     * @param relPath A boolean that switch between resources storage and root-dir storage
+     * @return List A list of strings, each string is a filename that starts with 
+     * provided fileName param.
+     */
     public static List<String> getFilesStartingWith(final String fileName, boolean relPath) {
         List<String> foundFiles = new ArrayList<>();
 

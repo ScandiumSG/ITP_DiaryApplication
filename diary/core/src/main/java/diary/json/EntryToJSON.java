@@ -101,8 +101,6 @@ public final class EntryToJSON {
     }
 
     public static File getJsonFile(final User user, final String fileName) {
-        String testString = PersistanceUtil.makeResourcesPathString(user, fileName);
-        File currentLocation = new File("");
-        return new File(currentLocation.getAbsolutePath() + "/" + testString);
+        return new File(PersistanceUtil.makeResourcesPathString(user, fileName));
     }
 }
