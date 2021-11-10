@@ -23,13 +23,7 @@ public final class RetrieveDiaries {
         throws IOException {
         HashMap<String, List<Entry>> foundDiaries = new HashMap<>();
 
-        File fileDir = new File(PersistanceUtil.resourcesFilePath());
-
-        // File.list() returns a String array of all filenames within a dir.
-        String[] allLocalDiaries = fileDir.list();
-        if (allLocalDiaries == null) {
-            return null;
-        }
+        String[] allLocalDiaries = getDiaryNames();
 
         String desiredFileString = user.getUserID();
 
@@ -45,6 +39,19 @@ public final class RetrieveDiaries {
             }
         }
         return foundDiaries;
+    }
+
+    public static String[] getDiaryNames() {
+        String baseFilePath = "src/main/resources/";
+        File fileDir = new File(baseFilePath);
+        
+        // File.list() returns a String array of all filenames within a dir.
+        String[] allLocalDiaries = fileDir.list();
+        if (allLocalDiaries == null) {
+            return null;
+        }
+
+        return allLocalDiaries;
     }
 
 

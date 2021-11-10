@@ -35,9 +35,27 @@ public class User {
         if (pin.length() != 4) {
             throw new IllegalArgumentException(
                 "Pin number must contain 4 digits");
+        } else if (!isNumeric(pin)) {
+            throw new IllegalArgumentException(
+                "Pin must only contain numbers");
         } else {
             this.userPin = pin;
         }
+    }
+
+    /**
+     * Checks if the given string only contains digits
+     * 
+     * @param str the string to check
+     * @return True if the string only contains digits. False otherwise
+     */
+    public static boolean isNumeric(String str)
+    {
+        for (char c : str.toCharArray())
+        {
+            if (!Character.isDigit(c)) return false;
+        }
+        return true;
     }
 
     /**

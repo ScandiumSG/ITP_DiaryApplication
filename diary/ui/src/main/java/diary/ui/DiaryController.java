@@ -4,14 +4,18 @@ import diary.core.Entry;
 import diary.core.User;
 import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
+import diary.json.RetrieveDiaries;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -19,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 public class DiaryController {
-    private static String diaryName = "diary1";
+    private String diaryName = "";
     private static User user;
 
     @FXML
@@ -29,7 +33,7 @@ public class DiaryController {
     private Label dateId;
 
     @FXML
-    private Text title;
+    private ComboBox<String> title;
 
     @FXML
     private DatePicker dateInput;
@@ -46,15 +50,25 @@ public class DiaryController {
     @FXML
     private Button logoutButton;
 
+    @FXML
+    private Button loadDiaryButton;
+
     /**
      * Sets the DatePickers date format and initializes the diary to display todays
      * date.
      */
     @FXML
     public void initialize() {
+        createDiaryList();
         setTitleText();
-
         setDateConverter();
+        setDatePickerValue(Entry.parseCurrentTime());
+        updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
+    }
+
+    @FXML
+    public void loadDiary() {
+        diaryName = (String) title.getValue();
         setDatePickerValue(Entry.parseCurrentTime());
         updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
     }
@@ -62,6 +76,22 @@ public class DiaryController {
     public static void setUser(User user) {
         DiaryController.user = user;
     }
+
+    public void setDiary(String diaryName) {
+        this.diaryName = diaryName;
+    }
+
+    private void createDiaryList() {
+        try {
+            HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
+            for (String name : diaries.keySet()) {
+                title.getItems().add(name);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } 
 
     /**
      * Saves the current page context as a json entry.
@@ -72,6 +102,9 @@ public class DiaryController {
 
         try {
             EntryToJSON.write(user, diaryName, entry);
+            if (!title.getItems().contains(diaryName)) {
+                title.getItems().add(diaryName);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,7 +144,11 @@ public class DiaryController {
     }
 
     private void setTitleText() {
-        title.setText(user.getUserName() + "'s diary");
+        if (diaryName.isEmpty()) {
+            diaryName = user.getUserName() + "'s diary";
+        }
+
+        title.setValue(diaryName);
     }
 
     private void updateGraphicsByDate(String date) {

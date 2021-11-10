@@ -21,22 +21,6 @@ public class DiaryApp extends Application {
         changeScene("Login.fxml");
     }
 
-    public static DiaryApp getDiaryApp() {
-        return cheatMethodWillRemove();
-    }
-
-    private static DiaryApp cheatMethodWillRemove() {
-        return DiaryApp.diaryApp;
-    }
-
-    private static void setDiaryApp(final DiaryApp app) {
-        diaryApp = app;
-    }
-
-    private void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     /**
      * Lauch method for DiaryApp.
      * @param args No input parameters
@@ -51,5 +35,21 @@ public class DiaryApp extends Application {
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
         stage.show();
+    }
+
+    public static DiaryApp getDiaryApp() {
+        return cheatMethodWillRemove();
+    }
+
+    private static DiaryApp cheatMethodWillRemove() {
+        return DiaryApp.diaryApp;
+    }
+
+    private static void setDiaryApp(final DiaryApp app) {
+        diaryApp = app;
+    }
+
+    private void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

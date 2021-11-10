@@ -19,8 +19,7 @@ public class WritingTest {
     public static void deleteFileIfExists() {
         if (testFilePath.exists()) {
             testFilePath.delete();
-        } else
-            ;
+        }
     }
 
     @Test
@@ -40,7 +39,6 @@ public class WritingTest {
     public static void deleteIfStillExists() {
         if (testFilePath.exists()) {
             testFilePath.delete();
-        } else
-            ;
+        }
     }
 }
