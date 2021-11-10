@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * EntryFromJSON returns a list or specific entry from JSON.
@@ -21,7 +22,6 @@ import java.util.List;
  * @author Stian K. Gaustad, Lars Overskeid
  */
 public final class EntryFromJSON {
-    private static String baseFilePath = "src/main/resources/";
 
     // Use GSON to read/write the JSON files
     // https://github.com/google/gson
@@ -42,19 +42,23 @@ public final class EntryFromJSON {
     public static List<Entry> read(final User user, final String fileName) throws IOException {
 
         List<Entry> readEntries = new ArrayList<Entry>();
-        File fullFilePath = new File(baseFilePath + user.getUserID() + "+" + sanitizeFilename(fileName) + ".json");
+        File chosenFile = new File(
+            PersistanceUtil.makeResourcesPathString(user, fileName));
 
-        if (!fullFilePath.exists()) {
+        if (!chosenFile.exists()) {
             return readEntries;
         }
 
         BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(fullFilePath), StandardCharsets.UTF_8));
+            new InputStreamReader(
+                new FileInputStream(chosenFile), StandardCharsets.UTF_8));
+
         Gson gson = new GsonBuilder().setLenient().create();
         Entry[] entries = gson.fromJson(bufferedReader, Entry[].class);
         if (entries != null) {
             readEntries = Arrays.asList(entries);
         }
+        bufferedReader.close();
         return readEntries;
     }
 
@@ -84,8 +88,35 @@ public final class EntryFromJSON {
         }
     }
 
-    private static String sanitizeFilename(final String fileName) {
-        String sanString = fileName.replace(" ", "_");
-        return sanString;
+    /**
+     * Retrieves the content of a JSON file as a un-interpreted string. Method intended
+     * to easy integration with REST-API.
+     * @param fileName full filename for the json file that is to be read.
+     * @param relPath Boolean, if file is located in root-dir or src/main/resources
+     * @return String A json string of the content of loaded entry.
+     * @throws IOException If no file of provided name can be read.
+     */
+    public static String readToString(final String fileName, boolean relPath)
+        throws IOException {
+        String filePath;
+        if (relPath) {
+            filePath = PersistanceUtil.makeResourcesPathString(fileName);
+        } else {
+            filePath = PersistanceUtil.makeCurrentDirectoryPathString(fileName);
+        }
+        return retrieveJsonString(filePath);
+    }
+
+    private static String retrieveJsonString(final String fullFilePath)
+        throws IOException {
+        File chosenFile = new File(fullFilePath);
+
+        BufferedReader bufferedReader = new BufferedReader(
+            new InputStreamReader(new FileInputStream(chosenFile), StandardCharsets.UTF_8));
+
+        String retrievedString = bufferedReader.lines().collect(Collectors.joining());
+        bufferedReader.close();
+
+        return retrievedString;
     }
 }

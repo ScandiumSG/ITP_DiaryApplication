@@ -72,6 +72,15 @@ public class RetrieveDiariesTest {
     }
 
     @Test
+    public void testListFilesStartingWith() {
+        List<String> foundFiles = PersistanceUtil.getFilesStartingWith(user.getUserID(), true);
+
+        Assertions.assertTrue(foundFiles.size() == 2);
+        Assertions.assertTrue(foundFiles.get(0).contains(diary1) || foundFiles.get(0).contains(diary2));
+        Assertions.assertTrue(foundFiles.get(1).contains(diary1) || foundFiles.get(1).contains(diary2));
+    }
+
+    @Test
     public void testInvalidUser() throws IOException {
         User invalidUser = new User("S+K", "1234");
         Entry testEntry = new Entry("test123");

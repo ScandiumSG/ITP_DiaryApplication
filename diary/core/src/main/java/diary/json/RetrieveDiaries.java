@@ -10,6 +10,15 @@ import java.util.List;
 
 public final class RetrieveDiaries {
 
+    /**
+     * A method to return all diary files, in the form of List of Entry, that 
+     * is associated with the provided User object.
+     * @param user The user object that is used to name associated files
+     * @return HashMap Hashmap with diary name as key and a list of all entry's
+     * within the diary as the mapped object
+     * @throws IOException If filePath is non-existant while loading entries 
+     * with EntryFromJSON.read().
+     */
     public static HashMap<String, List<Entry>> findDiaries(final User user)
         throws IOException {
         HashMap<String, List<Entry>> foundDiaries = new HashMap<>();
