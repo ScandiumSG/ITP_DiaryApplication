@@ -32,6 +32,7 @@
             <Font size="19.0" />
          </font>
       </PasswordField>
-      <Button fx:id="loginButton" layoutX="182.0" layoutY="355.0" mnemonicParsing="false" onAction="#logIn" text="Log in" />
+      <Button fx:id="loginButton" layoutX="370.0" layoutY="355.0" mnemonicParsing="false" onAction="#logIn" text="Log in" />
+      <Button fx:id="createUserButton" layoutX="182.0" layoutY="355.0" mnemonicParsing="false" onAction="#createUser" text="Create user" />
    </children>
 </Pane>

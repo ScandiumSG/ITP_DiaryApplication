@@ -35,7 +35,7 @@ public class User {
         if (pin.length() != 4) {
             throw new IllegalArgumentException(
                 "Pin number must contain 4 digits");
-        } else if (!isNumeric(pin)){
+        } else if (!isNumeric(pin)) {
             throw new IllegalArgumentException(
                 "Pin must only contain numbers");
         } else {

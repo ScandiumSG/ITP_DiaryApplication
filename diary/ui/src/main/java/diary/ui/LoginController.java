@@ -20,12 +20,20 @@ public class LoginController {
     private Button loginButton;
 
     @FXML
+    private Button createUserButton;
+
+    @FXML
     private Text title;
 
     @FXML
-    void logIn() throws IOException {
+    public void logIn() throws IOException {
         User user = new User(usernameField.getText(), pinField.getText());
         DiaryController.setUser(user);
         DiaryApp.getDiaryApp().changeScene("Diary.fxml");
+    }
+
+    @FXML
+    public void createUser() {
+        return;
     }
 }
