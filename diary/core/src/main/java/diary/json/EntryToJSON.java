@@ -52,26 +52,14 @@ public final class EntryToJSON {
      * instead of making Entry intermediate objects. Method intended to easy 
      * integration with REST-API.
      * @param fileName The filename of the file to write the content to.
-     * @param content The Entry content.
-     * @param date The Entry date.
+     * @param content The entire diary
      * @param relPath Boolean switch to send to root-dir or src/main/resources 
      * storage paths.
      * @throws IOException If EntryToJSON could not write to specified location.
      */
     public static void write(final String fileName, final String content,
-        final String date, boolean relPath) throws IOException {
-        File writeLocation;
-
-        String personalInfo = fileName.substring(
-            0, fileName.lastIndexOf("+"));
-        String diaryName = fileName.substring(
-            fileName.lastIndexOf("+") + 1, fileName.length());
-        String userName = fileName.substring(
-            0, fileName.indexOf("+"));
-        String userPin = fileName.substring(
-            fileName.indexOf("+") + 1, personalInfo.length());
-        User user = new User(userName, Integer.valueOf(userPin));
-        Entry entry = new Entry(content, date);
+        boolean relPath) throws IOException {
+            File writeLocation;
         if (relPath) {
             writeLocation = new File(
                 PersistanceUtil.makeResourcesPathString(fileName));
@@ -79,7 +67,15 @@ public final class EntryToJSON {
             writeLocation = new File(
                 PersistanceUtil.makeCurrentDirectoryPathString(fileName));
         }
-        fileWrite(user, diaryName, entry, writeLocation);
+        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+        // FileWriter fw = new FileWriter(jsonFile, false);
+        FileOutputStream sm = new FileOutputStream(writeLocation);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
+        gson.toJson(content, bw);
+        sm.flush();
+        bw.flush();
+        sm.close();
+        bw.close();
     }
 
     @SuppressWarnings("unused")
