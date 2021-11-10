@@ -15,14 +15,26 @@ public class DiaryApp extends Application {
 
     @Override
     public final void start(final Stage stage) throws IOException {
-        this.stage = stage;
-        diaryApp = this;
+        setStage(stage);
+        setDiaryApp(this);
 
         changeScene("Login.fxml");
     }
 
-    public static DiaryApp getDiaryApp(){
+    public static DiaryApp getDiaryApp() {
+        return cheatMethodWillRemove();
+    }
+
+    private static DiaryApp cheatMethodWillRemove() {
         return DiaryApp.diaryApp;
+    }
+
+    private static void setDiaryApp(final DiaryApp app) {
+        diaryApp = app;
+    }
+
+    private void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     /**
