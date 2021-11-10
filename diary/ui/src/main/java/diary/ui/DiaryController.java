@@ -68,6 +68,7 @@ public class DiaryController {
     @FXML
     public void loadDiary() {
         diaryName = (String) title.getValue();
+        setDatePickerValue(Entry.parseCurrentTime());
         updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
     }
 
