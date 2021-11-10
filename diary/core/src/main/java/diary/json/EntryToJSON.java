@@ -3,6 +3,7 @@ package diary.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diary.core.Entry;
+import diary.core.User;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,10 +40,10 @@ public final class EntryToJSON {
      *                 file is deleted after completed write.
      * @throws IOException .JSON location does not exist.
      */
-    public static void write(final String fileName, final Entry entry) throws IOException {
+    public static void write(final User user, final String fileName, final Entry entry) throws IOException {
 
         List<Entry> entries = new ArrayList<Entry>();
-        File fullFilePath = new File(baseFilePath + fileName + ".json");
+        File fullFilePath = new File(baseFilePath + user.getUserID() + "+" + sanitizeFilename(fileName) + ".json");
 
         if (!fullFilePath.exists()) {
             if (!fullFilePath.createNewFile()) {
@@ -50,7 +51,7 @@ public final class EntryToJSON {
             }
         }
 
-        entries.addAll(EntryFromJSON.read(fileName));
+        entries.addAll(EntryFromJSON.read(user, fileName));
 
         Boolean del = fullFilePath.delete();
 
@@ -71,7 +72,12 @@ public final class EntryToJSON {
         bw.close();
     }
 
-    public static File getJsonFile(final String fileName) {
-        return new File(baseFilePath + fileName + ".json");
+    public static File getJsonFile(final User user, final String fileName) {
+        return new File(baseFilePath + user.getUserID() + "+" + sanitizeFilename(fileName) + ".json");
+    }
+
+    private static String sanitizeFilename(final String fileName) {
+        String sanString = fileName.replace(" ", "_");
+        return sanString;
     }
 }

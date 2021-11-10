@@ -1,6 +1,7 @@
 package diary.ui;
 
 import diary.core.Entry;
+import diary.core.User;
 import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
 import java.io.IOException;
@@ -18,7 +19,8 @@ import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 public class DiaryController {
-    private static String userName;
+    private static final String tempDiaryName = "diary1";
+    private static final User tempUser = new User("User1", 1234);
 
     @FXML
     private TextArea textEntry;
@@ -72,7 +74,7 @@ public class DiaryController {
         Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
-            EntryToJSON.write(userName, entry);
+            EntryToJSON.write(tempUser, tempDiaryName, entry);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -143,7 +145,7 @@ public class DiaryController {
     /**
      * Gets the chosen date from the datepicker. Returns todays date if the
      * datepicker is empty.
-     * 
+     *
      * @return Datestring on the dd-MM-yyyy format.
      */
     private String getDateInput() {
@@ -159,7 +161,7 @@ public class DiaryController {
 
     /**
      * Sets the context of the diary page to match a given entry.
-     * 
+     *
      * @param entry The entry to show
      */
     private void updateGraphics(final Entry entry) {
