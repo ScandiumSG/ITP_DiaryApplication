@@ -59,7 +59,8 @@ public final class EntryToJSON {
      */
     public static void write(final String fileName, final String content,
         boolean relPath) throws IOException {
-            File writeLocation;
+        File writeLocation;
+        
         if (relPath) {
             writeLocation = new File(
                 PersistanceUtil.makeResourcesPathString(fileName));
