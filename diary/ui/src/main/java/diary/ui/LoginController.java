@@ -24,14 +24,8 @@ public class LoginController {
 
     @FXML
     void logIn() throws IOException {
-        try {
-            User user = new User(usernameField.getText(), pinField.getText());
-            System.out.println(user.getUserID());
-            DiaryController.setUser(user);
-            DiaryApp.getDiaryApp().changeScene("Diary.fxml");
-            
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+        User user = new User(usernameField.getText(), pinField.getText());
+        DiaryController.setUser(user);
+        DiaryApp.getDiaryApp().changeScene("Diary.fxml");
     }
 }
