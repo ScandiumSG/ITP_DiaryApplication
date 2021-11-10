@@ -5,14 +5,14 @@ import diary.json.RetrieveDiaries;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 public class LoginController {
 
     @FXML
-    private TextField usernameField;
+    private ComboBox<String> usernameField;
 
     @FXML
     private PasswordField pinField;
@@ -28,7 +28,7 @@ public class LoginController {
 
     @FXML
     public void logIn() throws IOException {
-        String name = usernameField.getText();
+        String name = (String) usernameField.getValue();
         String pin = pinField.getText();
 
         User user = new User(name, pin);
@@ -46,19 +46,31 @@ public class LoginController {
         return;
     }
 
-    private boolean userExists(String userName) {
-        String[] diaryNames = RetrieveDiaries.getDiaryNames();
+    @FXML
+    public void initialize() {
+        updateUserList();
+    }
 
-        if (diaryNames == null) {
-            return false;
-        }
+    private void updateUserList() {
+        String[] diaryNames = RetrieveDiaries.getDiaryNames();
 
         for (String name : diaryNames) {
             if (!name.contains("+")) {
                 continue;
             }
             name = name.substring(0, name.indexOf("+"));
-            if (name.replace("_", " ").equals(userName)) {
+            name = name.replace("_", " ");
+            usernameField.getItems().add(name);
+        }
+    }
+
+    private boolean userExists(String userName) {
+        if (usernameField.getItems() == null || usernameField.getItems().isEmpty()) {
+            return false;
+        }
+
+        for (String name : usernameField.getItems()) {
+            if (name.equals(userName)) {
                 return true;
             }
         }
