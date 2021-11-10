@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class ReadingTest {
     private final static String testFileName = "TestEntires";
-    private final static User user = new User("TestUser", 2425);
+    private final static User user = new User("TestUser", "2425");
     private final static File testFilePath =
         EntryToJSON.getJsonFile(user, testFileName);
 
@@ -52,6 +52,22 @@ public class ReadingTest {
         Entry emptyFile = EntryFromJSON.read(user, testFileName, "15-10-1990");
         Assertions.assertEquals("", emptyFile.getContent());
         Assertions.assertEquals("15-10-1990", emptyFile.getDate());
+    }
+
+    @Test
+    public void testReadToString() throws IOException {
+        String jsonContent = "Read Json to string content";
+        String jsonDate = "15-10-2000";
+        Entry entry = new Entry( jsonContent, jsonDate);
+        EntryToJSON.write(user, "toStringTest", entry);
+        String retrievedJson = EntryFromJSON.readToString(user.getUserID() + "+" + "toStringTest", true);
+        File file = new File(
+            PersistanceUtil.makeResourcesPathString(user, "toStringTest"));
+        file.delete();
+
+        Assertions.assertFalse(retrievedJson.isEmpty());
+        Assertions.assertTrue(retrievedJson.contains(entry.getContent()));
+        Assertions.assertTrue(retrievedJson.contains(entry.getDate()));
     }
 
     @AfterAll

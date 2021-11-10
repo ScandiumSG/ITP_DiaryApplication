@@ -11,7 +11,7 @@ import diary.json.EntryToJSON;
 public class EntrySearchTest {
     private String fileName;
     private File Testfile;
-    private User user = new User("TestPerson", 4252);
+    private User user = new User("TestPerson", "4252");
 
     @BeforeEach
     public void makeFile() throws IOException {

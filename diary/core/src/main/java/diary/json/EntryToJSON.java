@@ -21,7 +21,6 @@ import java.util.List;
  */
 
 public final class EntryToJSON {
-    private static String baseFilePath = "src/main/resources/";
 
     // Use GSON to read/write the JSON files
     // https://github.com/google/gson
@@ -40,30 +39,68 @@ public final class EntryToJSON {
      *                 file is deleted after completed write.
      * @throws IOException .JSON location does not exist.
      */
-    public static void write(final User user, final String fileName, final Entry entry) throws IOException {
+    public static void write(final User user, final String fileName, final Entry entry) 
+        throws IOException {
+        File writeLocation = new File(
+            PersistanceUtil.makeResourcesPathString(user, fileName));
 
+        fileWrite(user, fileName, entry, writeLocation);
+    }
+
+    /**
+     * Write a provided content-string and date-string directly to a json file
+     * instead of making Entry intermediate objects. Method intended to easy 
+     * integration with REST-API.
+     * @param fileName The filename of the file to write the content to.
+     * @param content The entire diary
+     * @param relPath Boolean switch to send to root-dir or src/main/resources 
+     * storage paths.
+     * @throws IOException If EntryToJSON could not write to specified location.
+     */
+    public static void write(final String fileName, final String content,
+        boolean relPath) throws IOException {
+        File writeLocation;
+        
+        if (relPath) {
+            writeLocation = new File(
+                PersistanceUtil.makeResourcesPathString(fileName));
+        } else {
+            writeLocation = new File(
+                PersistanceUtil.makeCurrentDirectoryPathString(fileName));
+        }
+        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+        // FileWriter fw = new FileWriter(jsonFile, false);
+        FileOutputStream sm = new FileOutputStream(writeLocation);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
+        gson.toJson(content, bw);
+        sm.flush();
+        bw.flush();
+        sm.close();
+        bw.close();
+    }
+
+    @SuppressWarnings("unused")
+    private static void fileWrite(final User user, final String fileName,
+        final Entry entry, final File writeLocation) throws IOException {
         List<Entry> entries = new ArrayList<Entry>();
-        File fullFilePath = new File(baseFilePath + user.getUserID() + "+" + sanitizeFilename(fileName) + ".json");
-
-        if (!fullFilePath.exists()) {
-            if (!fullFilePath.createNewFile()) {
-                throw new IOException("Could not find chosen path to " + fullFilePath.getName());
+        if (!writeLocation.exists()) {
+            if (!writeLocation.createNewFile()) {
+                throw new IOException("Could not find chosen path to "
+                    + writeLocation.getName());
             }
         }
 
         entries.addAll(EntryFromJSON.read(user, fileName));
-
-        Boolean del = fullFilePath.delete();
+        Boolean del = writeLocation.delete();
 
         if (entries.size() > 0) {
             entries.removeIf(d -> d.getDate().equals(entry.getDate()));
         }
-
         entries.add(entry);
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         // FileWriter fw = new FileWriter(jsonFile, false);
-        FileOutputStream sm = new FileOutputStream(fullFilePath);
+        FileOutputStream sm = new FileOutputStream(writeLocation);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
         gson.toJson(entries, bw);
         sm.flush();
@@ -73,11 +110,6 @@ public final class EntryToJSON {
     }
 
     public static File getJsonFile(final User user, final String fileName) {
-        return new File(baseFilePath + user.getUserID() + "+" + sanitizeFilename(fileName) + ".json");
-    }
-
-    private static String sanitizeFilename(final String fileName) {
-        String sanString = fileName.replace(" ", "_");
-        return sanString;
+        return new File(PersistanceUtil.makeResourcesPathString(user, fileName));
     }
 }
