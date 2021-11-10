@@ -32,15 +32,19 @@ public class DiaryControllerTest extends ApplicationTest{
         stage.show();
     }
 
+ 
     @BeforeAll
-    public static void delteFileAndSupportHeadless(){
+    public static void supportHeadless(){
+        delteFiles();
+        DiaryApp.supportHeadless(); 
+        
+    }
+
+    public static void delteFiles(){
         if(testFilePath.exists()){
             testFilePath.delete();
         }
-        DiaryApp.supportHeadless();  
     }
-
-
     public Parent getRoot()
     {
         return root;
