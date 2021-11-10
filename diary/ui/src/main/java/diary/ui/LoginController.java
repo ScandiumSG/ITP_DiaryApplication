@@ -60,6 +60,9 @@ public class LoginController {
             }
             name = name.substring(0, name.indexOf("+"));
             name = name.replace("_", " ");
+            if (usernameField.getItems().contains(name)) {
+                continue;
+            }
             usernameField.getItems().add(name);
         }
     }
