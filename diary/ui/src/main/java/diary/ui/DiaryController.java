@@ -4,19 +4,18 @@ import diary.core.Entry;
 import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.Calendar;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
-
 
 public class DiaryController {
     private static String userName;
