@@ -44,13 +44,13 @@ public class UserTest {
     @Test
     public void testUserpinValidation() {
         String username = "Ola Nordmann";
-        String userpin = String.valueOf(ThreadLocalRandom.current().nextInt(1000, 999+1));
+        String userpin = String.valueOf(ThreadLocalRandom.current().nextInt(100, 999+1));
 
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> {new User(username, userpin);});
 
-        String userpin2 = String.valueOf(ThreadLocalRandom.current().nextInt(1000, 9999+1));
+        String userpin2 = String.valueOf(ThreadLocalRandom.current().nextInt(10000, 99999+1));
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> {new User(username, userpin2);});

@@ -1,8 +1,7 @@
 package diary.ui;
 
-import java.io.IOException;
-
 import diary.core.User;
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -25,21 +24,13 @@ public class LoginController {
 
     @FXML
     void logIn() throws IOException {
-        try{
-            String username = usernameField.getText();
-            String pin = pinField.getText();
-
-            User user = new User("lars", "1234");
+        try {
+            User user = new User(usernameField.getText(), pinField.getText());
             System.out.println(user.getUserID());
-            /*
-            System.out.println("Laget user");
             DiaryController.setUser(user);
-            System.out.println("satt user");
             DiaryApp.getDiaryApp().changeScene("Diary.fxml");
-            System.out.println("byttet scene");
-            */
-    
-        } catch (IllegalArgumentException e){
+            
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
