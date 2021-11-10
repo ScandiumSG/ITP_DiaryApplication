@@ -17,6 +17,13 @@ public final class PersistanceUtil {
         return curDirFile.getAbsolutePath();
     }
 
+    /**
+     * Return a filepath string to be used when make a File object to 
+     * the provided filename.
+     * @param fileName The full name of the desired file.
+     * @return A string with a directory path to the file 
+     * in src/main/resources.
+     */
     public static String makeResourcesPathString(final String fileName) {
         String filePath = PersistanceUtil.resourcesFilePath()
             + sanitizeFilename(fileName)
@@ -24,15 +31,30 @@ public final class PersistanceUtil {
         return filePath;
     }
 
-    public static String makeResourcesPathString(final User user, final String fileName) {
+    /**
+     * Return a filepath string to be used when make a File object to 
+     * the provided user and diaryname.
+     * @param user The user associated with the diary.
+     * @param diaryName Name of the diary file.
+     * @return A string with a directory path to the file 
+     * in src/main/resources.
+     */
+    public static String makeResourcesPathString(final User user, final String diaryName) {
         String filePath = PersistanceUtil.resourcesFilePath()
             + user.getUserID()
             + "+"
-            + sanitizeFilename(fileName)
+            + sanitizeFilename(diaryName)
             + ".json";
         return filePath;
     }
 
+    /**
+     * Return a filepath string to be used when make a File object to 
+     * the provided filename.
+     * @param fileName The full name of the desired file.
+     * @return A string with a directory path to the file 
+     * in the root-directory
+     */
     public static String makeCurrentDirectoryPathString(final String fileName) {
         String filePath = PersistanceUtil.curDirFilePath()
             + sanitizeFilename(fileName)
@@ -40,11 +62,19 @@ public final class PersistanceUtil {
         return filePath;
     }
 
-    public static String makeCurrentDirectoryPathString(final User user, final String fileName) {
+    /**
+     * Return a filepath string to be used when make a File object to 
+     * the provided user and diaryname.
+     * @param user The user associated with the diary.
+     * @param diaryName Name of the diary file.
+     * @return A string with a directory path to the file 
+     * in the root-directory
+     */
+    public static String makeCurrentDirectoryPathString(final User user, final String diaryName) {
         String filePath = PersistanceUtil.curDirFilePath()
             + user.getUserID()
             + "+"
-            + sanitizeFilename(fileName)
+            + sanitizeFilename(diaryName)
             + ".json";
         return filePath;
     }

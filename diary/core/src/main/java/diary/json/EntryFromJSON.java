@@ -88,13 +88,22 @@ public final class EntryFromJSON {
         }
     }
 
+    /**
+     * Retrieves the content of a JSON file as a un-interpreted string. Method intended
+     * to easy integration with REST-API.
+     * @param fileName full filename for the json file that is to be read.
+     * @param relPath Boolean, if file is located in root-dir or src/main/resources
+     * @return String A json string of the content of loaded entry.
+     * @throws IOException If no file of provided name can be read.
+     */
     public static String readToString(final String fileName, boolean relPath)
         throws IOException {
         String filePath;
         if (relPath) {
             filePath = PersistanceUtil.makeResourcesPathString(fileName);
-        } else
+        } else {
             filePath = PersistanceUtil.makeCurrentDirectoryPathString(fileName);
+        }
         return retrieveJsonString(filePath);
     }
 

@@ -39,13 +39,25 @@ public final class EntryToJSON {
      *                 file is deleted after completed write.
      * @throws IOException .JSON location does not exist.
      */
-    public static void write(final User user, final String fileName, final Entry entry) throws IOException {
+    public static void write(final User user, final String fileName, final Entry entry) 
+        throws IOException {
         File writeLocation = new File(
             PersistanceUtil.makeResourcesPathString(user, fileName));
 
         fileWrite(user, fileName, entry, writeLocation);
     }
 
+    /**
+     * Write a provided content-string and date-string directly to a json file
+     * instead of making Entry intermediate objects. Method intended to easy 
+     * integration with REST-API.
+     * @param fileName The filename of the file to write the content to.
+     * @param content The Entry content.
+     * @param date The Entry date.
+     * @param relPath Boolean switch to send to root-dir or src/main/resources 
+     * storage paths.
+     * @throws IOException If EntryToJSON could not write to specified location.
+     */
     public static void write(final String fileName, final String content,
         final String date, boolean relPath) throws IOException {
         File writeLocation;
