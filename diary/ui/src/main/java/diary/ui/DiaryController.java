@@ -50,7 +50,7 @@ public class DiaryController {
      */
     @FXML
     public void initialize() {
-        if (userName == null || userName == "") {
+        if (userName.isBlank()) {
             throw new IllegalStateException("No username has been selected");
         }
         setTitleText();
@@ -108,7 +108,7 @@ public class DiaryController {
 
     @FXML
     public void logout() throws IOException {
-        DiaryApp.diaryApp.changeScene("Login.fxml");
+        DiaryApp.getDiaryApp().changeScene("Login.fxml");
     }
 
     private void setTitleText() {

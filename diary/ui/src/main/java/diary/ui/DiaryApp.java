@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class DiaryApp extends Application {
 
-    public static DiaryApp diaryApp;
+    private static DiaryApp diaryApp;
 
     private Stage stage;
 
@@ -19,6 +19,10 @@ public class DiaryApp extends Application {
         diaryApp = this;
 
         changeScene("Login.fxml");
+    }
+
+    public static DiaryApp getDiaryApp(){
+        return DiaryApp.diaryApp;
     }
 
     /**

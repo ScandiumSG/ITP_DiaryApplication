@@ -24,6 +24,6 @@ public class LoginController {
     @FXML
     void logIn() throws IOException {
         DiaryController.setUsername(usernameField.getText());
-        DiaryApp.diaryApp.changeScene("Diary.fxml");
+        DiaryApp.getDiaryApp().changeScene("Diary.fxml");
     }
 }
