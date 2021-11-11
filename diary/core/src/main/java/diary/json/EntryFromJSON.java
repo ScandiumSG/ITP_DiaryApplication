@@ -3,6 +3,7 @@ package diary.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diary.core.Entry;
+import diary.core.User;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,15 +13,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * EntryFromJSON returns a list or specific entry from JSON.
- * 
+ *
  * @since 1.0
  * @author Stian K. Gaustad, Lars Overskeid
  */
 public final class EntryFromJSON {
-    private static String baseFilePath = "src/main/resources/";
 
     // Use GSON to read/write the JSON files
     // https://github.com/google/gson
@@ -32,43 +33,47 @@ public final class EntryFromJSON {
     /**
      * Read any json file with provided username from main/resources/DiaryEntries
      * and returns as a unsorted ArrayList of Entry.
-     * 
+     *
      * @param fileName A string of the name of diary/.json file to be read from.
-     * 
+     *
      * @return List of all found Entry's stored under the provided username.
      * @throws IOException If filepath to resources is nonexistant.
      */
-    public static List<Entry> read(final String fileName) throws IOException {
+    public static List<Entry> read(final User user, final String fileName) throws IOException {
 
         List<Entry> readEntries = new ArrayList<Entry>();
-        File fullFilePath = new File(baseFilePath + fileName + ".json");
+        File chosenFile = new File(
+            PersistanceUtil.makeResourcesPathString(user, fileName));
 
-        if (!fullFilePath.exists()) {
+        if (!chosenFile.exists()) {
             return readEntries;
         }
 
         BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(fullFilePath), StandardCharsets.UTF_8));
+            new InputStreamReader(
+                new FileInputStream(chosenFile), StandardCharsets.UTF_8));
+
         Gson gson = new GsonBuilder().setLenient().create();
         Entry[] entries = gson.fromJson(bufferedReader, Entry[].class);
         if (entries != null) {
             readEntries = Arrays.asList(entries);
         }
+        bufferedReader.close();
         return readEntries;
     }
 
     /**
      * Read any json file with provided username and date from
      * main/resources/DiaryEntries and returns an Entry object if found.
-     * 
+     *
      * @param fileName A string of the name of diary/.json file to be read from.
      * @param date     The date to check
-     * 
+     *
      * @return The Entry object if found, otherwise return a new Entry object
      */
-    public static Entry read(final String fileName, final String date) {
+    public static Entry read(final User user, final String fileName, final String date) {
         try {
-            List<Entry> entries = read(fileName);
+            List<Entry> entries = read(user, fileName);
             if (entries != null) {
                 for (Entry entry : entries) {
                     if (entry.getDate().equals(date)) {
@@ -81,5 +86,37 @@ public final class EntryFromJSON {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Retrieves the content of a JSON file as a un-interpreted string. Method intended
+     * to easy integration with REST-API.
+     * @param fileName full filename for the json file that is to be read.
+     * @param relPath Boolean, if file is located in root-dir or src/main/resources
+     * @return String A json string of the content of loaded entry.
+     * @throws IOException If no file of provided name can be read.
+     */
+    public static String readToString(final String fileName, boolean relPath)
+        throws IOException {
+        String filePath;
+        if (relPath) {
+            filePath = PersistanceUtil.makeResourcesPathString(fileName);
+        } else {
+            filePath = PersistanceUtil.makeCurrentDirectoryPathString(fileName);
+        }
+        return retrieveJsonString(filePath);
+    }
+
+    private static String retrieveJsonString(final String fullFilePath)
+        throws IOException {
+        File chosenFile = new File(fullFilePath);
+
+        BufferedReader bufferedReader = new BufferedReader(
+            new InputStreamReader(new FileInputStream(chosenFile), StandardCharsets.UTF_8));
+
+        String retrievedString = bufferedReader.lines().collect(Collectors.joining());
+        bufferedReader.close();
+
+        return retrievedString;
     }
 }

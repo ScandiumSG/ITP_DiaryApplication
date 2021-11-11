@@ -12,7 +12,7 @@
     <artifactId>ui</artifactId>
 
     <properties>
-        <skipUiTests>false</skipUiTests>
+        <skipUiTests>True</skipUiTests>
     </properties>
 
 

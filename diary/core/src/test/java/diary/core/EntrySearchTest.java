@@ -11,20 +11,21 @@ import diary.json.EntryToJSON;
 public class EntrySearchTest {
     private String fileName;
     private File Testfile;
+    private User user = new User("TestPerson", "4252");
 
     @BeforeEach
     public void makeFile() throws IOException {
         String fileName = "SearchTest";
-        Testfile = EntryToJSON.getJsonFile(fileName);
+        Testfile = EntryToJSON.getJsonFile(user, fileName);
         this.fileName = fileName;
         Entry entry1 = new Entry("potato tomato", "01-01-2011");
-        EntryToJSON.write(fileName, entry1);
+        EntryToJSON.write(user, fileName, entry1);
         Entry entry2 = new Entry("potato tomato tornado", "02-01-2011");
-        EntryToJSON.write(fileName, entry2);
+        EntryToJSON.write(user, fileName, entry2);
         Entry entry3 = new Entry("tomato", "03-01-2011");
-        EntryToJSON.write(fileName, entry3);
+        EntryToJSON.write(user, fileName, entry3);
         Entry entry4 = new Entry("tomato tornado tobago", "04-01-2011");
-        EntryToJSON.write(fileName, entry4);
+        EntryToJSON.write(user, fileName, entry4);
     }
 
     @Test
@@ -36,16 +37,16 @@ public class EntrySearchTest {
 
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                fileName, keyword1).size() == 4);
+                user, fileName, keyword1).size() == 4);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                fileName, keyword1, keyword2).size() == 2);
+                user, fileName, keyword1, keyword2).size() == 2);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                fileName, keyword1, keyword2, keyword3).size() == 3);
+                user, fileName, keyword1, keyword2, keyword3).size() == 3);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                fileName, keyword4).size() == 0);
+                user, fileName, keyword4).size() == 0);
     }
 
     @AfterEach
