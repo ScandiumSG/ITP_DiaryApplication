@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class DiaryApp extends Application {
 
-    private static DiaryApp diaryApp;
+    private static DiaryApp instance;
 
     private Stage stage;
 
@@ -20,6 +20,13 @@ public class DiaryApp extends Application {
         setDiaryApp(this);
 
         changeScene("Login.fxml");
+
+        // Image credit:
+        // Photo by Annie Spratt - Unsplash
+        // See src/main/resources/img/thumb2_credit.txt for link
+        stage.getIcons().add(
+            new Image(getClass().getResourceAsStream("img/thumb2.jpg")));
+        stage.show();
     }
 
     /**
@@ -41,17 +48,9 @@ public class DiaryApp extends Application {
             this.getClass().getResource(sceneName));
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
-        if (sceneName.equals("Login.fxml")) {
-            stage.setTitle("Diary - Login");
-        } else {
-            stage.setTitle("Diary");
-        }
-        // Image credit:
-        // Photo by Annie Spratt - Unsplash
-        // See src/main/resources/img/thumb2_credit.txt for link
-        stage.getIcons().add(
-            new Image(getClass().getResourceAsStream("img/thumb2.jpg")));
-        stage.show();
+
+        String title = sceneName.equals("Login.fxml") ? "Diary - Login" : "Diary";
+        stage.setTitle(title);
     }
 
     public static DiaryApp getDiaryApp() {
@@ -59,11 +58,12 @@ public class DiaryApp extends Application {
     }
 
     private static DiaryApp cheatMethodWillRemove() {
-        return DiaryApp.diaryApp;
+        return DiaryApp.instance;
     }
 
+    //Setter for the diaryApp
     private static void setDiaryApp(final DiaryApp app) {
-        diaryApp = app;
+        instance = app;
     }
 
     private void setStage(Stage stage) {
