@@ -22,7 +22,6 @@ import javafx.scene.control.TextArea;
 import javafx.util.StringConverter;
 
 public class DiaryController {
-    private String diaryName = "";
     private static User user;
 
     @FXML
@@ -67,47 +66,42 @@ public class DiaryController {
         if (title.getValue().isEmpty()) {
             title.setValue(user.getUserName() + " 's diary");
         }
+        setDatePickerValue(Entry.parseCurrentTime());
 
-        loadDiary();
+        updateGraphics();
     }
 
     /**
-     * Load the diary corresponding to the current content of the title field.
-     * </p>The graphics is then updated with the current date and entry for the
-     * current date from the chosen diary.
+     * Updates the diary context based on selected user, diary, and date.
      */
     @FXML
-    public void loadDiary() {
-        diaryName = title.getValue();
-        updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
+    private void updateGraphics() {
+        Entry entry = EntryFromJSON.read(user, title.getValue(), getDateInput());
+
+        if (entry == null) {
+            entry = new Entry("", getDateInput());
+        }
+
+        dateId.setText("Current date: " + entry.getDate());
+        textEntry.setText(entry.getContent());
     }
 
     /**
      * Saves the current page context as a json entry.
+     * If this creates a new diary, it is added to the dropdown menu
      */
     @FXML
     public void saveDateEntry() {
         Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
-            EntryToJSON.write(user, diaryName, entry);
-            if (!title.getItems().contains(diaryName)) {
-                title.getItems().add(diaryName);
+            EntryToJSON.write(user, title.getValue(), entry);
+            if (!title.getItems().contains(title.getValue())) {
+                title.getItems().add(title.getValue());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Updates the page context using the values linked to the currently selected
-     * date on dateInput.
-     */
-    @FXML
-    public void getChosenDate() {
-        String date = getDateInput();
-
-        updateGraphicsByDate(date);
     }
 
     /**
@@ -116,9 +110,7 @@ public class DiaryController {
      */
     @FXML
     public void getPreviousDate() {
-        String date = incrementDate(getDateInput(), -1);
-
-        updateGraphicsByDate(date);
+        incrementDate(-1);
     }
 
     /**
@@ -127,24 +119,29 @@ public class DiaryController {
      */
     @FXML
     public void getNextDate() {
-        String date = incrementDate(getDateInput(), 1);
-
-        updateGraphicsByDate(date);
+        incrementDate(1);
     }
 
+    /**
+     * Changes active scene back to the login screen.
+    */
     @FXML
     public void logout() throws IOException {
         DiaryApp.getDiaryApp().changeScene("Login.fxml");
     }
 
+    /**
+     * Sets the active user.
+     * 
+     * @param user The user to set.
+     */
     public static void setUser(User user) {
         DiaryController.user = user;
     }
 
-    public void setDiary(String diaryName) {
-        this.diaryName = diaryName;
-    }
-
+    /**
+     * Fills the dropdown menu with registered diaries.
+     */
     private void createDiaryList() {
         try {
             HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
@@ -157,22 +154,13 @@ public class DiaryController {
         }
     }
 
-    private void updateGraphicsByDate(String date) {
-        Entry entry = EntryFromJSON.read(user, diaryName, date);
-
-        if (entry == null) {
-            entry = new Entry("", date);
-        }
-        updateGraphics(entry);
-    }
-
     /**
+     * Updates the page to show a date thats offset from curretly selected date by increment.
      * 
-     * @param date 
-     * @param increment
-     * @return
+     * @param increment how many pages to move.
      */
-    private String incrementDate(String date, int increment) {
+    private void incrementDate(int increment) {
+        String date = getDateInput();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         Calendar calendar = Calendar.getInstance();
@@ -185,7 +173,8 @@ public class DiaryController {
 
         calendar.add(Calendar.DATE, increment);
 
-        return formatter.format(calendar.getTime());
+        setDatePickerValue(formatter.format(calendar.getTime()));
+        updateGraphics();
     }
 
     /**
@@ -206,20 +195,9 @@ public class DiaryController {
     }
 
     /**
-     * Sets the context of the diary page to match a given entry.
-     *
-     * @param entry The entry to show
-     */
-    private void updateGraphics(final Entry entry) {
-        dateId.setText("Current date: " + entry.getDate());
-        textEntry.setText(entry.getContent());
-        setDatePickerValue(entry.getDate());
-    }
-
-    /**
      * Updates the datepicker to only accept input date on the format "dd-MM-yyyy".
      * Datepicker uses the windows system date format by default, which can be
-     * confusing if you're switching between different systems
+     * confusing if you're switching between different systems.
      */
     private void setDateConverter() {
         dateInput.setConverter(new StringConverter<LocalDate>() {
@@ -251,7 +229,7 @@ public class DiaryController {
     }
 
     /**
-     * Sets the date value displayed on the datepicker
+     * Sets the date value displayed on the datepicker.
      * 
      * @param date The date to display. A String in the format dd-MM-yyyy
      */

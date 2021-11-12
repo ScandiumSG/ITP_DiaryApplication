@@ -43,7 +43,7 @@ public class LoginController {
      */
     @FXML
     public void logIn() throws IOException {
-        String name = (String) usernameField.getValue();
+        String name = usernameField.getValue();
         String pin = pinField.getText();
 
         User user = new User(name, pin);
