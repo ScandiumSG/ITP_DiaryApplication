@@ -53,19 +53,22 @@ public class DiaryApp extends Application {
         stage.setTitle(title);
     }
 
+    //Getter for the DiaryApp
     public static DiaryApp getDiaryApp() {
-        return cheatMethodWillRemove();
+        return privateGetDiaryApp();
     }
 
-    private static DiaryApp cheatMethodWillRemove() {
-        return DiaryApp.instance;
+    //Method currently necessary because spotbugs wont let me return a private static variable.
+    private static DiaryApp privateGetDiaryApp() {
+        return instance;
     }
 
-    //Setter for the diaryApp
+    //Setter for the DiaryApp
     private static void setDiaryApp(final DiaryApp app) {
         instance = app;
     }
 
+    //Setter for the stage
     private void setStage(Stage stage) {
         this.stage = stage;
     }
