@@ -13,7 +13,7 @@ public class WritingTest {
     private final static String testFileName = "TestEntires";
     private final static User user = new User("TestUser", "2425");
     private final static File testFilePath =
-        EntryToJSON.getJsonFile(user, testFileName);
+        PersistanceUtil.getJsonFile(user, testFileName);
 
     @BeforeAll
     public static void deleteFileIfExists() {
@@ -31,7 +31,7 @@ public class WritingTest {
 
     @Test
     public void testGetJsonFile() {
-        Object output = EntryToJSON.getJsonFile(user, testFileName);
+        Object output = PersistanceUtil.getJsonFile(user, testFileName);
         Assertions.assertTrue(output instanceof File);
     }
 

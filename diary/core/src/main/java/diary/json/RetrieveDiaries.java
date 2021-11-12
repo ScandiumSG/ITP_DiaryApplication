@@ -11,19 +11,19 @@ import java.util.List;
 public final class RetrieveDiaries {
 
     /**
-     * A method to return all diary files, in the form of List of Entry, that 
+     * A method to return all diary files, in the form of List of Entry, that
      * is associated with the provided User object.
      * @param user The user object that is used to name associated files
      * @return HashMap Hashmap with diary name as key and a list of all entry's
      * within the diary as the mapped object
-     * @throws IOException If filePath is non-existant while loading entries 
+     * @throws IOException If filePath is non-existant while loading entries
      * with EntryFromJSON.read().
      */
     public static HashMap<String, List<Entry>> findDiaries(final User user)
         throws IOException {
         HashMap<String, List<Entry>> foundDiaries = new HashMap<>();
 
-        String[] allLocalDiaries = getDiaryNames();
+        String[] allLocalDiaries = getAllLocalDiaries();
 
         String desiredFileString = user.getUserID();
 
@@ -41,10 +41,14 @@ public final class RetrieveDiaries {
         return foundDiaries;
     }
 
-    public static String[] getDiaryNames() {
-        String baseFilePath = "src/main/resources/";
-        File fileDir = new File(baseFilePath);
-        
+    /**
+     * Method to retrieve a String array with every fileName found locally.
+     * @return String[] A String[] with the full name of all locally stored
+     * .json files in the default storage path.
+     */
+    public static String[] getAllLocalDiaries() {
+        File fileDir = new File(PersistancePaths.resourcesFilePath());
+
         // File.list() returns a String array of all filenames within a dir.
         String[] allLocalDiaries = fileDir.list();
         if (allLocalDiaries == null) {

@@ -5,98 +5,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public final class PersistanceUtil {
 
-    public static String resourcesFilePath() {
-        return curDirFilePath() + "/" + "src/main/resources/";
-    }
-
-    public static String curDirFilePath() {
-        File curDirFile = new File("");
-        return curDirFile.getAbsolutePath();
-    }
-
     /**
-     * Return a filepath string to be used when make a File object to 
-     * the provided filename.
-     * @param fileName The full name of the desired file.
-     * @return A string with a directory path to the file 
-     * in src/main/resources.
-     */
-    public static String makeResourcesPathString(final String fileName) {
-        String filePath = PersistanceUtil.resourcesFilePath()
-            + sanitizeFilename(fileName)
-            + ".json";
-        return filePath;
-    }
-
-    /**
-     * Return a filepath string to be used when make a File object to 
-     * the provided user and diaryname.
-     * @param user The user associated with the diary.
-     * @param diaryName Name of the diary file.
-     * @return A string with a directory path to the file 
-     * in src/main/resources.
-     */
-    public static String makeResourcesPathString(final User user, final String diaryName) {
-        String filePath = PersistanceUtil.resourcesFilePath()
-            + user.getUserID()
-            + "+"
-            + sanitizeFilename(diaryName)
-            + ".json";
-        return filePath;
-    }
-
-    /**
-     * Return a filepath string to be used when make a File object to 
-     * the provided filename.
-     * @param fileName The full name of the desired file.
-     * @return A string with a directory path to the file 
-     * in the root-directory
-     */
-    public static String makeCurrentDirectoryPathString(final String fileName) {
-        String filePath = PersistanceUtil.curDirFilePath()
-            + sanitizeFilename(fileName)
-            + ".json";
-        return filePath;
-    }
-
-    /**
-     * Return a filepath string to be used when make a File object to 
-     * the provided user and diaryname.
-     * @param user The user associated with the diary.
-     * @param diaryName Name of the diary file.
-     * @return A string with a directory path to the file 
-     * in the root-directory
-     */
-    public static String makeCurrentDirectoryPathString(final User user, final String diaryName) {
-        String filePath = PersistanceUtil.curDirFilePath()
-            + user.getUserID()
-            + "+"
-            + sanitizeFilename(diaryName)
-            + ".json";
-        return filePath;
-    }
-
-    private static String sanitizeFilename(final String fileName) {
-        String sanString = fileName.replace(" ", "_");
-        return sanString;
-    }
-
-    /**
-     * A utility method to get all filesnames that STARTS with the provided string. 
+     * A utility method to get all filesnames that STARTS with the provided string.
      * @param fileName String we wish all retrieved files to start with.
      * @param relPath A boolean that switch between resources storage and root-dir storage
-     * @return List A list of strings, each string is a filename that starts with 
+     * @return List A list of strings, each string is a filename that starts with
      * provided fileName param.
      */
     public static List<String> getFilesStartingWith(final String fileName, boolean relPath) {
         List<String> foundFiles = new ArrayList<>();
 
-        File chosenDir = new File(resourcesFilePath());
+        File chosenDir = new File(PersistancePaths.resourcesFilePath());
         if (!relPath) {
-            chosenDir = new File(curDirFilePath());
+            chosenDir = new File(PersistancePaths.curDirFilePath());
         }
 
         String[] files = chosenDir.list();
@@ -110,5 +33,17 @@ public final class PersistanceUtil {
             }
         }
         return foundFiles;
+    }
+
+    /**
+     * A static method that retrieves a file object pointing to the provided
+     * user and filename in the src/main/resources storage path.
+     * @param user The user the file belongs to.
+     * @param diaryName The name given to the specific diary to load.
+     * @return File A file object pointing at the specified json file.
+     */
+    public static File getJsonFile(final User user, final String diaryName) {
+        return new File(
+            PersistancePaths.makeResourcesPathString(user, diaryName));
     }
 }

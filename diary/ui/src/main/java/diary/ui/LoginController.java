@@ -26,13 +26,20 @@ public class LoginController {
     @FXML
     private Text title;
 
+    /**
+     * Handles the actions after the user press the login button.
+     * </p>Takes the current userName field and pin field values and makes a
+     * new user, the user is then set as current user and the scene is swapped
+     * to the "Diary.fxml" scene.
+     * @throws IOException If an error occur during loading of the new scene.
+     */
     @FXML
     public void logIn() throws IOException {
         String name = (String) usernameField.getValue();
         String pin = pinField.getText();
 
         User user = new User(name, pin);
-    
+
         DiaryController.setUser(user);
         DiaryApp.getDiaryApp().changeScene("Diary.fxml");
     }
@@ -48,14 +55,13 @@ public class LoginController {
     }
 
     private void updateUserList() {
-        String[] diaryNames = RetrieveDiaries.getDiaryNames();
+        String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
         for (String name : diaryNames) {
             if (!name.contains("+")) {
                 continue;
             }
-            name = name.substring(0, name.indexOf("+"));
-            name = name.replace("_", " ");
+            name = name.substring(0, name.indexOf("+")).replace("_", " ");
             if (usernameField.getItems().contains(name)) {
                 continue;
             }

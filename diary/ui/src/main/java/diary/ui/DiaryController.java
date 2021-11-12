@@ -19,7 +19,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 public class DiaryController {
@@ -66,6 +65,11 @@ public class DiaryController {
         updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
     }
 
+    /**
+     * Load the diary corresponding to the current content of the title field.
+     * </p>The graphics is then updated with the current date and entry for the
+     * current date from the chosen diary.
+     */
     @FXML
     public void loadDiary() {
         diaryName = (String) title.getValue();
@@ -91,7 +95,7 @@ public class DiaryController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } 
+    }
 
     /**
      * Saves the current page context as a json entry.
@@ -121,7 +125,10 @@ public class DiaryController {
         updateGraphicsByDate(date);
     }
 
-
+    /**
+     * Retrieves and displays the entry for the day before the currently
+     * selected date.
+     */
     @FXML
     public void getPreviousDate() {
         String date = incrementDate(getDateInput(), -1);
@@ -130,6 +137,10 @@ public class DiaryController {
         updateGraphicsByDate(date);
     }
 
+    /**
+     * Retrieves and displays the entry for the day after the currently
+     * selected date.
+     */
     @FXML
     public void getNextDate() {
         String date = incrementDate(getDateInput(), 1);
@@ -239,7 +250,7 @@ public class DiaryController {
 
     private void setDatePickerValue(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-      
+
         LocalDate localDate = LocalDate.parse(date, formatter);
 
         dateInput.setValue(localDate);

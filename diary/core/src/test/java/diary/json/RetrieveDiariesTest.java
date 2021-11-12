@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import diary.core.Entry;
 import diary.core.User;
 
-
 public class RetrieveDiariesTest {
     private static User user;
     private static User user2;
@@ -45,9 +44,9 @@ public class RetrieveDiariesTest {
         Integer userpin2 = ThreadLocalRandom.current().nextInt(1000, 9999+1);
         user2 = new User(username2,  String.valueOf(userpin2));
 
-        testFile1 = EntryToJSON.getJsonFile(user, diary1);
-        testFile2 = EntryToJSON.getJsonFile(user, diary2);
-        testFile3 = EntryToJSON.getJsonFile(user2, diary3);
+        testFile1 = PersistanceUtil.getJsonFile(user, diary1);
+        testFile2 = PersistanceUtil.getJsonFile(user, diary2);
+        testFile3 = PersistanceUtil.getJsonFile(user2, diary3);
 
         EntryToJSON.write(user, diary1, entry1);
         EntryToJSON.write(user, diary1, entry2);
@@ -90,7 +89,7 @@ public class RetrieveDiariesTest {
             IllegalArgumentException.class,
             () -> {RetrieveDiaries.findDiaries(invalidUser);});
 
-        EntryToJSON.getJsonFile(invalidUser, invalidUserFileName).delete();
+        PersistanceUtil.getJsonFile(invalidUser, invalidUserFileName).delete();
     }
 
     @AfterAll

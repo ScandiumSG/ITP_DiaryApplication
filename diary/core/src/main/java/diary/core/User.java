@@ -45,15 +45,15 @@ public class User {
 
     /**
      * Checks if the given string only contains digits
-     * 
+     *
      * @param str the string to check
      * @return True if the string only contains digits. False otherwise
      */
-    public static boolean isNumeric(String str)
-    {
-        for (char c : str.toCharArray())
-        {
-            if (!Character.isDigit(c)) return false;
+    public static boolean isNumeric(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
         }
         return true;
     }
