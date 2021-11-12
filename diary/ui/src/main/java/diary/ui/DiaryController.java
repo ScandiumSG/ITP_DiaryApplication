@@ -55,14 +55,20 @@ public class DiaryController {
     /**
      * Sets the DatePickers date format and initializes the diary to display todays
      * date.
+     * If the user has several diaries, it loads the top item in the dropdown menu
      */
     @FXML
     public void initialize() {
         createDiaryList();
-        setTitleText();
         setDateConverter();
-        setDatePickerValue(Entry.parseCurrentTime());
-        updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
+
+        title.getSelectionModel().selectFirst();
+
+        if (title.getValue().isEmpty()) {
+            title.setValue(user.getUserName() + " 's diary");
+        }
+
+        loadDiary();
     }
 
     /**
@@ -72,29 +78,8 @@ public class DiaryController {
      */
     @FXML
     public void loadDiary() {
-        diaryName = (String) title.getValue();
-        setDatePickerValue(Entry.parseCurrentTime());
+        diaryName = title.getValue();
         updateGraphics(EntryFromJSON.read(user, diaryName, Entry.parseCurrentTime()));
-    }
-
-    public static void setUser(User user) {
-        DiaryController.user = user;
-    }
-
-    public void setDiary(String diaryName) {
-        this.diaryName = diaryName;
-    }
-
-    private void createDiaryList() {
-        try {
-            HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
-            for (String name : diaries.keySet()) {
-                title.getItems().add(name);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -133,7 +118,6 @@ public class DiaryController {
     public void getPreviousDate() {
         String date = incrementDate(getDateInput(), -1);
 
-        setDatePickerValue(date);
         updateGraphicsByDate(date);
     }
 
@@ -145,7 +129,6 @@ public class DiaryController {
     public void getNextDate() {
         String date = incrementDate(getDateInput(), 1);
 
-        setDatePickerValue(date);
         updateGraphicsByDate(date);
     }
 
@@ -154,12 +137,24 @@ public class DiaryController {
         DiaryApp.getDiaryApp().changeScene("Login.fxml");
     }
 
-    private void setTitleText() {
-        if (diaryName.isEmpty()) {
-            diaryName = user.getUserName() + "'s diary";
-        }
+    public static void setUser(User user) {
+        DiaryController.user = user;
+    }
 
-        title.setValue(diaryName);
+    public void setDiary(String diaryName) {
+        this.diaryName = diaryName;
+    }
+
+    private void createDiaryList() {
+        try {
+            HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
+            for (String name : diaries.keySet()) {
+                title.getItems().add(name);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateGraphicsByDate(String date) {
@@ -171,20 +166,26 @@ public class DiaryController {
         updateGraphics(entry);
     }
 
+    /**
+     * 
+     * @param date 
+     * @param increment
+     * @return
+     */
     private String incrementDate(String date, int increment) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-        Calendar c = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
         try {
-            c.setTime(formatter.parse(date));
+            calendar.setTime(formatter.parse(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        c.add(Calendar.DATE, increment);
+        calendar.add(Calendar.DATE, increment);
 
-        return formatter.format(c.getTime());
+        return formatter.format(calendar.getTime());
     }
 
     /**
@@ -212,6 +213,7 @@ public class DiaryController {
     private void updateGraphics(final Entry entry) {
         dateId.setText("Current date: " + entry.getDate());
         textEntry.setText(entry.getContent());
+        setDatePickerValue(entry.getDate());
     }
 
     /**
@@ -248,6 +250,11 @@ public class DiaryController {
         });
     }
 
+    /**
+     * Sets the date value displayed on the datepicker
+     * 
+     * @param date The date to display. A String in the format dd-MM-yyyy
+     */
     private void setDatePickerValue(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
