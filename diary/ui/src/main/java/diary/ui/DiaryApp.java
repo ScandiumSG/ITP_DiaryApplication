@@ -55,11 +55,6 @@ public class DiaryApp extends Application {
 
     //Getter for the DiaryApp
     public static DiaryApp getDiaryApp() {
-        return privateGetDiaryApp();
-    }
-
-    //Method currently necessary because spotbugs wont let me return a private static variable.
-    private static DiaryApp privateGetDiaryApp() {
         return instance;
     }
 
