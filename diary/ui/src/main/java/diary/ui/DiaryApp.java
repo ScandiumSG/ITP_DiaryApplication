@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class DiaryApp extends Application {
@@ -34,6 +35,16 @@ public class DiaryApp extends Application {
             this.getClass().getResource(sceneName));
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
+        if (sceneName.equals("Login.fxml")) {
+            stage.setTitle("Diary - Login");
+        } else {
+            stage.setTitle("Diary");
+        }
+        // Image credit:
+        // Photo by Annie Spratt - Unsplash
+        // See src/main/resources/img/thumb2_credit.txt for link
+        stage.getIcons().add(
+            new Image(getClass().getResourceAsStream("img/thumb2.jpg")));
         stage.show();
     }
 
