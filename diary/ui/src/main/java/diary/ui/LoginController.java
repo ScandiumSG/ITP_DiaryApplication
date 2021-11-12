@@ -21,10 +21,18 @@ public class LoginController {
     private Button loginButton;
 
     @FXML
-    private Button createUserButton;
-
-    @FXML
     private Text title;
+
+
+    /**
+     * Runs whenever the scene is opened
+     * 
+     * Updates the list of registered usernames
+     */
+    @FXML
+    public void initialize() {
+        updateUserList();
+    }
 
     /**
      * Handles the actions after the user press the login button.
@@ -35,7 +43,7 @@ public class LoginController {
      */
     @FXML
     public void logIn() throws IOException {
-        String name = (String) usernameField.getValue();
+        String name = usernameField.getValue();
         String pin = pinField.getText();
 
         User user = new User(name, pin);
@@ -44,16 +52,10 @@ public class LoginController {
         DiaryApp.getDiaryApp().changeScene("Diary.fxml");
     }
 
-    @FXML
-    public void createUser() {
-        return;
-    }
-
-    @FXML
-    public void initialize() {
-        updateUserList();
-    }
-
+    /**
+     * Looks for users with regisered diaries and adds their names to the login dropdown menu
+     * Only adds names not already registered
+     */
     private void updateUserList() {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
@@ -67,18 +69,5 @@ public class LoginController {
             }
             usernameField.getItems().add(name);
         }
-    }
-
-    private boolean userExists(String userName) {
-        if (usernameField.getItems() == null || usernameField.getItems().isEmpty()) {
-            return false;
-        }
-
-        for (String name : usernameField.getItems()) {
-            if (name.equals(userName)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
