@@ -29,6 +29,12 @@ public class DiaryApp extends Application {
         launch();
     }
 
+    /**
+     * Method that loads in a new scene in the current stage based on provided
+     * scene name.
+     * @param sceneName A string of the scene that is to be displayed.
+     * @throws IOException If an error occur during loading of the new scene.
+     */
     public void changeScene(String sceneName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
             this.getClass().getResource(sceneName));

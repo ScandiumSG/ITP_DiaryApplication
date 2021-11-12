@@ -43,7 +43,7 @@ public final class EntryFromJSON {
 
         List<Entry> readEntries = new ArrayList<Entry>();
         File chosenFile = new File(
-            PersistanceUtil.makeResourcesPathString(user, fileName));
+            PersistancePaths.makeResourcesPathString(user, fileName));
 
         if (!chosenFile.exists()) {
             return readEntries;
@@ -100,9 +100,9 @@ public final class EntryFromJSON {
         throws IOException {
         String filePath;
         if (relPath) {
-            filePath = PersistanceUtil.makeResourcesPathString(fileName);
+            filePath = PersistancePaths.makeResourcesPathString(fileName);
         } else {
-            filePath = PersistanceUtil.makeCurrentDirectoryPathString(fileName);
+            filePath = PersistancePaths.makeCurrentDirectoryPathString(fileName);
         }
         return retrieveJsonString(filePath);
     }

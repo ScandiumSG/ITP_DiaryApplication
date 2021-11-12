@@ -39,34 +39,34 @@ public final class EntryToJSON {
      *                 file is deleted after completed write.
      * @throws IOException .JSON location does not exist.
      */
-    public static void write(final User user, final String fileName, final Entry entry) 
+    public static void write(final User user, final String fileName, final Entry entry)
         throws IOException {
         File writeLocation = new File(
-            PersistanceUtil.makeResourcesPathString(user, fileName));
+            PersistancePaths.makeResourcesPathString(user, fileName));
 
         fileWrite(user, fileName, entry, writeLocation);
     }
 
     /**
      * Write a provided content-string and date-string directly to a json file
-     * instead of making Entry intermediate objects. Method intended to easy 
+     * instead of making Entry intermediate objects. Method intended to easy
      * integration with REST-API.
      * @param fileName The filename of the file to write the content to.
      * @param content The entire diary
-     * @param relPath Boolean switch to send to root-dir or src/main/resources 
+     * @param relPath Boolean switch to send to root-dir or src/main/resources
      * storage paths.
      * @throws IOException If EntryToJSON could not write to specified location.
      */
     public static void write(final String fileName, final String content,
         boolean relPath) throws IOException {
         File writeLocation;
-        
+
         if (relPath) {
             writeLocation = new File(
-                PersistanceUtil.makeResourcesPathString(fileName));
+                PersistancePaths.makeResourcesPathString(fileName));
         } else {
             writeLocation = new File(
-                PersistanceUtil.makeCurrentDirectoryPathString(fileName));
+                PersistancePaths.makeCurrentDirectoryPathString(fileName));
         }
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         // FileWriter fw = new FileWriter(jsonFile, false);
@@ -107,9 +107,5 @@ public final class EntryToJSON {
         bw.flush();
         sm.close();
         bw.close();
-    }
-
-    public static File getJsonFile(final User user, final String fileName) {
-        return new File(PersistanceUtil.makeResourcesPathString(user, fileName));
     }
 }
