@@ -6,12 +6,12 @@ import java.io.File;
 public class PersistancePaths {
 
     public static String resourcesFilePath() {
-        return curDirFilePath() + "/" + "src/main/resources/";
+        return curDirFilePath() + "src/main/resources/";
     }
 
     public static String curDirFilePath() {
         File curDirFile = new File("");
-        return curDirFile.getAbsolutePath();
+        return curDirFile.getAbsolutePath() + "/";
     }
 
     /**
