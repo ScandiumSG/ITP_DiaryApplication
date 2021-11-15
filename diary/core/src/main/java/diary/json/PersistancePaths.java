@@ -2,16 +2,45 @@ package diary.json;
 
 import diary.core.User;
 import java.io.File;
+import java.util.Arrays;
 
 public class PersistancePaths {
 
+    /**
+     * Constructs a string directing towards the src/main/resources
+     * path. Intended to be used to contruct File objects with correct
+     * file directory.
+     * @return String A string of the file directory path.
+     */
     public static String resourcesFilePath() {
-        return curDirFilePath() + "src/main/resources/";
+        String appendResources = "src/main/resources/";
+        String rscPath = curDirFilePath() + appendResources;
+        String[] modules = {"/api/", "/core/", "/ui/"};
+        if (Arrays.stream(modules).anyMatch(rscPath::contains)) {
+            return rscPath;
+        } else {
+            rscPath = curDirFilePath() + "core/" + appendResources;
+            return rscPath;
+        }
     }
 
-    public static String curDirFilePath() {
+    private static String curDirFilePath() {
         File curDirFile = new File("");
         return curDirFile.getAbsolutePath() + "/";
+    }
+
+    /**
+     * Constructs a string directing towards the root-directory
+     * path. Intended to be used to contruct File objects with correct
+     * file directory.
+     * @return String A string of the file directory path.
+     */
+    public static String rootDirFilePath() {
+        String curDirString = curDirFilePath();
+        String fileDirSelect = "diary/";
+        String rootDirString = curDirString.substring(
+            0, curDirString.indexOf(fileDirSelect) + fileDirSelect.length());
+        return rootDirString;
     }
 
     /**
@@ -53,7 +82,7 @@ public class PersistancePaths {
      * in the root-directory
      */
     public static String makeCurrentDirectoryPathString(final String fileName) {
-        String filePath = PersistancePaths.curDirFilePath()
+        String filePath = PersistancePaths.rootDirFilePath()
             + sanitizeFilename(fileName)
             + ".json";
         return filePath;
@@ -68,7 +97,7 @@ public class PersistancePaths {
      * in the root-directory
      */
     public static String makeCurrentDirectoryPathString(final User user, final String diaryName) {
-        String filePath = PersistancePaths.curDirFilePath()
+        String filePath = PersistancePaths.rootDirFilePath()
             + user.getUserID()
             + "+"
             + sanitizeFilename(diaryName)

@@ -80,6 +80,19 @@ public class RetrieveDiariesTest {
     }
 
     @Test
+    public void testListFilesStartingWithRoot() throws IOException {
+        String fileName = "rootFilesStartingWithFile";
+        String fileFluff = "BobTheBuilder";
+        String content = "Test file, used to check ListFilesStartingWith method";
+        EntryToJSON.write(fileName+fileFluff, content, false);
+        List<String> foundFiles = PersistanceUtil.getFilesStartingWith(fileName, false);
+
+        Assertions.assertTrue(foundFiles.size() == 1);
+
+        new File(PersistancePaths.makeCurrentDirectoryPathString(fileName+fileFluff)).delete();
+    }
+
+    @Test
     public void testInvalidUser() throws IOException {
         User invalidUser = new User("S+K", "1234");
         Entry testEntry = new Entry("test123");

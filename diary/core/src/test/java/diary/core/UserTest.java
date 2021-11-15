@@ -50,9 +50,24 @@ public class UserTest {
             IllegalArgumentException.class,
             () -> {new User(username, userpin);});
 
-        String userpin2 = String.valueOf(ThreadLocalRandom.current().nextInt(10000, 99999+1));
+        String invalidPin1 = String.valueOf(ThreadLocalRandom.current().nextInt(10000, 99999+1));
         Assertions.assertThrows(
             IllegalArgumentException.class,
-            () -> {new User(username, userpin2);});
+            () -> {new User(username, invalidPin1);});
+
+        String invalidPin2 = "abcd";
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> {new User(username, invalidPin2);});
+
+        String invalidPin3 = "abcdefg";
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> {new User(username, invalidPin3);});
+
+        String invalidPin4 = "a2cd";
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> {new User(username, invalidPin4);});
     }
 }
