@@ -222,17 +222,21 @@ That's why I would like a diary capable of storing my thoughts over extended per
 
 Developers of this project assign standard issues and bugfixes during meetings that occur on wednesdays and fridays. Assigned issues are worked on independantly by the people assigned to the issue, with a deadline for pushing their work related to the issue.
 
-The wednesday and friday meetings is also the primary time where merge requests and code review is performed. However any developer can push their features at any time. For large and meaningful changes only the group meeting is allowed to approve of changes.
+The wednesday and friday meetings is also the primary time where merge requests and group code review is performed. However any developer can push their features at any time. For large and significant changes only the group meeting is allowed to approve of changes.
 
 Smaller features or changes can be approved by any other developer, after which they can be merge into intended branch immediatly. If such a minor change is desired to quickly be added the develop is to do the following:
 
--   Create merge request.
+-   Create merge request into develop branch.
 -   Fill inn any and all information pertinent to the merge request.
 -   Request a review from another developer on gitlab.
 
     -   The reviewer can also be pinged on the project discord server.
 
 -   Await the reviewer to approve of the changes.
+
+<i>Note: Using the time-spent feature on gitlab is <b>not</b> required for this project. Low familiarity with all gitlab features made some features not be explored for a significant amount of time, time-spent was therefore neglected from the start and the group does not think time-tracking would give any significant benefits to the current work schedule used.</i>
+
+Intended behaviour is merging other branches into the develop branch, however single-file changes minor changes is approved to be pushed directly to develop. After some features and issues is collected in develop the develop branch is pushed to master during a group meeting, this allows develop to work as a stable experimental branch while the master branch is shielded from unintended effects of new features.
 
 ### Working methods
 
