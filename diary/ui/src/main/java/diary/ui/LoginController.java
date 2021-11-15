@@ -27,7 +27,7 @@ public class LoginController {
     /**
      * Runs whenever the scene is opened
      * 
-     * Updates the list of registered usernames
+     * <p>Updates the list of registered usernames
      */
     @FXML
     public void initialize() {
@@ -36,7 +36,8 @@ public class LoginController {
 
     /**
      * Handles the actions after the user press the login button.
-     * </p>Takes the current userName field and pin field values and makes a
+     * 
+     * <p>Takes the current userName field and pin field values and makes a
      * new user, the user is then set as current user and the scene is swapped
      * to the "Diary.fxml" scene.
      * @throws IOException If an error occur during loading of the new scene.

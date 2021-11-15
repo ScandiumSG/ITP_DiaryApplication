@@ -19,7 +19,7 @@ public final class PersistanceUtil {
 
         File chosenDir = new File(PersistancePaths.resourcesFilePath());
         if (!relPath) {
-            chosenDir = new File(PersistancePaths.curDirFilePath());
+            chosenDir = new File(PersistancePaths.rootDirFilePath());
         }
 
         String[] files = chosenDir.list();
@@ -45,5 +45,16 @@ public final class PersistanceUtil {
     public static File getJsonFile(final User user, final String diaryName) {
         return new File(
             PersistancePaths.makeResourcesPathString(user, diaryName));
+    }
+
+    /**
+     * A static method that retrieves a file object pointing to the provided
+     * filename in the src/main/resources storage path.
+     * @param fileName The full name given to the specific diary to load.
+     * @return File A file object pointing at the specified json file.
+     */
+    public static File getJsonFile(final String fileName) {
+        return new File(
+            PersistancePaths.makeResourcesPathString(fileName));
     }
 }

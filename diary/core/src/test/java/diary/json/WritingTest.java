@@ -33,6 +33,9 @@ public class WritingTest {
     public void testGetJsonFile() {
         Object output = PersistanceUtil.getJsonFile(user, testFileName);
         Assertions.assertTrue(output instanceof File);
+        File outputFile = (File) output;
+        Assertions.assertTrue(outputFile.getAbsolutePath().contains(user.getUserID()));
+        Assertions.assertTrue(outputFile.getAbsolutePath().contains(testFileName));
     }
 
     @AfterAll
