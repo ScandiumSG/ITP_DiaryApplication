@@ -10,6 +10,7 @@
     <!--  -->
     <!-- https://www.tutorialspoint.com/design_pattern/singleton_pattern.htm -->
     <Match>
+        <Source name="diary.ui.DiaryApp.java" />
         <Bug pattern="MS_EXPOSE_REP" />
     </Match>
 </FindBugsFilter>
