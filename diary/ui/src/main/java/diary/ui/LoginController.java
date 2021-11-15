@@ -21,58 +21,54 @@ public class LoginController {
     private Button loginButton;
 
     @FXML
-    private Button createUserButton;
-
-    @FXML
     private Text title;
 
-    @FXML
-    public void logIn() throws IOException {
-        String name = (String) usernameField.getValue();
-        String pin = pinField.getText();
 
-        User user = new User(name, pin);
-    
-        DiaryController.setUser(user);
-        DiaryApp.getDiaryApp().changeScene("Diary.fxml");
-    }
-
-    @FXML
-    public void createUser() {
-        return;
-    }
-
+    /**
+     * Runs whenever the scene is opened
+     * 
+     * <p>Updates the list of registered usernames
+     */
     @FXML
     public void initialize() {
         updateUserList();
     }
 
+    /**
+     * Handles the actions after the user press the login button.
+     * 
+     * <p>Takes the current userName field and pin field values and makes a
+     * new user, the user is then set as current user and the scene is swapped
+     * to the "Diary.fxml" scene.
+     * @throws IOException If an error occur during loading of the new scene.
+     */
+    @FXML
+    public void logIn() throws IOException {
+        String name = usernameField.getValue();
+        String pin = pinField.getText();
+
+        User user = new User(name, pin);
+
+        DiaryController.setUser(user);
+        DiaryApp.changeScene("Diary.fxml");
+    }
+
+    /**
+     * Looks for users with regisered diaries and adds their names to the login dropdown menu
+     * Only adds names not already registered
+     */
     private void updateUserList() {
-        String[] diaryNames = RetrieveDiaries.getDiaryNames();
+        String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
         for (String name : diaryNames) {
             if (!name.contains("+")) {
                 continue;
             }
-            name = name.substring(0, name.indexOf("+"));
-            name = name.replace("_", " ");
+            name = name.substring(0, name.indexOf("+")).replace("_", " ");
             if (usernameField.getItems().contains(name)) {
                 continue;
             }
             usernameField.getItems().add(name);
         }
-    }
-
-    private boolean userExists(String userName) {
-        if (usernameField.getItems() == null || usernameField.getItems().isEmpty()) {
-            return false;
-        }
-
-        for (String name : usernameField.getItems()) {
-            if (name.equals(userName)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

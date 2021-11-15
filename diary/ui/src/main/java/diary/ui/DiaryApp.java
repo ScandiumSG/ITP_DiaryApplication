@@ -5,11 +5,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class DiaryApp extends Application {
 
-    private static DiaryApp diaryApp;
+    private static DiaryApp instance;
 
     private Stage stage;
 
@@ -19,6 +20,13 @@ public class DiaryApp extends Application {
         setDiaryApp(this);
 
         changeScene("Login.fxml");
+
+        // Image credit:
+        // Photo by Annie Spratt - Unsplash
+        // See src/main/resources/img/thumb2_credit.txt for link
+        stage.getIcons().add(
+            new Image(getClass().getResourceAsStream("img/thumb2.jpg")));
+        stage.show();
     }
 
     /**
@@ -29,26 +37,28 @@ public class DiaryApp extends Application {
         launch();
     }
 
-    public void changeScene(String sceneName) throws IOException {
+    /**
+     * Method that loads in a new scene in the current stage based on provided
+     * scene name.
+     * @param sceneName A string of the scene that is to be displayed.
+     * @throws IOException If an error occur during loading of the new scene.
+     */
+    public static void changeScene(String sceneName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
-            this.getClass().getResource(sceneName));
+            instance.getClass().getResource(sceneName));
         Parent parent = fxmlLoader.load();
-        stage.setScene(new Scene(parent));
-        stage.show();
+        instance.stage.setScene(new Scene(parent));
+
+        String title = sceneName.equals("Login.fxml") ? "Diary - Login" : "Diary";
+        instance.stage.setTitle(title);
     }
 
-    public static DiaryApp getDiaryApp() {
-        return cheatMethodWillRemove();
-    }
-
-    private static DiaryApp cheatMethodWillRemove() {
-        return DiaryApp.diaryApp;
-    }
-
+    //Setter for the DiaryApp
     private static void setDiaryApp(final DiaryApp app) {
-        diaryApp = app;
+        instance = app;
     }
 
+    //Setter for the stage
     private void setStage(Stage stage) {
         this.stage = stage;
     }

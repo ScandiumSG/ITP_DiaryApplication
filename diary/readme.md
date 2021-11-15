@@ -8,16 +8,17 @@ The reason GSON was selected for this project is that it provides a very simple 
 
 A downside is that GSON is not currently [under development](https://old.reddit.com/r/androiddev/comments/684flw/why_use_moshi_over_gson/dgx3gpm/?context=3), but in maintenance mode. New features to java is therefore unlikely to be supported by GSON in the future, but critical bugs and minor fixes do currently get implemented.
 
-## File storage
-
-The file storage is based on implicit storage, json files are stored in the src/main/resources folder of the project run.
-This is done to ensure that the saved JSON entries are stored in a safe location that is easy and predictable to access for the project code. We also consider this approach advantageous to keep all facets of the project within one folder, making it easy to keep track of all associated files and remove project files when project done.
-
 ### _Why is the project not migrated to Moshi, the successor of GSON?_
 
 GSON fullfill all requirements set for this project. The nature of the Diary project does not require better separation of possible exceptions thrown nor does it benefit from Kotlin support.
 
 If GSON becomes insufficient in future development the project will migrate over to Moshi, but the developers see no reason to invest development time into this convertion at this time.
+
+## File storage
+
+The file storage is based on implicit storage, json files are stored in the src/main/resources folder of the project run.
+This is done to ensure that the saved JSON entries are stored in a safe location that is easy and predictable to access for the project code. We also consider this approach advantageous to keep all facets of the project within one folder, making it easy to keep track of all associated files and remove project files when project done.
+
 
 # Testing and code verification
 
@@ -36,7 +37,7 @@ The adviced procedure is as follows:
     - Verify that intended input is properly used and returns valid results.
     - Check actions when using invalid input. Correct exceptions, error correction etc. should be tested in this part.
 
-3. If 2. uncover any issues those issues must be addresses before the new code is pushed/merge to main.
+3. If 2. uncover any issues those issues must be addresses before the new code is pushed/merge to develop.
 
 ## Unit test coverage
 
@@ -46,7 +47,7 @@ Unit test coverage is measured using [jacoco](https://github.com/jacoco/jacoco).
 
 The project is expected to have test coverage above 70% for each module. 
 For gitlab the aggregate test coverage in the main branch is shown as both a project badge as well as a badge in the root-directory readme.md file.
-The UI module will however not be included in the aggregate report, due to javafx tests not working as a headless gitlab pipeline. The expected aggregate coverage for the overall project is therefore set at 50%.
+The UI module will however not be included in the aggregate report, due to javafx tests not working as a headless gitlab pipeline. The aggregate coverage for the overall project is therefore set at 50% minimum.
 
 ## Checkstyle
 
@@ -64,7 +65,7 @@ The maven spotbugs plugin, spotbugs-maven-plugin, is used to detect well known b
 
 This project use a spotbugs exclusion list, which contains any spotbugs error that is allowed within the project. This exclusion list is located in `diary/config/spotbugs_exclude.xml`.
 
-The only bug excluded is `DLS_DEAD_LOCAL_STORE`, this is included due to usage of `File.delete()` in the persistance layer. The `File.delete()` method returns a boolean value, however currently the project design just needs the file to delete without a return value, which is why the `DLS_DEAD_LOCAL_STORE` is on the exclusion list.
+Currently on bug that is excluded from bugspot tests. `DLS_DEAD_LOCAL_STORE` is included due to usage of `File.delete()` in the persistance layer. The `File.delete()` method returns a boolean value, however currently the project design just needs the file to delete without a return value, which is why the `DLS_DEAD_LOCAL_STORE` is on the exclusion list.
 
 ## How to run test
 

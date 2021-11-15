@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import diary.json.EntryToJSON;
+import diary.json.PersistanceUtil;
 
 public class EntrySearchTest {
     private String fileName;
@@ -16,7 +17,7 @@ public class EntrySearchTest {
     @BeforeEach
     public void makeFile() throws IOException {
         String fileName = "SearchTest";
-        Testfile = EntryToJSON.getJsonFile(user, fileName);
+        Testfile = PersistanceUtil.getJsonFile(user, fileName);
         this.fileName = fileName;
         Entry entry1 = new Entry("potato tomato", "01-01-2011");
         EntryToJSON.write(user, fileName, entry1);
