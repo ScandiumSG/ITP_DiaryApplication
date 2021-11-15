@@ -18,8 +18,16 @@ public class PersistancePaths {
         String[] modules = {"/api/", "/core/", "/ui/"};
         if (Arrays.stream(modules).anyMatch(rscPath::contains)) {
             return rscPath;
+        } else if (curDirFilePath().contains("/diary/")) {
+            rscPath = curDirFilePath() 
+                + "core/" 
+                + appendResources;
+            return rscPath;
         } else {
-            rscPath = curDirFilePath() + "core/" + appendResources;
+            rscPath = curDirFilePath() 
+                + "diary/" 
+                + "core/" 
+                + appendResources;
             return rscPath;
         }
     }
