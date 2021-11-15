@@ -79,7 +79,8 @@ public final class EntryToJSON {
         bw.close();
     }
 
-    @SuppressWarnings("unused")
+    // Delete boolean not used, suppressing warning.
+    @SuppressWarnings("unused") 
     private static void fileWrite(final User user, final String fileName,
         final Entry entry, final File writeLocation) throws IOException {
         List<Entry> entries = new ArrayList<Entry>();

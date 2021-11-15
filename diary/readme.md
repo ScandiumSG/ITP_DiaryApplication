@@ -65,9 +65,7 @@ The maven spotbugs plugin, spotbugs-maven-plugin, is used to detect well known b
 
 This project use a spotbugs exclusion list, which contains any spotbugs error that is allowed within the project. This exclusion list is located in `diary/config/spotbugs_exclude.xml`.
 
-Currently two bugs are excluded from bugspot tests. `DLS_DEAD_LOCAL_STORE` and `MS_EXPOSE_REP`. `DLS_DEAD_LOCAL_STORE` is included due to usage of `File.delete()` in the persistance layer. The `File.delete()` method returns a boolean value, however currently the project design just needs the file to delete without a return value, which is why the `DLS_DEAD_LOCAL_STORE` is on the exclusion list.
-
-`MS_EXPOSE_REP` is included due to a need to access the currently running instance of the diary application to switch scenes. The method does expose the Application object, but intended functionality require this method be use.
+Currently on bug that is excluded from bugspot tests. `DLS_DEAD_LOCAL_STORE` is included due to usage of `File.delete()` in the persistance layer. The `File.delete()` method returns a boolean value, however currently the project design just needs the file to delete without a return value, which is why the `DLS_DEAD_LOCAL_STORE` is on the exclusion list.
 
 ## How to run test
 
