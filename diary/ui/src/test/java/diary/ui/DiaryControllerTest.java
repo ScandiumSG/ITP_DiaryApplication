@@ -59,36 +59,36 @@ public class DiaryControllerTest extends ApplicationTest{
         assertNotNull(this.controller);
     }
 
-    @Test
-    public void testRobot(){
-        clickOn("#textEntry").write("Test");
-        assertEquals("Test", getText());
-        clickOn("#entrySubmit");
-    }
+    // @Test
+    // public void testRobot(){
+    //     clickOn("#textEntry").write("Test");
+    //     assertEquals("Test", getText());
+    //     clickOn("#entrySubmit");
+    // }
 
-    @Test
-    public void testDifferentDate(){
-        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10-11-2021"+"\n");
-        clickOn("#textEntry").write("Test2");
-        clickOn("#entrySubmit");
-        assertEquals("Test2", getText());
-        clickOn("#textEntry").write(" Test3");
-        assertEquals("Test2 Test3", getText());
-        clickOn("#entrySubmit");
-    }
+    // @Test
+    // public void testDifferentDate(){
+    //     clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10-11-2021"+"\n");
+    //     clickOn("#textEntry").write("Test2");
+    //     clickOn("#entrySubmit");
+    //     assertEquals("Test2", getText());
+    //     clickOn("#textEntry").write(" Test3");
+    //     assertEquals("Test2 Test3", getText());
+    //     clickOn("#entrySubmit");
+    // }
 
-    @Test
-    public void testBackToCurrentDate(){
-        assertNotNull(getText());
-        testFilePath.delete();
-    }
+    // @Test
+    // public void testBackToCurrentDate(){
+    //     assertNotNull(getText());
+    //     testFilePath.delete();
+    // }
 
-    @Test
-    public void testBackToDifferDate(){
-        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10-11-2021"+"\n");
-        assertNotNull(getText());
-        testFilePath.delete();
-    }
+    // @Test
+    // public void testBackToDifferDate(){
+    //     clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10-11-2021"+"\n");
+    //     assertNotNull(getText());
+    //     testFilePath.delete();
+    // }
 
     @AfterAll
     public static void deleteIfStillExists(){

@@ -16,7 +16,7 @@ import javafx.util.StringConverter;
 
 public class DiaryController {
     private static final String tempDiaryName = "diary1";
-    private static final User tempUser = new User("User1", 1234);
+    private static final User tempUser = new User("User1", "1234"); //needed int to be string in order to succed for test
 
     @FXML
     private TextArea textEntry;
