@@ -63,7 +63,7 @@ public class DiaryController {
 
         title.getSelectionModel().selectFirst();
 
-        if (title.getValue().isEmpty()) {
+        if (title.getValue() == null) {
             title.setValue(user.getUserName() + " 's diary");
         }
         setDatePickerValue(Entry.parseCurrentTime());
@@ -127,7 +127,7 @@ public class DiaryController {
     */
     @FXML
     public void logout() throws IOException {
-        DiaryApp.getDiaryApp().changeScene("Login.fxml");
+        DiaryApp.changeScene("Login.fxml");
     }
 
     /**

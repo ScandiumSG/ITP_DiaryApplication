@@ -43,19 +43,14 @@ public class DiaryApp extends Application {
      * @param sceneName A string of the scene that is to be displayed.
      * @throws IOException If an error occur during loading of the new scene.
      */
-    public void changeScene(String sceneName) throws IOException {
+    public static void changeScene(String sceneName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
-            this.getClass().getResource(sceneName));
+            instance.getClass().getResource(sceneName));
         Parent parent = fxmlLoader.load();
-        stage.setScene(new Scene(parent));
+        instance.stage.setScene(new Scene(parent));
 
         String title = sceneName.equals("Login.fxml") ? "Diary - Login" : "Diary";
-        stage.setTitle(title);
-    }
-
-    //Getter for the DiaryApp
-    public static DiaryApp getDiaryApp() {
-        return instance;
+        instance.stage.setTitle(title);
     }
 
     //Setter for the DiaryApp

@@ -49,7 +49,7 @@ public class LoginController {
         User user = new User(name, pin);
 
         DiaryController.setUser(user);
-        DiaryApp.getDiaryApp().changeScene("Diary.fxml");
+        DiaryApp.changeScene("Diary.fxml");
     }
 
     /**
