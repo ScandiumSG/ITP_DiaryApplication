@@ -242,7 +242,11 @@ Intended behaviour is merging other branches into the develop branch, however si
 
 The prefered working method is pair-programming or pair-review before attempting to merge into a branch. Assigned pair is not fixed and based on current availability, previous work with the issue or part of the code, and general interest in the assigned change. Preferred communication style for the pair programming or review is through the project specific discord server, however review is also acceptable to perform in the gitlab repository.
 
-Information about guidelines for writing tests, compliance with checkstyle, and preferred test coverage can be found in the specific project readme within the diary directory.
+Information about guidelines for writing tests, compliance with checkstyle, and preferred test coverage can be found in the specific project readme within the diary directory. 
+
+</br>
+
+During project 3 did all members develope a curiosity about headless testing, how it works and how it may be included in the CI and Jacoco report. A great amout of extra time have therefor been spent trying to implement headless testing. We managed to test the application headless as the final result. However, we didn't manage to cerate a monocle library the docker-file could use to make it readable for Gitlab. Even though we didn't reach our goal did the proccess teach us a fair amount about how headless testing works and what it takes to create neccessary properties it realies on. To read more about this sub-project please visit documentation on headless testing: [link]()
 
  <div align="right">
     <a href="#top">back to top</a>
@@ -282,7 +286,7 @@ Project Link: [https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172]
 
 </br>
 
-These sources have actively been used during this project. Therefor would we love to give some credit to the content creators of these. Links of the most used ons are included belove.
+These sources have actively been used during this project. Therefor would we love to give some credit to the content creators of these. Links of the most used ons are included belove. There is, however, many more sources used but five pages of sorce description would hardly be read by anyone. 
 
 -   [Simpleexample2](https://gitlab.stud.idi.ntnu.no/it1901/simpleexample2)
 -   [Simpleexample](https://gitlab.stud.idi.ntnu.no/it1901/simpleexample)
@@ -290,6 +294,18 @@ These sources have actively been used during this project. Therefor would we lov
 -   [Docker](https://www.docker.com/)
 -   [Maven](https://maven.apache.org/)
 -   [GSON](https://github.com/google/gson/blob/master/UserGuide.md)
+-   [Monocle](https://monocle.com/)
+-   [Github forum ](https://github.com/gitpod-io/gitpod/issues/962)
+-   [Gitpod forum](https://www.gitpod.io/blog/gitpodify/)
+-   [StackOverflow](https://stackoverflow.com/)
+-   [Travis CI](https://docs.travis-ci.com/user/gui-and-headless-browsers/)
+-   [Gitlab blog](https://about.gitlab.com/blog/2017/12/19/moving-to-headless-chrome/)
+-   [Ali-Dev](https://ali-dev.medium.com/how-to-setup-chrome-headless-on-gitlab-ci-with-puppeteer-docker-fbb562cbaee1)
+-   [GitLab example issue 7](https://gitlab.stud.idi.ntnu.no/tdt4140-staff/examples/-/issues/7)
+-   []()
+-   []()
+-   []()
+-   []()
 
  <div align="right">
     <a href="#top">back to top</a>
