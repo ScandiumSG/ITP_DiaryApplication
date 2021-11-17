@@ -93,7 +93,6 @@ public class LoginControllerTest extends ApplicationTest{
     public void testEmpty() {
         assertTrue(getUsernameField().getValue() == null);
         assertTrue(getUsernameField().getItems().isEmpty());
-        System.out.println("1");
     }
 
     @Test
@@ -107,7 +106,6 @@ public class LoginControllerTest extends ApplicationTest{
 
         User testUser3 = new User("test user 3", "1111");
         Entry testEntry4 = new Entry("Ut at ligula nec est.", Entry.parseCurrentTime());
-        System.out.println("2");
         
         try {
             EntryToJSON.write(testUser1, "testUser1's diary", testEntry1);
@@ -124,14 +122,12 @@ public class LoginControllerTest extends ApplicationTest{
 
         File file1 = new File(PersistancePaths.makeResourcesPathString(testUser1, "testUser1's diary"));
         file1.delete();
-        System.out.println(file1);
         File file2 = new File(PersistancePaths.makeResourcesPathString(testUser1, "testUser1's diary2"));
         file2.delete();
         File file3 = new File(PersistancePaths.makeResourcesPathString(testUser2, "testUser2's diary"));
         file3.delete();
         File file4 = new File(PersistancePaths.makeResourcesPathString(testUser3, "testUser3's diary"));
         file4.delete();
-        System.out.println("3");
     }
 
     @Test
@@ -141,7 +137,6 @@ public class LoginControllerTest extends ApplicationTest{
         clickOn(getLoginButton());
 
         assertEquals(loginScene, stage.getScene());
-        System.out.println("4");
     }
 
     @Test
@@ -151,7 +146,6 @@ public class LoginControllerTest extends ApplicationTest{
         clickOn(getLoginButton());
 
         assertEquals(loginScene, stage.getScene());
-        System.out.println("5");
     }
 
     @Test
@@ -160,7 +154,6 @@ public class LoginControllerTest extends ApplicationTest{
         clickOn(getPinField()).write("invalid pin");
         clickOn(getLoginButton());
         assertEquals(loginScene, stage.getScene());
-        System.out.println("6");
     }
 
     @Test
@@ -169,7 +162,6 @@ public class LoginControllerTest extends ApplicationTest{
         clickOn(getPinField()).write("111");
         clickOn(getLoginButton());
         assertEquals(loginScene, stage.getScene());
-        System.out.println("7");
     }
 
     @Test
@@ -178,7 +170,6 @@ public class LoginControllerTest extends ApplicationTest{
         clickOn(getPinField()).write("11111");
         clickOn(getLoginButton());
         assertEquals(loginScene, stage.getScene());
-        System.out.println("8");
     }
 
     @Test
@@ -196,6 +187,5 @@ public class LoginControllerTest extends ApplicationTest{
         clickOn(logoutButton);
 
         assertEquals(loginScene, stage.getScene());
-        System.out.println("9");
     }
 }

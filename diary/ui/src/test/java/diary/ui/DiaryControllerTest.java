@@ -1,12 +1,14 @@
 package diary.ui;
 
 import org.junit.jupiter.api.Test;
+import org.testfx.api.FxRobotInterface;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.junit.jupiter.api.BeforeAll;
 
-import diary.core.User;
+import diary.core.*;
 import diary.json.PersistancePaths;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 
@@ -25,13 +28,10 @@ public class DiaryControllerTest extends ApplicationTest{
 
     private DiaryController diaryController;
     private Parent diaryPane;
-    private Stage stage;
     private User user;
 
     @Override
     public void start(final Stage stage) throws Exception {
-        this.stage = stage;
-
         FXMLLoader diaryLoader = new FXMLLoader(
         this.getClass().getResource("Diary.fxml"));
         diaryPane = diaryLoader.load();
@@ -51,6 +51,10 @@ public class DiaryControllerTest extends ApplicationTest{
         DiaryApp.supportHeadless();
     }
 
+    private Button getLoadButton() {
+        return (Button) diaryPane.lookup("#loadDiaryButton");
+    }
+
     private TextArea getTextArea() {
         return (TextArea) diaryPane.lookup("#textEntry");
     }
@@ -68,6 +72,18 @@ public class DiaryControllerTest extends ApplicationTest{
         return (DatePicker) diaryPane.lookup("#dateInput");
     }
 
+    private Button getRightArrow() {
+        return (Button) diaryPane.lookup("#rightButton");
+    }
+
+    private Button getLeftArrow() {
+        return (Button) diaryPane.lookup("#leftButton");
+    }
+
+    private FxRobotInterface tripleClick(Node node) {
+        return clickOn(node).clickOn(node).clickOn(node);
+    }
+
     @Test
     public void testController() {
         assertNotNull(this.diaryController);
@@ -79,20 +95,64 @@ public class DiaryControllerTest extends ApplicationTest{
         assertEquals("", getTextArea().getText());
     }
 
-    /*
+    
     @Test
     public void testSaveAndDatePicker() {
         clickOn(getTextArea()).write("todays date");
         clickOn(getSaveButton());
 
-        clickOn(getDatePicker().getEditor()).write("10-11-2021"+"\n");
+        tripleClick(getDatePicker().getEditor()).write("10-11-2021"+"\n");
         assertEquals("", getTextArea().getText());
 
-        clickOn(getDatePicker().getEditor()).write(Entry.parseCurrentTime() + "\n");
+        tripleClick(getDatePicker().getEditor()).write(Entry.parseCurrentTime() + "\n");
         assertEquals("todays date", getTextArea().getText());
 
         File file = new File(PersistancePaths.makeResourcesPathString(user, getTitleField().getValue()));
         file.delete();
     }
-    */
+
+    @Test
+    public void testArrowButtons() {
+        clickOn(getTextArea()).write("Todays date");
+        clickOn(getSaveButton());
+
+        clickOn(getRightArrow());
+        assertEquals("", getTextArea().getText());
+        clickOn(getTextArea()).write("Tomorrows date");
+        clickOn(getSaveButton());
+
+        clickOn(getLeftArrow());
+        assertEquals("Todays date", getTextArea().getText());
+
+        clickOn(getRightArrow());
+        assertEquals("Tomorrows date", getTextArea().getText());
+
+        File file = new File(PersistancePaths.makeResourcesPathString(user, getTitleField().getValue()));
+        file.delete();
+    }
+
+    @Test
+    public void testMultipleDiaries() {
+        clickOn(getTextArea()).write("Diary 1");
+        clickOn(getSaveButton());
+
+        tripleClick(getTitleField()).write("TestUser's diary2");
+        clickOn(getLoadButton());
+
+        assertEquals("", getTextArea().getText());
+        clickOn(getTextArea()).write("Diary 2");
+        clickOn(getSaveButton());
+
+        tripleClick(getTitleField()).write("TestUser's diary");
+        clickOn(getLoadButton());
+
+        assertEquals("Diary 1", getTextArea().getText());
+
+        assertTrue(getTitleField().getItems().size() == 2);
+
+        File file = new File(PersistancePaths.makeResourcesPathString(user, "TestUser's diary"));
+        file.delete();
+        File file2 = new File(PersistancePaths.makeResourcesPathString(user, "TestUser's diary2"));
+        file2.delete();
+    }
 }
