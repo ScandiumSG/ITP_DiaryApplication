@@ -19,6 +19,7 @@ public class DiaryApp extends Application {
         System.setProperty("java.awt.headless", "true");   
         }
     }
+
     @Override
     public final void start(final Stage stage) throws IOException {
         FXMLLoader loginLoader = new FXMLLoader(

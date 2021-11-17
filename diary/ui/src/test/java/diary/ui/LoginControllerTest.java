@@ -2,7 +2,6 @@ package diary.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -23,17 +22,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
-import diary.ui.DiaryApp;
 
 
 public class LoginControllerTest extends ApplicationTest{
+    
     private LoginController loginController;
     private DiaryController diaryController;
 
     private Stage stage;
 
     private Parent loginPane;
+    private Scene loginScene;
 
+    private Parent diaryPane;
+    private Scene diaryScene;
+    
     @Override
     public void start(final Stage stage) throws Exception{
         this.stage = stage;
@@ -41,12 +44,12 @@ public class LoginControllerTest extends ApplicationTest{
         FXMLLoader loginLoader = new FXMLLoader(
             this.getClass().getResource("Login.fxml"));
         loginPane = loginLoader.load();
-        Scene loginScene = new Scene(loginPane);
+        loginScene = new Scene(loginPane);
 
         FXMLLoader diaryLoader = new FXMLLoader(
             this.getClass().getResource("Diary.fxml"));
-        Parent diaryPane = diaryLoader.load();
-        Scene diaryScene = new Scene(diaryPane);
+        diaryPane = diaryLoader.load();
+        diaryScene = new Scene(diaryPane);
 
         loginController = (LoginController) loginLoader.getController();
         loginController.setDiaryScene(diaryScene);
@@ -61,10 +64,10 @@ public class LoginControllerTest extends ApplicationTest{
         stage.setScene(loginScene);
         stage.show();
     }
+
     @BeforeAll
     public static void supportHeadless(){
-        DiaryApp.supportHeadless(); 
-        
+        DiaryApp.supportHeadless();   
     }
 
     @Test
@@ -111,6 +114,7 @@ public class LoginControllerTest extends ApplicationTest{
 
         File file1 = new File(PersistancePaths.makeResourcesPathString(testUser1, "testUser1's diary"));
         file1.delete();
+        System.out.println(file1);
         File file2 = new File(PersistancePaths.makeResourcesPathString(testUser1, "testUser1's diary2"));
         file2.delete();
         File file3 = new File(PersistancePaths.makeResourcesPathString(testUser2, "testUser2's diary"));
@@ -126,5 +130,40 @@ public class LoginControllerTest extends ApplicationTest{
 
         clickOn(pinField).write("1111");
         clickOn(loginButton);
+
+        assertEquals(loginScene, stage.getScene());
+    }
+
+    @Test
+    public void testEmptyPin() {
+        @SuppressWarnings("unchecked")
+        ComboBox<String> usernameField = (ComboBox<String>) loginPane.lookup("#usernameField");
+        Button loginButton = (Button) loginPane.lookup("#loginButton");
+
+        clickOn(usernameField).write("testuser1");
+        clickOn(loginButton);
+
+        assertEquals(loginScene, stage.getScene());
+    }
+
+    @Test
+    public void testLoginAndLogout() {
+        @SuppressWarnings("unchecked")
+        ComboBox<String> usernameField = (ComboBox<String>) loginPane.lookup("#usernameField");
+        PasswordField pinField = (PasswordField) loginPane.lookup("#pinField");
+        Button loginButton = (Button) loginPane.lookup("#loginButton");
+
+        clickOn(usernameField).write("testuser1");
+        clickOn(pinField).write("1111");
+
+        clickOn(loginButton);
+
+        assertEquals(diaryScene, stage.getScene());
+
+        Button logoutButton = (Button) diaryPane.lookup("#logoutButton");
+
+        clickOn(logoutButton);
+
+        assertEquals(loginScene, stage.getScene());
     }
 }

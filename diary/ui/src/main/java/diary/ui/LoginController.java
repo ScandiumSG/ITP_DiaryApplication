@@ -4,7 +4,6 @@ import diary.core.User;
 import diary.json.RetrieveDiaries;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -84,6 +83,10 @@ public class LoginController {
      */
     public void updateUserList() {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
+
+        if (diaryNames == null) {
+            return;
+        }
 
         for (String name : diaryNames) {
             if (!name.contains("+")) {
