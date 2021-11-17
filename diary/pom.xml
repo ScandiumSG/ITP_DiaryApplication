@@ -222,7 +222,7 @@
     <modules>
         <module>core</module>
         <module>ui</module>
-        <module>testing</module>
         <module>api</module>
+        <module>testing</module>
     </modules>
 </project>

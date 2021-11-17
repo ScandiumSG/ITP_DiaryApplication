@@ -85,15 +85,17 @@ public class LoginController {
     public void updateUserList() {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
-        for (String name : diaryNames) {
-            if (!name.contains("+")) {
-                continue;
+        if (diaryNames != null) {
+            for (String name : diaryNames) {
+                if (!name.contains("+")) {
+                    continue;
+                }
+                name = name.substring(0, name.indexOf("+")).replace("_", " ");
+                if (usernameField.getItems().contains(name)) {
+                    continue;
+                }
+                usernameField.getItems().add(name);
             }
-            name = name.substring(0, name.indexOf("+")).replace("_", " ");
-            if (usernameField.getItems().contains(name)) {
-                continue;
-            }
-            usernameField.getItems().add(name);
         }
     }
 }

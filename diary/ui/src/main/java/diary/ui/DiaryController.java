@@ -185,6 +185,8 @@ public class DiaryController {
             
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException f)  {
+
         }
     }
 
