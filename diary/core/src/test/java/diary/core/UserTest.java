@@ -10,7 +10,7 @@ public class UserTest {
     @Test
     public void testUserCreation() {
         String username = "Ola";
-        Integer userpin = ThreadLocalRandom.current().nextInt(1000, 9999+1);
+        String userpin = String.valueOf(ThreadLocalRandom.current().nextInt(1000, 9999+1));
         User user = new User(username, userpin);
 
         Assertions.assertEquals(username, user.getUserName());
@@ -22,7 +22,7 @@ public class UserTest {
     @Test
     public void testUsernameSanitization() {
         String username = "Ola Nordmann ";
-        Integer userpin = ThreadLocalRandom.current().nextInt(1000, 9999+1);
+        String userpin = String.valueOf(ThreadLocalRandom.current().nextInt(1000, 9999+1));
         User user = new User(username, userpin);
 
         Assertions.assertTrue(user.getUserID().contains("_"));
@@ -34,7 +34,7 @@ public class UserTest {
     @Test
     public void testUsernameValidation() {
         String username = " ";
-        Integer userpin = ThreadLocalRandom.current().nextInt(1000, 9999+1);
+        String userpin = String.valueOf(ThreadLocalRandom.current().nextInt(1000, 9999+1));
 
         Assertions.assertThrows(
             IllegalArgumentException.class,
@@ -44,15 +44,30 @@ public class UserTest {
     @Test
     public void testUserpinValidation() {
         String username = "Ola Nordmann";
+        String userpin = String.valueOf(ThreadLocalRandom.current().nextInt(100, 999+1));
 
-        Integer userpin = ThreadLocalRandom.current().nextInt(100, 999+1);
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> {new User(username, userpin);});
 
-        Integer userpin2 = ThreadLocalRandom.current().nextInt(10000, 99999+1);
+        String invalidPin1 = String.valueOf(ThreadLocalRandom.current().nextInt(10000, 99999+1));
         Assertions.assertThrows(
             IllegalArgumentException.class,
-            () -> {new User(username, userpin2);});
+            () -> {new User(username, invalidPin1);});
+
+        String invalidPin2 = "abcd";
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> {new User(username, invalidPin2);});
+
+        String invalidPin3 = "abcdefg";
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> {new User(username, invalidPin3);});
+
+        String invalidPin4 = "a2cd";
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> {new User(username, invalidPin4);});
     }
 }

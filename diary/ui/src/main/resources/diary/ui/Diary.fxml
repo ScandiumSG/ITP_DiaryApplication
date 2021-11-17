@@ -5,24 +5,24 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="diary.ui.DiaryController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="diary.ui.DiaryController">
     <children>
-        <Button fx:id="entrySubmit" layoutX="482.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#saveDateEntry" text="Save entry"/>
-        <DatePicker fx:id="dateInput" layoutX="59.0" layoutY="506.0" onAction="#retrieveDateEntry"/>
-        <Text layoutX="230.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dagbok" wrappingWidth="151.13671875">
-            <font>
-                <Font size="36.0"/>
-            </font>
-        </Text>
+        <Button fx:id="entrySubmit" layoutX="482.0" layoutY="506.0" mnemonicParsing="false" onAction="#saveDateEntry" text="Save entry" />
+        <DatePicker fx:id="dateInput" layoutX="59.0" layoutY="506.0" onAction="#updateGraphics" />
         <Label fx:id="dateId" layoutX="59.0" layoutY="52.0" text="Current date:">
             <font>
-                <Font size="15.0"/>
+                <Font size="15.0" />
             </font>
         </Label>
         <TextArea fx:id="textEntry" layoutX="59.0" layoutY="73.0" prefHeight="412.0" prefWidth="494.0">
             <font>
-                <Font size="20.0"/>
+                <Font size="20.0" />
             </font>
         </TextArea>
+      <Button fx:id="leftButton" layoutX="14.0" layoutY="254.0" mnemonicParsing="false" onAction="#getPreviousDate" prefHeight="25.0" prefWidth="45.0" text="&lt;" />
+      <Button fx:id="rightButton" layoutX="553.0" layoutY="254.0" mnemonicParsing="false" onAction="#getNextDate" prefHeight="25.0" prefWidth="45.0" text="&gt;" />
+      <Button fx:id="logoutButton" layoutX="534.0" layoutY="12.0" mnemonicParsing="false" onAction="#logout" text="Log out" />
+      <ComboBox fx:id="title" editable="true" layoutX="117.0" layoutY="6.0" onAction="#updateGraphics" prefHeight="37.0" prefWidth="260.0" promptText="select dairy" />
+      <Button fx:id="loadDiaryButton" layoutX="393.0" layoutY="12.0" mnemonicParsing="false" onAction="#updateGraphics" prefHeight="25.0" prefWidth="71.0" text="load dairy" textAlignment="CENTER" />
     </children>
 </Pane>

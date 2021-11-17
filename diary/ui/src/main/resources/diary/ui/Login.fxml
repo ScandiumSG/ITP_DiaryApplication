@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="diary.ui.LoginController">
+   <children>
+      <Text fx:id="title" layoutX="125.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dagbok" textAlignment="CENTER" wrappingWidth="349.13671875">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Text>
+      <Text layoutX="46.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " textAlignment="RIGHT" wrappingWidth="118.701171875">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text layoutX="46.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pin:" textAlignment="RIGHT" wrappingWidth="118.701171875">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="pinField" layoutX="182.0" layoutY="286.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="loginButton" layoutX="182.0" layoutY="341.0" mnemonicParsing="false" onAction="#logIn" text="Log in" />
+      <ComboBox fx:id="usernameField" editable="true" layoutX="182.0" layoutY="229.0" prefHeight="42.0" prefWidth="237.0" />  
+   </children>
+</Pane>

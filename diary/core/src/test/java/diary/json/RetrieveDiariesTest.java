@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import diary.core.Entry;
 import diary.core.User;
 
-
 public class RetrieveDiariesTest {
     private static User user;
     private static User user2;
@@ -39,15 +38,15 @@ public class RetrieveDiariesTest {
 
         String username = "testUser";
         Integer userpin = ThreadLocalRandom.current().nextInt(1000, 9999+1);
-        user = new User(username, userpin);
+        user = new User(username,  String.valueOf(userpin));
 
         String username2 = "testOtherUser";
         Integer userpin2 = ThreadLocalRandom.current().nextInt(1000, 9999+1);
-        user2 = new User(username2, userpin2);
+        user2 = new User(username2,  String.valueOf(userpin2));
 
-        testFile1 = EntryToJSON.getJsonFile(user, diary1);
-        testFile2 = EntryToJSON.getJsonFile(user, diary2);
-        testFile3 = EntryToJSON.getJsonFile(user2, diary3);
+        testFile1 = PersistanceUtil.getJsonFile(user, diary1);
+        testFile2 = PersistanceUtil.getJsonFile(user, diary2);
+        testFile3 = PersistanceUtil.getJsonFile(user2, diary3);
 
         EntryToJSON.write(user, diary1, entry1);
         EntryToJSON.write(user, diary1, entry2);
@@ -72,8 +71,30 @@ public class RetrieveDiariesTest {
     }
 
     @Test
+    public void testListFilesStartingWith() {
+        List<String> foundFiles = PersistanceUtil.getFilesStartingWith(user.getUserID(), true);
+
+        Assertions.assertTrue(foundFiles.size() == 2);
+        Assertions.assertTrue(foundFiles.get(0).contains(diary1) || foundFiles.get(0).contains(diary2));
+        Assertions.assertTrue(foundFiles.get(1).contains(diary1) || foundFiles.get(1).contains(diary2));
+    }
+
+    @Test
+    public void testListFilesStartingWithRoot() throws IOException {
+        String fileName = "rootFilesStartingWithFile";
+        String fileFluff = "BobTheBuilder";
+        String content = "Test file, used to check ListFilesStartingWith method";
+        EntryToJSON.write(fileName+fileFluff, content, false);
+        List<String> foundFiles = PersistanceUtil.getFilesStartingWith(fileName, false);
+
+        Assertions.assertTrue(foundFiles.size() == 1);
+
+        new File(PersistancePaths.makeCurrentDirectoryPathString(fileName+fileFluff)).delete();
+    }
+
+    @Test
     public void testInvalidUser() throws IOException {
-        User invalidUser = new User("S+K", 1234);
+        User invalidUser = new User("S+K", "1234");
         Entry testEntry = new Entry("test123");
         String invalidUserFileName = "invalid User Diary";
         EntryToJSON.write(invalidUser, invalidUserFileName, testEntry);
@@ -81,7 +102,7 @@ public class RetrieveDiariesTest {
             IllegalArgumentException.class,
             () -> {RetrieveDiaries.findDiaries(invalidUser);});
 
-        EntryToJSON.getJsonFile(invalidUser, invalidUserFileName).delete();
+        PersistanceUtil.getJsonFile(invalidUser, invalidUserFileName).delete();
     }
 
     @AfterAll
