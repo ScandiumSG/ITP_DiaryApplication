@@ -149,6 +149,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Need additional packages for linux, see link: https://github.com/jgneff/openjdk#java-platform -->
             <!-- config above and below taken from https://dev.to/cherrychain/javafx-jlink-and-jpackage-h9 -->
             <plugin>
                 <groupId>org.panteleyev</groupId>
