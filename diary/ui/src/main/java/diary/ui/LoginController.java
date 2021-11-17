@@ -60,6 +60,7 @@ public class LoginController {
     private void updateUserList() {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
+        if (diaryNames != null) {
         for (String name : diaryNames) {
             if (!name.contains("+")) {
                 continue;
@@ -70,5 +71,6 @@ public class LoginController {
             }
             usernameField.getItems().add(name);
         }
+    }
     }
 }
