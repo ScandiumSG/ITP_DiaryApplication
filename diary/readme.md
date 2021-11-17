@@ -65,7 +65,7 @@ The maven spotbugs plugin, spotbugs-maven-plugin, is used to detect well known b
 
 This project use a spotbugs exclusion list, which contains any spotbugs error that is allowed within the project. This exclusion list is located in `diary/config/spotbugs_exclude.xml`.
 
-Currently on bug that is excluded from bugspot tests. `DLS_DEAD_LOCAL_STORE` is included due to usage of `File.delete()` in the persistance layer. The `File.delete()` method returns a boolean value, however currently the project design just needs the file to delete without a return value, which is why the `DLS_DEAD_LOCAL_STORE` is on the exclusion list.
+Currently one bug is excluded from bugspot tests. `DLS_DEAD_LOCAL_STORE` is included due to usage of `File.delete()` in the persistance layer. The `File.delete()` method returns a boolean value, however currently the project design just needs the file to delete without a return value, which is why the `DLS_DEAD_LOCAL_STORE` is on the exclusion list.
 
 ## How to run test
 
