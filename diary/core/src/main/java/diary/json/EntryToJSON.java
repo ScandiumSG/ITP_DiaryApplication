@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,15 +69,23 @@ public final class EntryToJSON {
             writeLocation = new File(
                 PersistancePaths.makeCurrentDirectoryPathString(fileName));
         }
-        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-        // FileWriter fw = new FileWriter(jsonFile, false);
-        FileOutputStream sm = new FileOutputStream(writeLocation);
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
-        gson.toJson(content, bw);
-        sm.flush();
-        bw.flush();
-        sm.close();
-        bw.close();
+
+        PrintWriter out = new PrintWriter(writeLocation, StandardCharsets.UTF_8);
+        out.print(content);
+        out.close();
+
+        // //FileWriter fw = new FileWriter(writeLocation);
+
+        // Gson gson = new GsonBuilder().create();
+        // // FileWriter fw = new FileWriter(jsonFile, false);
+        // FileOutputStream sm = new FileOutputStream(writeLocation);
+        // BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
+        // System.out.println(content);
+        // gson.toJson(content, bw);
+        // sm.flush();
+        // bw.flush();
+        // sm.close();
+        // bw.close();
     }
 
     // Delete boolean not used, suppressing warning.

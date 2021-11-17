@@ -1,0 +1,14 @@
+#Ignore files and directories in the diary folder
+/*
+/*/
+
+#unignore all directories and files listed here
+!/backend/
+!/frontend/
+!/config/
+!/core/
+!/testing/
+!/ui/
+!pom.xml
+!readme.md
+!.gitignore

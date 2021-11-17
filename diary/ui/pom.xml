@@ -12,7 +12,7 @@
     <artifactId>ui</artifactId>
 
     <properties>
-        <skipUiTests>false</skipUiTests>
+        <skipUiTests>true</skipUiTests>
     </properties>
 
 
@@ -20,6 +20,11 @@
         <dependency>
             <groupId>diary</groupId>
             <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>diary</groupId>
+            <artifactId>frontend</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -47,6 +52,12 @@
 		<dependency>
     		<groupId>org.testfx</groupId>
 			<artifactId>testfx-junit5</artifactId>
+        </dependency>
+        <!-- JAVA servlet -->
+        <!-- Dunno why this is needed here, but trust me, it is -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
     </dependencies>
 

@@ -6,6 +6,7 @@ module diary.ui {
     requires javafx.fxml;
 
     requires diary.core;
+    requires diary.frontend;
 
     opens diary.ui to javafx.graphics, javafx.fxml;
 }
