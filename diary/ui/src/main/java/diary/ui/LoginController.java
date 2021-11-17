@@ -4,12 +4,22 @@ import diary.core.User;
 import diary.json.RetrieveDiaries;
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class LoginController {
+
+    public Scene diaryScene;
+    public DiaryController diaryController;
+
+    @FXML
+    private Pane pane;
 
     @FXML
     private ComboBox<String> usernameField;
@@ -23,6 +33,13 @@ public class LoginController {
     @FXML
     private Text title;
 
+    public void setDiaryScene(Scene scene) {
+        diaryScene = scene;
+    }
+
+    public void setDiaryController(DiaryController controller) {
+        diaryController = controller;
+    }
 
     /**
      * Runs whenever the scene is opened
@@ -43,21 +60,29 @@ public class LoginController {
      * @throws IOException If an error occur during loading of the new scene.
      */
     @FXML
-    public void logIn() throws IOException {
-        String name = usernameField.getValue();
-        String pin = pinField.getText();
+    public void logIn() throws IOException, IllegalArgumentException {
+        try {
+            String name = usernameField.getValue();
+            String pin = pinField.getText();    
 
-        User user = new User(name, pin);
+            User user = new User(name, pin);
+            diaryController.openNewUser(user);
+            usernameField.setValue("");
+            pinField.clear();
+    
+            Stage stage = (Stage) pane.getScene().getWindow();
+            stage.setScene(diaryScene);
 
-        DiaryController.setUser(user);
-        DiaryApp.changeScene("Diary.fxml");
+        } catch (Exception e) {
+            System.out.println("invalid username or password");
+        }
     }
 
     /**
      * Looks for users with regisered diaries and adds their names to the login dropdown menu
      * Only adds names not already registered
      */
-    private void updateUserList() {
+    public void updateUserList() {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
         if (diaryNames != null) {

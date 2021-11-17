@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="diary.ui.DiaryController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="diary.ui.DiaryController">
     <children>
         <Button fx:id="entrySubmit" layoutX="482.0" layoutY="506.0" mnemonicParsing="false" onAction="#saveDateEntry" text="Save entry" />
         <DatePicker fx:id="dateInput" layoutX="59.0" layoutY="506.0" onAction="#updateGraphics" />
