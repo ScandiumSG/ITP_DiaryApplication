@@ -104,6 +104,10 @@ Interface:
 </br>
 
 -   [Maven](https://maven.apache.org/)
+-   [Monocle]()
+-   [Java]()
+-   [JavaFX]()
+
 
  <div align="right">
     <a href="#top">back to top</a>
@@ -127,7 +131,7 @@ To get a local copy up and running follow these simple steps.
 
 How to set up the environment to use the application and how to install them.
 
--   install mvn
+-   Install maven
 
 </br>
 
@@ -174,6 +178,22 @@ mvn javafx:run -f ui/pom.xml
   </div>
 
 
+<!-- RUN TESTS -->
+## Run Tests
+</br>
+
+### **Regular Tests**
+```
+cd diary/<module>
+mvn test
+```
+
+### **Headless Tests of UI**
+```
+cd diary/ui
+mvn test -P headless
+```
+
 <!-- USAGE EXAMPLES -->
 
 ## Usage
@@ -199,14 +219,16 @@ For more infomration of the project, plrease refer to the [Documentation](https:
 
 </br>
 
-### Userhistory
+### **Userhistory**
 
 As an imaginative and thoughtful person I find it necessary to collect my thoughts somewhere. That's why I need some place where I may write down my thoughts in order to look back at them in the future.
 That's why I would like a diary capable of storing my thoughts over extended periods of time, with the option to view and edit them later.
+I highly value my privacy, which is why I want my diary to be secure. In order to keep my thoughts secrete I secure the diary with a pin code.
 
 </br>
 
-### Important features for the user
+
+### **Important features for the user**
 
 -   The submit button saves your current entry to the selected date. (Today by default)
 -   Use the datepicker to edit or read the entry for a different date.
@@ -238,7 +260,7 @@ Smaller features or changes can be approved by any other developer, after which 
 
 Intended behaviour is merging other branches into the develop branch, however single-file changes minor changes is approved to be pushed directly to develop. After some features and issues is collected in develop the develop branch is pushed to master during a group meeting, this allows develop to work as a stable experimental branch while the master branch is shielded from unintended effects of new features.
 
-### Working methods
+### **Working methods**
 
 The prefered working method is pair-programming or pair-review before attempting to merge into a branch. Assigned pair is not fixed and based on current availability, previous work with the issue or part of the code, and general interest in the assigned change. Preferred communication style for the pair programming or review is through the project specific discord server, however review is also acceptable to perform in the gitlab repository.
 
@@ -302,12 +324,14 @@ These sources have actively been used during this project. Therefor would we lov
 -   [Gitlab blog](https://about.gitlab.com/blog/2017/12/19/moving-to-headless-chrome/)
 -   [Ali-Dev](https://ali-dev.medium.com/how-to-setup-chrome-headless-on-gitlab-ci-with-puppeteer-docker-fbb562cbaee1)
 -   [GitLab example issue 7](https://gitlab.stud.idi.ntnu.no/tdt4140-staff/examples/-/issues/7)
--   []()
--   []()
--   []()
--   []()
+
 
  <div align="right">
     <a href="#top">back to top</a>
   </div>
-
+<div align="center">
+<a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
+  <img src="docs/release2/logo.svg" alt="Logo" width="180" height="180">
+</a>
+ <h3 align>Group2172</h3>
+</div>
