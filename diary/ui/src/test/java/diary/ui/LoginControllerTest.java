@@ -27,12 +27,17 @@ import diary.ui.DiaryApp;
 
 
 public class LoginControllerTest extends ApplicationTest{
+    
     private LoginController loginController;
     private DiaryController diaryController;
 
     private Stage stage;
 
     private Parent loginPane;
+    private Scene loginScene;
+
+    private Parent diaryPane;
+    private Scene diaryScene;
 
     @Override
     public void start(final Stage stage) throws Exception{
@@ -41,12 +46,12 @@ public class LoginControllerTest extends ApplicationTest{
         FXMLLoader loginLoader = new FXMLLoader(
             this.getClass().getResource("Login.fxml"));
         loginPane = loginLoader.load();
-        Scene loginScene = new Scene(loginPane);
+        loginScene = new Scene(loginPane);
 
         FXMLLoader diaryLoader = new FXMLLoader(
             this.getClass().getResource("Diary.fxml"));
-        Parent diaryPane = diaryLoader.load();
-        Scene diaryScene = new Scene(diaryPane);
+        diaryPane = diaryLoader.load();
+        diaryScene = new Scene(diaryPane);
 
         loginController = (LoginController) loginLoader.getController();
         loginController.setDiaryScene(diaryScene);
@@ -126,5 +131,40 @@ public class LoginControllerTest extends ApplicationTest{
 
         clickOn(pinField).write("1111");
         clickOn(loginButton);
+
+        assertEquals(loginScene, stage.getScene());
+    }
+
+    @Test
+    public void testEmptyPin() {
+        @SuppressWarnings("unchecked")
+        ComboBox<String> usernameField = (ComboBox<String>) loginPane.lookup("#usernameField");
+        Button loginButton = (Button) loginPane.lookup("#loginButton");
+
+        clickOn(usernameField).write("testuser1");
+        clickOn(loginButton);
+
+        assertEquals(loginScene, stage.getScene());
+    }
+
+    @Test
+    public void testLoginAndLogout() {
+        @SuppressWarnings("unchecked")
+        ComboBox<String> usernameField = (ComboBox<String>) loginPane.lookup("#usernameField");
+        PasswordField pinField = (PasswordField) loginPane.lookup("#pinField");
+        Button loginButton = (Button) loginPane.lookup("#loginButton");
+
+        clickOn(usernameField).write("testuser1");
+        clickOn(pinField).write("1111");
+
+        clickOn(loginButton);
+
+        assertEquals(diaryScene, stage.getScene());
+
+        Button logoutButton = (Button) diaryPane.lookup("#logoutButton");
+
+        clickOn(logoutButton);
+
+        assertEquals(loginScene, stage.getScene());
     }
 }

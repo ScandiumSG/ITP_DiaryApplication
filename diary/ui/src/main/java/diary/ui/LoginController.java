@@ -85,6 +85,10 @@ public class LoginController {
     public void updateUserList() {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
+        if (diaryNames == null) {
+            return;
+        }
+
         for (String name : diaryNames) {
             if (!name.contains("+")) {
                 continue;
