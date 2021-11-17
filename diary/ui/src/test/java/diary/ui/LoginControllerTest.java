@@ -61,7 +61,7 @@ public class LoginControllerTest extends ApplicationTest{
         stage.setScene(loginScene);
         stage.show();
     }
-        @BeforeAll
+    @BeforeAll
     public static void supportHeadless(){
         DiaryApp.supportHeadless(); 
         
