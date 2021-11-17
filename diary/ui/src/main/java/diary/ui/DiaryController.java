@@ -26,9 +26,9 @@ import javafx.util.StringConverter;
 
 public class DiaryController {
 
-    private Scene loginScene;
+    public Scene loginScene;
 
-    private LoginController loginController;
+    public LoginController loginController;
 
     private User user;
 
@@ -77,6 +77,10 @@ public class DiaryController {
      */
     @FXML
     private void updateGraphics() {
+        if (title.getValue() == null) {
+            return;
+        }
+
         Entry entry = EntryFromJSON.read(user, title.getValue(), getDateInput());
 
         if (entry == null) {
@@ -138,7 +142,7 @@ public class DiaryController {
      * 
      * @param scene the javafx scene to load
      */
-    public void setLoginScene(Scene scene){
+    public void setLoginScene(Scene scene) {
         loginScene = scene;
     }
 
@@ -166,7 +170,7 @@ public class DiaryController {
      */
     private void updateDiaryList() {
         try {
-            title.valueProperty().set(null);
+            title.getItems().clear();
 
             HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
             for (String name : diaries.keySet()) {
@@ -176,9 +180,9 @@ public class DiaryController {
             title.getSelectionModel().selectFirst();
 
             if (title.getValue() == null) {
-                title.setValue(user.getUserName() + " 's diary");
+                title.setValue(user.getUserName() + "'s diary");
             }
-
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

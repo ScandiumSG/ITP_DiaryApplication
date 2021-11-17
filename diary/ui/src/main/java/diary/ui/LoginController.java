@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 
 public class LoginController {
 
-    private Scene diaryScene;
-    private DiaryController diaryController;
+    public Scene diaryScene;
+    public DiaryController diaryController;
 
     @FXML
     private Pane pane;
@@ -40,7 +40,6 @@ public class LoginController {
     public void setDiaryController(DiaryController controller) {
         diaryController = controller;
     }
-
 
     /**
      * Runs whenever the scene is opened
