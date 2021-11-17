@@ -127,6 +127,7 @@
                 <configuration>
                     <skipTests>${skipUiTests}</skipTests>
                     <argLine>
+                    @{jaCoCoArgLine}
                     --add-opens diary.ui/diary.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
                 </configuration>
@@ -185,6 +186,9 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <propertyName>jaCoCoArgLine</propertyName>
+                </configuration>
             </plugin>
         </plugins>
     </build>
