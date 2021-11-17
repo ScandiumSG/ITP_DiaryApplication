@@ -18,16 +18,11 @@
         <mainClassName>diary.ui.DiaryApp</mainClassName>
         <checkstyle.config.location>config/custom_checkstyle.xml</checkstyle.config.location>
         <skipUiTests>false</skipUiTests>
+        <headlessTests>false</headlessTests>
     </properties>
 
     <dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>org.testfx</groupId>
-            <artifactId>openjfx-monocle</artifactId>
-            <version>jdk-12.0.1+2</version>
-            <scope>test</scope>
-        </dependency>
         <!-- javafx -->
         <dependency>
             <groupId>org.openjfx</groupId>
