@@ -67,7 +67,7 @@ public class LoginControllerTest extends ApplicationTest{
 
     @BeforeAll
     public static void supportHeadless(){
-        DiaryApp.supportHeadless();   
+        DiaryApp.supportHeadless(); 
     }
 
     @Test
@@ -76,13 +76,23 @@ public class LoginControllerTest extends ApplicationTest{
         assertNotNull(this.diaryController);
     }
 
+    @SuppressWarnings("unchecked")
+    private ComboBox<String> getUsernameField() {
+        return (ComboBox<String>) loginPane.lookup("#usernameField");
+    }
+
+    private PasswordField getPinField() {
+        return (PasswordField) loginPane.lookup("#pinField");
+    }
+
+    private Button getLoginButton() {
+        return (Button) loginPane.lookup("#loginButton");
+    }
 
     @Test
     public void testEmpty() {
-        @SuppressWarnings("unchecked")
-        ComboBox<String> usernameField = (ComboBox<String>) loginPane.lookup("#usernameField");
-        assertTrue(usernameField.getValue() == null);
-        assertTrue(usernameField.getItems().isEmpty());
+        assertTrue(getUsernameField().getValue() == null);
+        assertTrue(getUsernameField().getItems().isEmpty());
     }
 
     @Test
@@ -108,9 +118,7 @@ public class LoginControllerTest extends ApplicationTest{
 
         loginController.updateUserList();
 
-        @SuppressWarnings("unchecked")
-        ComboBox<String> usernameField = (ComboBox<String>) loginPane.lookup("#usernameField");
-        assertTrue(usernameField.getItems().size() == 3);
+        assertTrue(getUsernameField().getItems().size() == 3);
 
         File file1 = new File(PersistancePaths.makeResourcesPathString(testUser1, "testUser1's diary"));
         file1.delete();
@@ -125,38 +133,53 @@ public class LoginControllerTest extends ApplicationTest{
 
     @Test
     public void testEmptyName() {
-        PasswordField pinField = (PasswordField) loginPane.lookup("#pinField");
-        Button loginButton = (Button) loginPane.lookup("#loginButton");
 
-        clickOn(pinField).write("1111");
-        clickOn(loginButton);
+        clickOn(getPinField()).write("1111");
+        clickOn(getLoginButton());
 
         assertEquals(loginScene, stage.getScene());
     }
 
     @Test
     public void testEmptyPin() {
-        @SuppressWarnings("unchecked")
-        ComboBox<String> usernameField = (ComboBox<String>) loginPane.lookup("#usernameField");
-        Button loginButton = (Button) loginPane.lookup("#loginButton");
 
-        clickOn(usernameField).write("testuser1");
-        clickOn(loginButton);
+        clickOn(getUsernameField()).write("testuser1");
+        clickOn(getLoginButton());
 
         assertEquals(loginScene, stage.getScene());
     }
 
     @Test
+    public void testLettersInPin() {
+        clickOn(getUsernameField()).write("testuser2");
+        clickOn(getPinField()).write("invalid pin");
+        clickOn(getLoginButton());
+        assertEquals(loginScene, stage.getScene());
+    }
+
+    @Test
+    public void testShortPin() {
+        clickOn(getUsernameField()).write("testuser3");
+        clickOn(getPinField()).write("111");
+        clickOn(getLoginButton());
+        assertEquals(loginScene, stage.getScene());
+    }
+
+    @Test
+    public void testLongPin() {
+        clickOn(getUsernameField()).write("testuser4");
+        clickOn(getPinField()).write("11111");
+        clickOn(getLoginButton());
+        assertEquals(loginScene, stage.getScene());
+    }
+
+    @Test
     public void testLoginAndLogout() {
-        @SuppressWarnings("unchecked")
-        ComboBox<String> usernameField = (ComboBox<String>) loginPane.lookup("#usernameField");
-        PasswordField pinField = (PasswordField) loginPane.lookup("#pinField");
-        Button loginButton = (Button) loginPane.lookup("#loginButton");
 
-        clickOn(usernameField).write("testuser1");
-        clickOn(pinField).write("1111");
+        clickOn(getUsernameField()).write("testuser5");
+        clickOn(getPinField()).write("1111");
 
-        clickOn(loginButton);
+        clickOn(getLoginButton());
 
         assertEquals(diaryScene, stage.getScene());
 
