@@ -74,3 +74,43 @@ Currently one bug is excluded from bugspot tests. `DLS_DEAD_LOCAL_STORE` is incl
 Tests are run in the verify phase of the maven lifecycle. Therefore a any branch can run every test, checkstyle, spotbugs, and jacoco, using the `mvn verify` command.
 
 A daily jacoco coverage report is generated on the master branch on gitlab. While a code coverage percentage can be seen on the master branch badges, a more conclusive report can be downloaded as a artifact from the daily `jacocoReport` job performed under the CI/CD meny.
+
+# Making installer and runtime 
+
+The project is exported as a runtime, using jlink, and as a installer, using jpackage. The creation of the installer and runtime is done on each operating system (OS) as these utilities can only make usable installers for the currently running OS. 
+
+
+## Prerequisite packages on system
+### Linux/Debian
+
+For the linux environment installer we require two non-default packages to be installed first, binutils and fakeroot. In the running gitpod environment we can add these by running the following commands, as described in the [github page for openjdk](https://github.com/jgneff/openjdk#java-platform):
+```
+sudo apt-get update
+sudo apt install binutils fakeroot
+```
+
+### Windows
+
+## Creating installer
+
+After the OS specific prerequisite packages has been installed we can make our installer.
+
+First we need to compile our entire project using `mvn compile`, followed by running jlink and jpackage in the ui module. 
+
+The following code will complete both these tasks:
+```
+mvn clean compile
+mvn javafx:jlink jpackage:jpackage -f ui/pom.xml
+```
+After these commands are run the installer and runtime image will be created within the `ui/target` folder. The installer located in the `ui/target/dist` with the runtime contained in `ui/target/diary`.
+
+### Gitpod
+The application can then be ran using the generated runtime image, as the required java version and dependancies are already present. If not generated within the same gitpod instance the installer located within `ui/target/diary/dist` can be ran using 
+```
+sudo dpkg -i /workspace/gr2172/diary/ui/target/dist/diary-debian-installer_1.0.0-1_amd64.deb
+```
+The runtime is executed by calling the diary file within the `diary/bin/`, which on gitpod will have the following path:
+```
+/workspace/gr2172/diary/ui/target/diary/bin/diary
+```
+
