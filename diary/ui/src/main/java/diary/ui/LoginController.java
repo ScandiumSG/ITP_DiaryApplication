@@ -60,19 +60,22 @@ public class LoginController {
      * @throws IOException If an error occur during loading of the new scene.
      */
     @FXML
-    public void logIn() throws IOException {
-        String name = usernameField.getValue();
-        String pin = pinField.getText();
+    public void logIn() throws IOException, IllegalArgumentException {
+        try {
+            String name = usernameField.getValue();
+            String pin = pinField.getText();    
 
-        User user = new User(name, pin);
+            User user = new User(name, pin);
+            diaryController.openNewUser(user);
+            usernameField.setValue("");
+            pinField.clear();
+    
+            Stage stage = (Stage) pane.getScene().getWindow();
+            stage.setScene(diaryScene);
 
-        diaryController.openNewUser(user);
-
-        usernameField.setValue("");
-        pinField.clear();
-
-        Stage stage = (Stage) pane.getScene().getWindow();
-        stage.setScene(diaryScene);
+        } catch (Exception e) {
+            System.out.println("invalid username or password");
+        }
     }
 
     /**
