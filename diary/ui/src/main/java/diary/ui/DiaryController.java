@@ -64,7 +64,7 @@ public class DiaryController {
         title.getSelectionModel().selectFirst();
 
         if (title.getValue() == null) {
-            title.setValue(user.getUserName() + " 's diary");
+            title.setValue(user.getUserName() + "'s diary");
         }
         setDatePickerValue(Entry.parseCurrentTime());
 
@@ -151,6 +151,8 @@ public class DiaryController {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException f)  {
+
         }
     }
 
