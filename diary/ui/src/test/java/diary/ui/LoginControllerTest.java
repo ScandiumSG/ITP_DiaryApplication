@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.junit.jupiter.api.BeforeAll;
 
 import diary.core.Entry;
 import diary.core.User;
@@ -22,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
+import diary.ui.DiaryApp;
 
 
 public class LoginControllerTest extends ApplicationTest{
@@ -63,6 +65,11 @@ public class LoginControllerTest extends ApplicationTest{
         stage.setTitle("Diary - Login");
         stage.setScene(loginScene);
         stage.show();
+    }
+    @BeforeAll
+    public static void supportHeadless(){
+        DiaryApp.supportHeadless(); 
+        
     }
 
     @Test

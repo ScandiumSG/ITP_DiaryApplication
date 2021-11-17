@@ -1,11 +1,12 @@
 image: maven:latest
 
 variables:
-    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+    MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+    MAVEN_CLI_OPTS: "--batch-mode -P headless"
+
 
 cache:
     paths:
-        - .m2/repository/
         - target/
 
 stages:
@@ -28,7 +29,7 @@ JUnitTests:
     stage: test
     script:
         - cd diary
-        - mvn test -DskipUiTests=true
+        - mvn clean test $MAVEN_CLI_OPTS
     retry: 
         max: 2
         when:
@@ -42,7 +43,7 @@ premerge_jacoco:
     stage: test
     script:
         - cd diary
-        - mvn $MAVEN_CLI_OPTS clean verify -DskipUiTests=true
+        - mvn clean verify $MAVEN_CLI_OPTS
         - cat testing/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
     artifacts:
         paths:
