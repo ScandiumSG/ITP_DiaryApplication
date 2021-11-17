@@ -1,42 +1,36 @@
 package diary.ui;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterAll;
 
 import diary.core.Entry;
 import diary.core.User;
-import diary.json.EntryToJSON;
 import diary.json.PersistancePaths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import diary.ui.DiaryApp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.File;
 
 
 public class DiaryControllerTest extends ApplicationTest{
 
     private DiaryController diaryController;
     private Parent diaryPane;
-    private final static File testFilePath = new File("src/main/resources/DiaryEntries.json");
     private Stage stage;
+    private User user;
 
     @Override
-    public void start(final Stage stage) throws Exception{
+    public void start(final Stage stage) throws Exception {
         this.stage = stage;
 
         FXMLLoader diaryLoader = new FXMLLoader(
@@ -45,33 +39,34 @@ public class DiaryControllerTest extends ApplicationTest{
         Scene diaryScene = new Scene(diaryPane);
 
         diaryController = (DiaryController) diaryLoader.getController();
-        User test = new User("TestUser", "1111");
-        diaryController.openNewUser(test);
+        user = new User("TestUser", "1111");
+        diaryController.openNewUser(user);
+
         stage.setTitle("Diary");
         stage.setScene(diaryScene);
         stage.show();
     }
-
  
     @BeforeAll
-    public static void supportHeadless(){
-        delteFiles();
-        DiaryApp.supportHeadless(); 
-        
+    public static void supportHeadless() {
+        DiaryApp.supportHeadless();
     }
 
-    public static void delteFiles(){
-        if(testFilePath.exists()){
-            testFilePath.delete();
-        }
+    private TextArea getTextArea() {
+        return (TextArea) diaryPane.lookup("#textEntry");
     }
-    public Parent getRoot()
-    {
-        return diaryPane;
 
+    @SuppressWarnings("unchecked")
+    private ComboBox<String> getTitleField() {        
+        return (ComboBox<String>) diaryPane.lookup("#title");
     }
-    private String getText(){
-        return ((TextArea)getRoot().lookup("#textEntry")).getText();
+
+    private Button getSaveButton() {
+        return (Button) diaryPane.lookup("#entrySubmit");
+    }
+
+    private DatePicker getDatePicker() {
+        return (DatePicker) diaryPane.lookup("#dateInput");
     }
 
     @Test
@@ -80,42 +75,25 @@ public class DiaryControllerTest extends ApplicationTest{
     }
 
     @Test
-    public void testRobot(){
-        clickOn("#textEntry").write("Test");
-        assertEquals("Test", getText());
-        clickOn("#entrySubmit");
+    public void testInitialValues() {
+        assertEquals("TestUser's diary", getTitleField().getValue());
+        assertEquals("", getTextArea().getText());
     }
 
+    /*
     @Test
-    public void testDifferentDate(){
-        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10-11-2021"+"\n");
-        clickOn("#textEntry").write("Test2");
-        clickOn("#entrySubmit");
-        assertEquals("Test2", getText());
-        clickOn("#textEntry").write(" Test3");
-        assertEquals("Test2 Test3", getText());
-        clickOn("#entrySubmit");
-    }
+    public void testSaveAndDatePicker() {
+        clickOn(getTextArea()).write("todays date");
+        clickOn(getSaveButton());
 
-    @Test
-    public void testBackToCurrentDate(){
-        assertNotNull(getText());
-        testFilePath.delete();
-    }
+        clickOn(getDatePicker().getEditor()).write("10-11-2021"+"\n");
+        assertEquals("", getTextArea().getText());
 
-    @Test
-    public void testBackToDifferDate(){
-        clickOn(((DatePicker)getRoot().lookup("#dateInput")).getEditor()).write("10-11-2021"+"\n");
-        assertNotNull(getText());
-        testFilePath.delete();
-    }
+        clickOn(getDatePicker().getEditor()).write(Entry.parseCurrentTime() + "\n");
+        assertEquals("todays date", getTextArea().getText());
 
-    @AfterAll
-    public static void deleteIfStillExists(){
-        if(testFilePath.exists()){
-            testFilePath.delete();
-        }
+        File file = new File(PersistancePaths.makeResourcesPathString(user, getTitleField().getValue()));
+        file.delete();
     }
+    */
 }
-
-
