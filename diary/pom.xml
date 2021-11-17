@@ -82,10 +82,10 @@
 
         <!-- JAVA servlet -->
         <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-web-api</artifactId>
-            <version>9.0.0</version>
-            <scope>provided</scope>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
+            <!--<scope>provided</scope>-->
         </dependency>
     </dependencies>
     </dependencyManagement>
@@ -197,6 +197,19 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Jetty used to run Server.java on backend -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>11.0.2</version>
+                <configuration>
+                    <httpConnector>
+                        <port>8080</port><!-- SET PORT -->
+                    </httpConnector>
+                    <!--<stopKey>quit</stopKey>
+                    <stopPort>${jetty.port.stop}</stopPort>-->
+                </configuration>
+            </plugin>
         </plugins>
             <pluginManagement>
                 <plugins>
@@ -226,7 +239,8 @@
     <modules>
         <module>core</module>
         <module>ui</module>
-        <module>api</module>
-        <module>testing</module>
+        <module>frontend</module>
+        <module>backend</module>
+        <module>testing</module><!-- testing må vær sist -->
     </modules>
 </project>

@@ -2,6 +2,7 @@ package diary.ui;
 
 import diary.core.Entry;
 import diary.core.User;
+import diary.frontend.Client;
 import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
 import diary.json.RetrieveDiaries;
@@ -107,6 +108,8 @@ public class DiaryController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Client.postDiary(user.getUserID() + "+" + title.getValue());
     }
 
     /**
@@ -157,6 +160,9 @@ public class DiaryController {
      */
     public void openNewUser(User user) {
         this.user = user;
+
+        //SendGET to retrieve all user's diaries from server
+        Client.getDiaries(user.getUserID());
 
         updateDiaryList();
 

@@ -52,7 +52,7 @@ public final class RetrieveDiaries {
         // File.list() returns a String array of all filenames within a dir.
         String[] allLocalDiaries = fileDir.list();
         if (allLocalDiaries == null) {
-            return null;
+            return new String[0];
         }
 
         return allLocalDiaries;
