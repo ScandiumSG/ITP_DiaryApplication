@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 
 public class DiaryApp extends Application {
 
-
     @Override
     public final void start(final Stage stage) throws IOException {
         FXMLLoader loginLoader = new FXMLLoader(
