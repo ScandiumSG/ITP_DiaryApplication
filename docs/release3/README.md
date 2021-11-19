@@ -37,17 +37,17 @@
 <!-- ABOUT PROJECT 3 -->
 </br>
 
-## Intro 
+## Intro
 
 <!-- HEADLESS TESTING-->
 
 ## Headless
 
-During project 3 did all members establish a curiosity about headless testing, how it works and how it may be included in the CI and Jacoco report. A great amount of extra time has therefor been spent trying to implement headless testing. We managed to test the application headless as the result. However, we didn't manage to create or find a monocle library the docker-image could use to make it readable to Gitlab. Even though we didn't reach our goal did the process teach us a fair amount about how headless testing works and what it takes to create necessary properties it depend on. 
+During project 3 did all members establish a curiosity about headless testing, how it works and how it may be included in the CI and Jacoco report. A great amount of extra time has therefor been spent trying to implement headless testing. We managed to test the application headless as the result. However, we didn't manage to create or find a monocle library the docker-image could use to make it readable to Gitlab. Even though we didn't reach our goal did the process teach us a fair amount about how headless testing works and what it takes to create necessary properties it depend on.
 
-Another technology we tried to use in order to implement headless testing was [selenium](https://www.selenium.dev/). By simply running a Selenium test using a headless browser that operates as your typical browser, but without a user interface, making it to automated testing. We tried to make the docker image to download two browsers (chrome and firefox) intending to open the application on a VM from GitLab. We did get closer to the final goal. However, one issue stopped us reaching it. The maven surefire dependency had conflicts. 
+Another technology we tried to use in order to implement headless testing was [selenium](https://www.selenium.dev/). By simply running a Selenium test using a headless browser that operates as your typical browser, but without a user interface, making it to automated testing. We tried to make the docker image to download two browsers (chrome and firefox) intending to open the application on a VM from GitLab. We did get closer to the final goal. However, one issue stopped us reaching it. The maven surefire dependency had conflicts.
 
-As Phantom and Karma also had some issues with gitpod and are easier to use with JAR we had to accept the failure and rather keep going on the actual project. Our ideal approache 
+As Phantom and Karma also had some issues with gitpod and are easier to use with JAR we had to accept the failure and rather keep going on the actual project. Our ideal approache
 
 <img src="selenium-screenshot.png" alt="Logo" width="650" height="500">
 
@@ -57,7 +57,13 @@ As Phantom and Karma also had some issues with gitpod and are easier to use with
 
 <!-- DEPLOYMENT-->
 
-## Deployment
+## Shippable Program
+
+The local version of the diary application can now be provided as a java runtime or as a installable version.
+
+Use of the installable version allows anyone to utilize the diary application without having to install java and maven previously. The files saved diary files are stored in a users home directory, within a diary folder. However the application will not be able to connect to the REST API server, as this service is not available on a fixed location due to the nature of this project.
+
+Simple run the installation medium as specified in the [diary readme](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/tree/develop/diary#using-runtime-and-installer), the required runtime will then be available to start the application.
 
 <!-- WORK SCHEDULE AND HABITS-->
 
@@ -69,4 +75,4 @@ As Phantom and Karma also had some issues with gitpod and are easier to use with
 
 <!-- CONTACT -->
 
-## Contact 
+## Contact
