@@ -1,6 +1,7 @@
 package diary.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -37,9 +38,16 @@ public class LoginControllerTest extends ApplicationTest{
     private Parent diaryPane;
     private Scene diaryScene;
 
+    private final User testUser1 = new User("test user 1", "1111");
+    private final User testUser2 = new User("test user 2", "1111");
+    private final User testUser3 = new User("test user 3", "1111");
+
+
     @Override
     public void start(final Stage stage) throws Exception{
         this.stage = stage;
+
+        deleteTestFilesIfExists();
 
         FXMLLoader loginLoader = new FXMLLoader(
             this.getClass().getResource("Login.fxml"));
@@ -59,6 +67,9 @@ public class LoginControllerTest extends ApplicationTest{
 
         loginController.setDiaryController(diaryController);
         diaryController.setLoginController(loginController);
+
+        diaryController.setTesting();
+        loginController.setTesting();
 
         stage.setTitle("Diary - Login");
         stage.setScene(loginScene);
@@ -89,45 +100,48 @@ public class LoginControllerTest extends ApplicationTest{
         return (Button) loginPane.lookup("#loginButton");
     }
 
+    private void deleteTestFilesIfExists() {
+        File file1 = new File(PersistancePaths.makeResourcesPathString(testUser1, testUser1.getUserName() +"'s diary"));
+        file1.delete();
+        File file2 = new File(PersistancePaths.makeResourcesPathString(testUser1, testUser1.getUserName() +"'s diary2"));
+        file2.delete();
+        File file3 = new File(PersistancePaths.makeResourcesPathString(testUser2, testUser2.getUserName() +"'s diary"));
+        file3.delete();
+        File file4 = new File(PersistancePaths.makeResourcesPathString(testUser3, testUser3.getUserName() +"'s diary"));
+        file4.delete();
+    }
+
     @Test
     public void testEmpty() {
         assertTrue(getUsernameField().getValue() == null);
-        assertTrue(getUsernameField().getItems().isEmpty());
+        assertFalse(getUsernameField().getItems().contains(testUser1.getUserName()));
+        assertFalse(getUsernameField().getItems().contains(testUser2.getUserName()));
+        assertFalse(getUsernameField().getItems().contains(testUser3.getUserName()));
     }
 
     @Test
     public void testFilled() throws IOException {
-        User testUser1 = new User("test user 1", "1111");
         Entry testEntry1 = new Entry("Aliquam ligula tortor, viverra a.", Entry.parseCurrentTime());
         Entry testEntry2 = new Entry("Sed vel scelerisque neque. Sed.", Entry.parseCurrentTime());
-
-        User testUser2 = new User("test user 2", "1111");
         Entry testEntry3 = new Entry("Lorem ipsum dolor sit amet.", Entry.parseCurrentTime());
-
-        User testUser3 = new User("test user 3", "1111");
         Entry testEntry4 = new Entry("Ut at ligula nec est.", Entry.parseCurrentTime());
 
         try {
-            EntryToJSON.write(testUser1, "testUser1's diary", testEntry1);
-            EntryToJSON.write(testUser1, "testUser1's diary2", testEntry2);
-            EntryToJSON.write(testUser2, "testUser2's diary", testEntry3);
-            EntryToJSON.write(testUser3, "testUser3's diary", testEntry4);
+            EntryToJSON.write(testUser1, testUser1.getUserName() +"'s diary", testEntry1);
+            EntryToJSON.write(testUser1, testUser1.getUserName() +"'s diary2", testEntry2);
+            EntryToJSON.write(testUser2, testUser2.getUserName() +"'s diary", testEntry3);
+            EntryToJSON.write(testUser3, testUser3.getUserName() +"'s diary", testEntry4);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         loginController.updateUserList();
 
-        assertTrue(getUsernameField().getItems().size() == 3);
+        assertTrue(getUsernameField().getItems().contains(testUser1.getUserName()));
+        assertTrue(getUsernameField().getItems().contains(testUser2.getUserName()));
+        assertTrue(getUsernameField().getItems().contains(testUser3.getUserName()));
 
-        File file1 = new File(PersistancePaths.makeResourcesPathString(testUser1, "testUser1's diary"));
-        file1.delete();
-        File file2 = new File(PersistancePaths.makeResourcesPathString(testUser1, "testUser1's diary2"));
-        file2.delete();
-        File file3 = new File(PersistancePaths.makeResourcesPathString(testUser2, "testUser2's diary"));
-        file3.delete();
-        File file4 = new File(PersistancePaths.makeResourcesPathString(testUser3, "testUser3's diary"));
-        file4.delete();
+        deleteTestFilesIfExists();
     }
 
     @Test

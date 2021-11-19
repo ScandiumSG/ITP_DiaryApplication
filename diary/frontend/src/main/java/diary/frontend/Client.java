@@ -2,6 +2,7 @@ package diary.frontend;
 
 import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -33,8 +34,8 @@ public final class Client {
             connection.setRequestProperty("Accept-Charset", charset.toString());
             return inputStreamToString(connection.getInputStream());
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Couldn't connect to server with get");
         }
         return "";
     }
@@ -46,7 +47,7 @@ public final class Client {
      */
     public static void getDiaries(String startOfDiaryNames) {
         String[] nameContentPairs = sendGET(startOfDiaryNames).split(separator);
-        if (nameContentPairs.length == 0 || nameContentPairs.length % 2 == 1) {
+        if (nameContentPairs.length == 1 || nameContentPairs.length % 2 == 1) {
             System.out.println("Error getting diaries.");
             return;
         }
@@ -74,8 +75,8 @@ public final class Client {
                 output.write(content.getBytes(charset));
             }
             connection.getInputStream();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Couldn't connect to server with post");
         }
 
         return;
@@ -99,5 +100,10 @@ public final class Client {
         } else {
             System.out.println("Read diary had a length of 0");
         }
+    }
+
+    public static void main(String[] args) {
+        String[] test = "Aaaaaaaaa".split("b");
+        System.out.println(test.length);
     }
 }

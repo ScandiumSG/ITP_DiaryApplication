@@ -38,12 +38,23 @@ public class DiaryControllerTest extends ApplicationTest{
         Scene diaryScene = new Scene(diaryPane);
 
         diaryController = (DiaryController) diaryLoader.getController();
-        user = new User("TestUser", "1111");
+        user = new User("TestUser", "3475");
+
+        deleteTestFilesIfExists();
+
+        diaryController.setTesting();
         diaryController.openNewUser(user);
 
         stage.setTitle("Diary");
         stage.setScene(diaryScene);
         stage.show();
+    }
+
+    private void deleteTestFilesIfExists() {
+        File file = new File(PersistancePaths.makeResourcesPathString(user, "TestUser's diary"));
+        file.delete();
+        File file2 = new File(PersistancePaths.makeResourcesPathString(user, "TestUser's diary2"));
+        file2.delete();
     }
  
     @BeforeAll
@@ -107,8 +118,7 @@ public class DiaryControllerTest extends ApplicationTest{
         tripleClick(getDatePicker().getEditor()).write(Entry.parseCurrentTime() + "\n");
         assertEquals("todays date", getTextArea().getText());
 
-        File file = new File(PersistancePaths.makeResourcesPathString(user, getTitleField().getValue()));
-        file.delete();
+        deleteTestFilesIfExists();
     }
 
     @Test
@@ -127,8 +137,7 @@ public class DiaryControllerTest extends ApplicationTest{
         clickOn(getRightArrow());
         assertEquals("Tomorrows date", getTextArea().getText());
 
-        File file = new File(PersistancePaths.makeResourcesPathString(user, getTitleField().getValue()));
-        file.delete();
+        deleteTestFilesIfExists();
     }
 
     @Test
@@ -150,9 +159,6 @@ public class DiaryControllerTest extends ApplicationTest{
 
         assertTrue(getTitleField().getItems().size() == 2);
 
-        File file = new File(PersistancePaths.makeResourcesPathString(user, "TestUser's diary"));
-        file.delete();
-        File file2 = new File(PersistancePaths.makeResourcesPathString(user, "TestUser's diary2"));
-        file2.delete();
+        deleteTestFilesIfExists();
     }
 }
