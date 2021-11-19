@@ -33,6 +33,8 @@ public class DiaryController {
 
     private User user;
 
+    private boolean isTesting;
+
     @FXML
     private Pane pane;
 
@@ -109,7 +111,9 @@ public class DiaryController {
             e.printStackTrace();
         }
 
-        Client.postDiary(user.getUserID() + "+" + title.getValue());
+        if (!isTesting) {
+            Client.postDiary(user.getUserID() + "+" + title.getValue().replace(" ", "_"));
+        }
     }
 
     /**
@@ -140,6 +144,10 @@ public class DiaryController {
         loginController.updateUserList();
     }
 
+    public void setTesting() {
+        this.isTesting = true;
+    }
+
     /**
      * Stores the login scene to enable switching back to it
      * 
@@ -161,8 +169,10 @@ public class DiaryController {
     public void openNewUser(User user) {
         this.user = user;
 
-        //SendGET to retrieve all user's diaries from server
-        Client.getDiaries(user.getUserID());
+        if (!isTesting) {
+            //SendGET to retrieve all user's diaries from server
+            Client.getDiaries(user.getUserID());
+        }
 
         updateDiaryList();
 

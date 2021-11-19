@@ -17,6 +17,8 @@ public class LoginController {
     public Scene diaryScene;
     public DiaryController diaryController;
 
+    private boolean isTesting;
+
     @FXML
     private Pane pane;
 
@@ -74,7 +76,9 @@ public class LoginController {
             stage.setScene(diaryScene);
 
         } catch (Exception e) {
-            System.out.println("invalid username or password");
+            if (!isTesting) {
+                System.out.println("invalid username or password");
+            }
         }
     }
 
@@ -86,10 +90,6 @@ public class LoginController {
     public void updateUserList() throws IOException {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
-        if (diaryNames == null) {
-            return;
-        }
-
         for (String name : diaryNames) {
             if (!name.contains("+")) {
                 continue;
@@ -98,6 +98,11 @@ public class LoginController {
             if (usernameField.getItems().contains(name)) {
                 continue;
             }
+            usernameField.getItems().add(name);
         }
+    }
+
+    public void setTesting() {
+        isTesting = true;
     }
 }
