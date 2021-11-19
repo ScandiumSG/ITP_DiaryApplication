@@ -187,6 +187,7 @@ public class DiaryController {
     private void updateDiaryList() {
         try {
             title.getItems().clear();
+            title.setValue(null);
 
             HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
             for (String name : diaries.keySet()) {
