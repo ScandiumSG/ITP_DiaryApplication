@@ -2,9 +2,15 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: sdk use java 16.0.1.hs-adpt
-    command: cd diary; mvn clean install
+  - name: Terminal
+    before: sdk use java 16.0.1.hs-adpt; cd diary
+    command: mvn clean install; gp sync-done cleanInstall
+  - name: Backend
+    before: sdk use java 16.0.1.hs-adpt; cd diary
+    command: gp sync-await cleanInstall; mvn jetty:run -f backend/pom.xml
+    openMode: tab-before
 
 ports:
   # used by virtual desktop and vnc, supports JavaFX
   - port: 6080
+  - port: 8080

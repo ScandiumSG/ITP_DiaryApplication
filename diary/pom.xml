@@ -17,6 +17,8 @@
         <junit.version>5.7.2</junit.version>
         <mainClassName>diary.ui.DiaryApp</mainClassName>
         <checkstyle.config.location>config/custom_checkstyle.xml</checkstyle.config.location>
+        <skipUiTests>false</skipUiTests>
+        <headlessTests>false</headlessTests>
     </properties>
 
     <dependencyManagement>
@@ -82,10 +84,10 @@
 
         <!-- JAVA servlet -->
         <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-web-api</artifactId>
-            <version>9.0.0</version>
-            <scope>provided</scope>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
+            <!--<scope>provided</scope>-->
         </dependency>
     </dependencies>
     </dependencyManagement>
@@ -179,19 +181,36 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.6</version>
+                <version>0.8.7</version>
                 <executions>
                     <execution>
                         <id>jacoco-prepare-agent</id>
                         <phase>process-test-classes</phase>
-                        <goals><goal>prepare-agent</goal></goals>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
                     </execution>
                     <execution>
                         <id>jacoco-report</id>
                         <phase>verify</phase>
-                        <goals><goal>report</goal></goals>
+                        <goals>
+                            <goal>report</goal>                            
+                        </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Jetty used to run Server.java on backend -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>11.0.2</version>
+                <configuration>
+                    <httpConnector>
+                        <port>8080</port><!-- SET PORT -->
+                    </httpConnector>
+                    <!--<stopKey>quit</stopKey>
+                    <stopPort>${jetty.port.stop}</stopPort>-->
+                </configuration>
             </plugin>
         </plugins>
             <pluginManagement>
@@ -222,7 +241,8 @@
     <modules>
         <module>core</module>
         <module>ui</module>
-        <module>api</module>
-        <module>testing</module>
+        <module>frontend</module>
+        <module>backend</module>
+        <module>testing</module><!-- testing må vær sist -->
     </modules>
 </project>

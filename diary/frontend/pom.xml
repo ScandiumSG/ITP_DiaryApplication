@@ -9,8 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>api</artifactId>
-    <packaging>war</packaging>
+    <artifactId>frontend</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,12 +17,13 @@
     </properties>
 
     <dependencies>
+        
         <!--Include the core module to allow access to file IO-->
-        <!--<dependency>
+        <dependency>
             <groupId>diary</groupId>
             <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -45,22 +45,34 @@
             <artifactId>gson</artifactId>
         </dependency>
         <dependency><!-- JAVA servlet -->
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
-        
     </dependencies>
 
     <build>
-        <finalName>api</finalName><!--DETTE SETT URLEN-->
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
-            <plugin>
+            <!-- ALSO COMPILE TO WAR PLUGIN BELOW -->
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.2</version>
-            </plugin>
+                <version>3.3.2</version>
+                <configuration>
+                    <classifier>war</classifier>
+                </configuration>
+                <executions>
+                <execution>
+                    <id>install-war</id>
+                    <phase>install</phase>
+                    <goals>
+                    <goal>war</goal>
+                    </goals>
+                </execution>
+                </executions>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
