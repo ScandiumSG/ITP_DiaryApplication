@@ -18,7 +18,28 @@ public class PersistancePaths {
 
     private static String curDirFilePath() {
         File curDirFile = new File("");
-        return curDirFile.getAbsolutePath() + File.separator;
+
+        String sep = File.separator;
+        String curDirPath = curDirFile.getAbsolutePath();
+
+        // If installed use user.home instead, check each OS
+        String userHomeDir = System.getProperty("user.home") + sep;
+        // Windows
+        if (curDirPath.toLowerCase().contains(
+            sep + "program files" + sep + "diary_application")) {
+            return userHomeDir;
+        // Linux
+        } else if (curDirPath.toLowerCase().contains(
+            sep + "opt" + sep + "diary_application")) {
+            return userHomeDir;
+        // macOs
+        } else if (curDirPath.toLowerCase().contains(
+            sep + "application" + sep + "diary_application")) {
+            return userHomeDir;
+        // No OS specific, user is using direct java code.
+        } else {
+            return curDirPath + sep;
+        }
     }
 
     /**
