@@ -28,6 +28,12 @@ public final class Client {
         return responseBody.trim();
     }
 
+    /**
+     * Sends a get request to localhost with urlEnd at the end of the url
+     * Gets called by getDiaries()
+     * @param urlEnd String to append to url, the start of the filename
+     * @return The string the server returns, otherwise an empty string
+     */
     public static String sendGET(String urlEnd) {
         try {
             URLConnection connection = new URL(url + urlEnd).openConnection();
@@ -65,6 +71,11 @@ public final class Client {
 
     }
 
+    /**
+     * Sends a get request to localhost with urlEnd at the end of the url
+     * @param urlEnd String to append to url, the start of the filename
+     * @param content The content of the post request, the diary content
+     */
     public static void sendPOST(String urlEnd, String content) {
         try {
             URLConnection connection = new URL(url + urlEnd).openConnection();
@@ -100,10 +111,5 @@ public final class Client {
         } else {
             System.out.println("Read diary had a length of 0");
         }
-    }
-
-    public static void main(String[] args) {
-        String[] test = "Aaaaaaaaa".split("b");
-        System.out.println(test.length);
     }
 }

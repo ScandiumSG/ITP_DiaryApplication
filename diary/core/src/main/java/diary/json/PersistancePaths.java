@@ -12,7 +12,8 @@ public class PersistancePaths {
      * @return String A string of the file directory path.
      */
     public static String resourcesFilePath() {
-        String appendResources = String.join(File.separator, "core", "src", "main", "resources", "");
+        String appendResources = String.join(File.separator, "core", 
+            "src", "main", "resources", "");
         return rootDirFilePath() + appendResources;
     }
 
