@@ -42,17 +42,18 @@ public class LoginController {
 
     /**
      * Runs whenever the scene is opened
-     * 
+     *
      * <p>Updates the list of registered usernames
+     * @throws IOException
      */
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         updateUserList();
     }
 
     /**
      * Handles the actions after the user press the login button.
-     * 
+     *
      * <p>Takes the current userName field and pin field values and makes a
      * new user, the user is then set as current user and the scene is swapped
      * to the "Diary.fxml" scene.
@@ -62,13 +63,13 @@ public class LoginController {
     public void logIn() throws IOException, IllegalArgumentException {
         try {
             String name = usernameField.getValue();
-            String pin = pinField.getText();    
+            String pin = pinField.getText();
 
             User user = new User(name, pin);
             diaryController.openNewUser(user);
             usernameField.setValue("");
             pinField.clear();
-    
+
             Stage stage = (Stage) pane.getScene().getWindow();
             stage.setScene(diaryScene);
 
@@ -80,8 +81,9 @@ public class LoginController {
     /**
      * Looks for users with regisered diaries and adds their names to the login dropdown menu
      * Only adds names not already registered
+     * @throws IOException
      */
-    public void updateUserList() {
+    public void updateUserList() throws IOException {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
 
         if (diaryNames == null) {

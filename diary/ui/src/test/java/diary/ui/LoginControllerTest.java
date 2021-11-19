@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 
 
 public class LoginControllerTest extends ApplicationTest{
-    
+
     private LoginController loginController;
     private DiaryController diaryController;
 
@@ -36,7 +36,7 @@ public class LoginControllerTest extends ApplicationTest{
 
     private Parent diaryPane;
     private Scene diaryScene;
-    
+
     @Override
     public void start(final Stage stage) throws Exception{
         this.stage = stage;
@@ -67,7 +67,7 @@ public class LoginControllerTest extends ApplicationTest{
 
     @BeforeAll
     public static void supportHeadless(){
-        DiaryApp.supportHeadless(); 
+        DiaryApp.supportHeadless();
     }
 
     @Test
@@ -96,7 +96,7 @@ public class LoginControllerTest extends ApplicationTest{
     }
 
     @Test
-    public void testFilled() {
+    public void testFilled() throws IOException {
         User testUser1 = new User("test user 1", "1111");
         Entry testEntry1 = new Entry("Aliquam ligula tortor, viverra a.", Entry.parseCurrentTime());
         Entry testEntry2 = new Entry("Sed vel scelerisque neque. Sed.", Entry.parseCurrentTime());
@@ -106,7 +106,7 @@ public class LoginControllerTest extends ApplicationTest{
 
         User testUser3 = new User("test user 3", "1111");
         Entry testEntry4 = new Entry("Ut at ligula nec est.", Entry.parseCurrentTime());
-        
+
         try {
             EntryToJSON.write(testUser1, "testUser1's diary", testEntry1);
             EntryToJSON.write(testUser1, "testUser1's diary2", testEntry2);
