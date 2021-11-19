@@ -268,7 +268,7 @@ Information about guidelines for writing tests, compliance with checkstyle, and 
 
 </br>
 
-During project 3 did all members develop a curiosity about headless testing, how it works and how it may be included in the CI and Jacoco report. A great amount of extra time has therefor been spent trying to implement headless testing. We managed to test the application headless as the result. However, we didn't manage to create a monocle library the docker-image could use to make it readable to Gitlab. Even though we didn't reach our goal did the process teach us a fair amount about how headless testing works and what it takes to create necessary properties it realises on. To read more about this sub-project please visit release 3 documentation where headless is discussed more in detail: [link](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/tree/master/docs/release3/README.md).
+During project 3 did all members develop a curiosity about headless testing, how it works and how it may be included in the CI and Jacoco report. A great amount of extra time has therefor been spent trying to implement headless testing. We managed to test the application headless as the result. However, we didn't manage to create a monocle library the docker-image could use to make it readable to Gitlab. Even though we didn't reach our goal did the process teach us a fair amount about how headless testing works and what it takes to create necessary properties it releases on. To read more about this sub-project please visit release 3 documentation where headless is discussed more in detail: [link](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/tree/master/docs/release3/README.md).
 
  <div align="right">
     <a href="#top">back to top</a>
