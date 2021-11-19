@@ -55,6 +55,8 @@ As Phantom and Karma also had some issues with gitpod and are easier to use with
 
 ## Rest API
 
+In this release we implemented a REST-api, which saves the diaries the user creates to the server. The server currently is quite simple, only supporting GET to retrieve diaries and POST to update the server. We still store diaries locally, as a simple kind of cache. The backend starts automatically when the repository is opened in gitpod. To read more about how the API functions and what commands are needed to start it, visit the [readme.md](../../diary/readme.md) in diary. 
+
 <!-- DEPLOYMENT-->
 
 ## Deployment
@@ -62,10 +64,6 @@ As Phantom and Karma also had some issues with gitpod and are easier to use with
 <!-- WORK SCHEDULE AND HABITS-->
 
 ## Work Habits
-
-<!-- JAVA FX-->
-
-## Java FX
 
 <!-- CONTACT -->
 

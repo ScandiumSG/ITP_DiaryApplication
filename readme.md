@@ -78,10 +78,16 @@
 
 <div align="center">
 <p>
-    Architecture:
+Class diagram:
 </p>
 <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
-<img src="docs/release2/Architecture.png" alt="Architecture" width="450" height="450">
+<img src="docs/Class_diagram.png" alt="Class diagram" width="630" height="400">
+</a>
+<p>
+Sequence diagram:
+</p>
+<a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
+<img src="docs/Sequence_diagram.png" alt="Sequence diagram" width="450" height="450">
 </a>
 <p>
 Interface:

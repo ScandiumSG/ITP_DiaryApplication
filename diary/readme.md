@@ -20,6 +20,9 @@ In our application we never delete local files, and the reason for this is twofo
 
 Currently the backend stores the diaries in the diary folder(the one this readme is in), as this is the default working directory. We could make them be stored in backend/../resources, but this would be subject to change for any actual deployment, and therefore we have let it stay user.dir.
 
+## Security
+As this is just a school project, we knew we didn't have time to implement comprehensive security measures. Despite this, we have managed to implement some fundamental security, which allows several different users to save their diaries to the same location, without being able to view eachothers diaries. Every diary filename is the user's username, pluss their user pin, pluss the diary's name. The client and server are both blissfully unaware that they are transporting usernames and pins, they only see strings, and when the user logs in, the client sends a get request to the server retrieving any files that start with a specific string, which is allways their username pluss pin. This same trick is used to have the user be able to select their username from the dropdown menu, read from any diary filenames stored locally. In an actual project, this would be changed. 
+
 # Persistance - core.json
 
 ## Source code for persistance layer
