@@ -171,7 +171,7 @@
                 <version>0.0.6</version>
                 <configuration>
                     <mainClass>diary.ui/diary.ui.DiaryApp</mainClass>
-                
+
                     <!-- Jlink config -->
                     <compress>2</compress>
                     <noHeaderFiles>true</noHeaderFiles>
@@ -190,13 +190,13 @@
                 <artifactId>jpackage-maven-plugin</artifactId>
                 <version>1.4.0</version>
                 <configuration>
-                    <name>diary_Debian_installer</name>
+                    <name>diary_Application</name>
                     <appVersion>1.0.0</appVersion>
                     <vendor>it1901</vendor>
                     <destination>target/dist</destination>
                     <module>diary.ui/diary.ui.DiaryApp</module>
                     <runtimeImage>target/diary</runtimeImage>
-                    <icon>src/main/resources/diary/ui/img/thumb2.jpg</icon>
+                    <icon>src/main/resources/diary/ui/img/thumb2.ico</icon>
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>
