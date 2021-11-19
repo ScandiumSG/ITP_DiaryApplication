@@ -18,8 +18,6 @@
 
 <!-- ABOUT PROJECT 3 -->
 
-
-
 <!-- HEADLESS TESTING-->
 
 ## Headless
@@ -30,7 +28,13 @@
 
 <!-- DEPLOYMENT-->
 
-## Deployment
+## Shippable Program
+
+The local version of the diary application can now be provided as a java runtime or as a installable version.
+
+Use of the installable version allows anyone to utilize the diary application without having to install java and maven previously. The files saved diary files are stored in a users home directory, within a diary folder. However the application will not be able to connect to the REST API server, as this service is not available on a fixed location due to the nature of this project.
+
+Simple run the installation medium as specified in the [diary readme](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/tree/develop/diary#using-runtime-and-installer), the required runtime will then be available to start the application.
 
 <!-- WORK SCHEDULE AND HABITS-->
 
@@ -42,4 +46,4 @@
 
 <!-- CONTACT -->
 
-## Contact 
+## Contact
