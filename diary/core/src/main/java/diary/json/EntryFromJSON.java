@@ -45,6 +45,7 @@ public final class EntryFromJSON {
         File chosenFile = new File(
             PersistancePaths.makeResourcesPathString(user, fileName));
 
+        PersistanceUtil.checkDirExistance(chosenFile.getAbsolutePath());
         if (!chosenFile.exists()) {
             return readEntries;
         }
@@ -104,6 +105,8 @@ public final class EntryFromJSON {
         } else {
             filePath = PersistancePaths.makeCurrentDirectoryPathString(fileName);
         }
+
+        PersistanceUtil.checkDirExistance(filePath);
         return retrieveJsonString(filePath);
     }
 
