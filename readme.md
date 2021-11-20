@@ -68,9 +68,7 @@
   </ol>
 </details>
 
-  <div align="right">
-    <a href="#top">back to top</a>
-  </div>
+</br>
 
 <!-- ABOUT THE PROJECT -->
 
@@ -330,13 +328,12 @@ These sources have actively been used during this project. Therefor would we lov
 -   [Ali-Dev](https://ali-dev.medium.com/how-to-setup-chrome-headless-on-gitlab-ci-with-puppeteer-docker-fbb562cbaee1)
 -   [GitLab example issue 7](https://gitlab.stud.idi.ntnu.no/tdt4140-staff/examples/-/issues/7)
 
-
- <div align="right">
-    <a href="#top">back to top</a>
-  </div>
 <div align="center">
 <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
   <img src="docs/logo/logo.svg" alt="Logo" width="180" height="180">
 </a>
  <h3 align>Group2172</h3>
+</div>
+<div align="right">
+  <a href="#top">back to top</a>
 </div>
