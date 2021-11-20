@@ -134,41 +134,48 @@ mvn javafx:jlink jpackage:jpackage -f ui/pom.xml
 After these commands are run the installer and runtime image will be created within the `ui/target` folder. The installer located in the `ui/target/dist` with the runtime contained in `ui/target/diary`.
 
 ## Using runtime and installer
+### Installers
+Generated installers are provided through [folk.ntnu.no](https://folk.ntnu.no/stiankg/IT1901/Installers/).
+* [Windows](https://folk.ntnu.no/stiankg/IT1901/Installers/Windows/)
+* [Linux](https://folk.ntnu.no/stiankg/IT1901/Installers/Linux/)
+* [macOS](https://folk.ntnu.no/stiankg/IT1901/Installers/macOS/)
 
 ### Windows
 
 The produced (or provided) .exe file can be ran, in which case the application will be saved to the default position at
 
 ```
-c:\Program Files\diary_Application
+c:\Program Files\diaryApplication
 ```
 
 The runable java application is located within the runtime;
 
 ```
-C:\Program Files\diary_Application\runtime\bin\diary
+C:\Program Files\diaryApplication\runtime\bin\diary
 ```
 
 From a CMD window the app can then be run using the following commands:
 
 ```
-cd C:\Program Files\diary_Application\runtime\bin\
+cd C:\Program Files\diaryapplication\runtime\bin\
 diary
 ```
 
 ### Linux / Gitpod
 
-The application can then be ran using the generated runtime image, as the required java version and dependancies are already present. If not generated within the same gitpod instance the installer located within `ui/target/diary/dist` can be ran using
-
+The installer on gitpod would be located within `ui/target/diary/dist`, and can be ran using the following command for gitpod:
 ```
 sudo dpkg -i /workspace/gr2172/diary/ui/target/dist/diary-application_1.0.0-1_amd64.deb
 ```
+Local applications need to substitute in their own working directory to provide the path for the .deb file, or double-click the downloaded .deb file if their configuration allows this action.
 
-for gitpod, local applications need to substitute in their own working directory to provide the path for the .deb file.
+The install location using this .deb file is to the default install location, `/opt/diaryapplication`. The application can therefore be run using the following commands;
+```
+cd /opt/diaryapplication/bin/
+./diaryApplication
+```
 
-The install location using this .deb file is to the default install location, `/opt/diary_application`.
-
-Alternatively the runtime can be directly executed by calling the diary file within the `diary/bin/`, which on gitpod will have the following path:
+Alternatively, if you have just compiled the installer and runtime, the runtime can be directly executed by calling the diary file within the `diary/bin/`, which on gitpod will have the following path:
 
 ```
 /workspace/gr2172/diary/ui/target/diary/bin/diary
@@ -179,5 +186,5 @@ Alternatively the runtime can be directly executed by calling the diary file wit
 The application once installed using the generated dmg installer is located within
 
 ```
-/Applications/diary_application
+/applications/diaryApplication
 ```
