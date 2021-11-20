@@ -196,7 +196,8 @@
                     <destination>target/dist</destination>
                     <module>diary.ui/diary.ui.DiaryApp</module>
                     <runtimeImage>target/diary</runtimeImage>
-                    <icon>src/main/resources/diary/ui/img/thumb2.ico</icon>
+                    <linuxShortcut>true</linuxShortcut>
+                    <icon>src/main/resources/diary/ui/img/thumb2.png</icon>
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>
