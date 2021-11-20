@@ -27,7 +27,7 @@ public class PersistancePaths {
         String userHomeDir = System.getProperty("user.home") + sep;
         // Windows
         if (curDirPath.toLowerCase().contains(
-            sep + "program files" + sep + "diary_application")) {
+            sep + "program files" + sep + "diaryapplication")) {
             return userHomeDir;
         // Linux
         } else if (curDirPath.toLowerCase().contains(
@@ -35,7 +35,7 @@ public class PersistancePaths {
             return userHomeDir;
         // macOs
         } else if (curDirPath.toLowerCase().contains(
-            sep + "application" + sep + "diary_application")) {
+            sep + "application" + sep + "diaryapplication")) {
             return userHomeDir;
         // No OS specific, user is using direct java code.
         } else {
