@@ -46,7 +46,7 @@ public class LoginController {
      * Runs whenever the scene is opened
      *
      * <p>Updates the list of registered usernames
-     * @throws IOException
+     * @throws IOException If local directory is not found
      */
     @FXML
     public void initialize() throws IOException {
@@ -85,7 +85,7 @@ public class LoginController {
     /**
      * Looks for users with regisered diaries and adds their names to the login dropdown menu
      * Only adds names not already registered
-     * @throws IOException
+     * @throws IOException If local directory is not found
      */
     public void updateUserList() throws IOException {
         String[] diaryNames = RetrieveDiaries.getAllLocalDiaries();
