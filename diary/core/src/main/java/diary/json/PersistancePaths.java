@@ -31,7 +31,7 @@ public class PersistancePaths {
             return userHomeDir;
         // Linux
         } else if (curDirPath.toLowerCase().contains(
-            sep + "opt" + sep + "diary_application")) {
+            sep + "opt" + sep + "diary")) {
             return userHomeDir;
         // macOs
         } else if (curDirPath.toLowerCase().contains(
