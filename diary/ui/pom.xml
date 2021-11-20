@@ -197,7 +197,7 @@
                     <module>diary.ui/diary.ui.DiaryApp</module>
                     <runtimeImage>target/diary</runtimeImage>
                     <linuxShortcut>true</linuxShortcut>
-                    <icon>src/main/resources/diary/ui/img/thumb2.png</icon>
+                    <icon>src/main/resources/diary/ui/img/thumb2.ico</icon>
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>

@@ -12,7 +12,7 @@ public class PersistancePaths {
      * @return String A string of the file directory path.
      */
     public static String resourcesFilePath() {
-        String appendResources = String.join(File.separator, "core", 
+        String appendResources = String.join(File.separator, "core",
             "src", "main", "resources", "");
         return rootDirFilePath() + appendResources;
     }
@@ -27,7 +27,7 @@ public class PersistancePaths {
         String userHomeDir = System.getProperty("user.home") + sep;
         // Windows
         if (curDirPath.toLowerCase().contains(
-            sep + "program files" + sep + "diaryapplication")) {
+            sep + "program files" + sep + "diary")) {
             return userHomeDir;
         // Linux
         } else if (curDirPath.toLowerCase().contains(
