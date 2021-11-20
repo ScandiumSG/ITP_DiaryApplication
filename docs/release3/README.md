@@ -1,18 +1,12 @@
+ <div id="top"></div>
+
  <!-- PROJECT TITLE -->
 <br />
 <div align="center">
   <img src="../logo/logo.svg" alt="Logo" width="250" height="250">
-  <h1 align="center">Release 3</h1>
-  <p align="center">
-    <br />
+  <h1>Release 3</h1>
+  <p>
     <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172"><strong>Back to Root</strong></a>
-    <br />
-    <br />
-    <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/issues">Issues</a>
-    ·
-    <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/commits/master">Commits</a>
-    ·
-    <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/project_members">Members</a>
   </p>
 </div>
 
@@ -38,6 +32,8 @@
 </br>
 
 ## Intro
+
+In this readme folder are more specifics related to project three described. The combination of the heavily weight of this assignment and four curious students set together, have we spent hundreds of hours creating the final programming related product for this course. It’s been an interesting journey. 
 
 <!-- HEADLESS TESTING-->
 
@@ -71,6 +67,35 @@ To install the diary application simply run the installation medium as specified
 
 ## Work Habits
 
+All members have been working almost daily. With multiply sleepless nights and long hours have the project been worked on almost continuously every day, every week. 
+
+<br/>
+
+As well as working hours is coordination and planning been executed by two to three meeting each week. This have surely benefitted us in organizing and working with a proper efficiency. We considered to track working hours but decided too not to. We must admit to regret that decision a bit. I would been fun to actual show you that we are not joking about continuously working together and individually. It’s been fun to make this project a bit extra.
+
 <!-- CONTACT -->
 
 ## Contact
+
+</br>
+<!-- Alphabetical first-name order -->
+
+-   Jakob Lien - [@jlien11](https://github.com/jlien11) - jakobli@stud.ntnu.no
+-   Lars Overskeid - [@Lars-over](https://github.com/Lars-over) - larsover@stud.ntnu.no
+-   Sebastian Veum - [@nazgul735](https://github.com/nazgul735) - sebasv@stud.ntnu.no
+-   Stian Gaustad - [@StianKGaustad](https://github.com/StianKGaustad) - stiankg@stud.ntnu.no
+
+<!-- Alphabetical last-name order -->
+<!--
+-   Stian Gaustad - [@StianKGaustad](https://github.com/StianKGaustad) - stiankg@stud.ntnu.no
+-   Jakob Lien - [@jlien11](https://github.com/jlien11) - jakobli@stud.ntnu.no
+-   Lars Overskeid - [@Lars-over](https://github.com/Lars-over) - larsover@stud.ntnu.no
+-   Sebastian Veum - [@nazgul735](https://github.com/nazgul735) - sebasv@stud.ntnu.no
+-->
+</br>
+
+**Project Link:** [Diary](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172)
+
+<div align="right">
+  <a href="#top">back to top</a>
+</div>
