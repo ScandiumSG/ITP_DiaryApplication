@@ -59,6 +59,12 @@ public final class PersistanceUtil {
             PersistancePaths.makeResourcesPathString(fileName));
     }
 
+    /**
+     * Checks if the provided filePath has existing parent directories, 
+     * if not the required folders/directories to make the filePath valid is
+     * attempted to be created.
+     * @throws IOException Can't create the required directories.
+     */
     public static void checkDirExistance(String filePath) throws IOException {
         File writeDir = new File(filePath.substring(
             0, filePath.lastIndexOf(File.separator)));
