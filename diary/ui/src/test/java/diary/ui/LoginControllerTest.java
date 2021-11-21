@@ -77,7 +77,7 @@ public class LoginControllerTest extends ApplicationTest{
     }
 
     @BeforeAll
-    public static void supportHeadless(){
+    public static void prepareTests(){
         DiaryApp.supportHeadless();
         deleteTestFilesIfExists();
     }
