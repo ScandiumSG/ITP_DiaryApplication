@@ -38,9 +38,9 @@ public class LoginControllerTest extends ApplicationTest{
     private Parent diaryPane;
     private Scene diaryScene;
 
-    private final User testUser1 = new User("test user 1", "1111");
-    private final User testUser2 = new User("test user 2", "1111");
-    private final User testUser3 = new User("test user 3", "1111");
+    private static final User testUser1 = new User("test user 1", "1111");
+    private static final User testUser2 = new User("test user 2", "1111");
+    private static final User testUser3 = new User("test user 3", "1111");
 
 
     @Override
@@ -79,6 +79,7 @@ public class LoginControllerTest extends ApplicationTest{
     @BeforeAll
     public static void supportHeadless(){
         DiaryApp.supportHeadless();
+        deleteTestFilesIfExists();
     }
 
     @Test
@@ -100,7 +101,7 @@ public class LoginControllerTest extends ApplicationTest{
         return (Button) loginPane.lookup("#loginButton");
     }
 
-    private void deleteTestFilesIfExists() {
+    private static void deleteTestFilesIfExists() {
         File file1 = new File(PersistancePaths.makeResourcesPathString(testUser1, testUser1.getUserName() +"'s diary"));
         file1.delete();
         File file2 = new File(PersistancePaths.makeResourcesPathString(testUser1, testUser1.getUserName() +"'s diary2"));
