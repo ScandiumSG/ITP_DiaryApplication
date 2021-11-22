@@ -24,7 +24,6 @@
     <li><a href="#deployment">Deployment</a></li>
     <li><a href="#work-schedule-and-habits">Work schedule and habits</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#java-fx">JavaFX</a></li>
   </ol>
 </details>
 
