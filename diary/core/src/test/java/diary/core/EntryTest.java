@@ -7,6 +7,10 @@ import java.time.format.DateTimeFormatter;
 
 public class EntryTest {
 
+    /**
+     * Test that created entries return correct values when calling its getter methods,
+     * getContent and getDate.
+     */
     @Test
     public void testContent() {
         String content = new String("Dette er en teststreng.");
@@ -19,6 +23,10 @@ public class EntryTest {
         Assertions.assertEquals("10-01-2001", validDate.getDate());
     }
 
+    /**
+     * Test that the provided timestamp on Entry constructor actually sets the
+     * correct date.
+     */
     @Test
     public void testTimestamp() {
         DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -29,6 +37,9 @@ public class EntryTest {
         Assertions.assertEquals(thisTime, entry.getDate());
     }
 
+    /**
+     * Test that IllegalArgumentException is thrown when invalid day is provided.
+     */
     @Test
     public void testInvalidDayValidation() {
         // 3 numbers in day
@@ -38,6 +49,10 @@ public class EntryTest {
             () -> {new Entry("TestContent", invalidDateFormat1);});
     }
 
+    /**
+     * Test that IllegalArgumentException is thrown when invalid month is provided.
+     * Both 3-digit month numeral as well as letter month abbreviations.
+     */
     @Test
     public void testInvalidMonthValidation() {
         // 3 numbers in month
@@ -53,6 +68,9 @@ public class EntryTest {
             () -> {new Entry("TestContent", invalidDateFormat4);});
     }
 
+    /**
+     * Test that IllegalArgumentException is thrown when invalid year is provided.
+     */
     @Test
     public void testInvalidYearValidation() {
         // 5 numbers in year
