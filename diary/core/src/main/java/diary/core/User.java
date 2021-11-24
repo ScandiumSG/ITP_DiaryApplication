@@ -1,7 +1,6 @@
 package diary.core;
 
 import diary.json.RetrieveDiaries;
-import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -129,7 +128,7 @@ public class User {
      * @return
      */
     public Entry getEntryByDate(String diaryName, String date) {
-        try {      
+        try {
             HashMap<String, Entry> selectedDiary = this.userDiaries.get(diaryName);
             return selectedDiary.get(date);
         } catch (NullPointerException e) {
@@ -146,7 +145,7 @@ public class User {
     public void setEntryInDiary(String diaryName, Entry entry) {
         if (!this.userDiaries.keySet().contains(diaryName)) {
             this.userDiaries.put(diaryName, new HashMap<String, Entry>());
-        } 
+        }
         HashMap<String, Entry> selectedDairy = this.userDiaries.get(diaryName);
         selectedDairy.put(entry.getDate(), entry);
     }
