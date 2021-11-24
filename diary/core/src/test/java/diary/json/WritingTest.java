@@ -15,6 +15,11 @@ public class WritingTest {
     private final static File testFilePath =
         PersistanceUtil.getJsonFile(user, testFileName);
 
+    /**
+     * Prepare for test.
+     * Remove file if it exists, as each test will use existance of file as
+     * indication of method validity.
+     */
     @BeforeAll
     public static void deleteFileIfExists() {
         if (testFilePath.exists()) {
@@ -22,6 +27,10 @@ public class WritingTest {
         }
     }
 
+    /**
+     * Test that EntryToJSON.write makes a file
+     * @throws IOException When issue with {@link EntryToJSON.write()} occur.
+     */
     @Test
     public void testWriting() throws IOException {
         Entry entry = new Entry("TestFile - Should auto delete");
@@ -29,6 +38,9 @@ public class WritingTest {
         Assertions.assertTrue(testFilePath.exists());
     }
 
+    /**
+     * Test that the PersistanceUtil.getJsonFile method functions properly.
+     */
     @Test
     public void testGetJsonFile() {
         Object output = PersistanceUtil.getJsonFile(user, testFileName);
@@ -38,6 +50,9 @@ public class WritingTest {
         Assertions.assertTrue(outputFile.getAbsolutePath().contains(testFileName));
     }
 
+    /**
+     * Clean up testfiles after the method is ran.
+     */
     @AfterAll
     public static void deleteIfStillExists() {
         if (testFilePath.exists()) {

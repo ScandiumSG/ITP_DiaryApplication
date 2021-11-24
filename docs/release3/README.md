@@ -52,6 +52,8 @@ As Phantom and Karma also had some issues with gitpod and are easier to use with
 
 In this release we implemented a REST-api, which saves any diaries the user creates to the server. The server is quite simple, only supporting GET to retrieve diaries and POST to update the server. We still store diaries locally, as a simple form kind of cache. The backend starts automatically when the repository is opened in gitpod. To read more about how the API functions and what commands are needed to start it, visit the [readme.md](../../diary/backend/readme.md) in diary. Using the provided installers to run application would not allow interaction with the REST API, as the REST API does not have a permanent, publicly available server to run from.
 
+When we added a common server to be used by several users, we also required a way to distinguish which diaries belonged to which user. Our approach was to add a simple login with username and pin. There is no validation here, but this simple change allows us to store several diaries of the same name to the server. Because of this the "login" has no validation, besides the format of the pin (a four digit number). 
+
 <!-- DEPLOYMENT-->
 
 ## Shippable Program

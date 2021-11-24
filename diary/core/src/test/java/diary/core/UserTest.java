@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 public class UserTest {
 
+    /**
+     * Test that a User object can be created and that basic getters return
+     * correct values.
+     */
     @Test
     public void testUserCreation() {
         String username = "Ola";
@@ -19,6 +23,10 @@ public class UserTest {
             username+"+"+String.valueOf(userpin), user.getUserID());
     }
 
+    /**
+     * Test that user name sanitization functions as anticipated, swapping
+     * " " for "_" in userIDs, but still returning " " for userName getter.
+     */
     @Test
     public void testUsernameSanitization() {
         String username = "Ola Nordmann ";
@@ -31,6 +39,10 @@ public class UserTest {
         Assertions.assertNotEquals(username.trim(), user.getUserName());
     }
 
+    /**
+     * Minor test to check on the (very miniscule) user name validation. Make sure name
+     * cannot be just whitespace (" ").
+     */
     @Test
     public void testUsernameValidation() {
         String username = " ";
@@ -40,7 +52,9 @@ public class UserTest {
             IllegalArgumentException.class,
             () -> {new User(username, userpin);});
     }
-
+    /**
+     * Test that only valid 4-digit pins are accepted.
+     */
     @Test
     public void testUserpinValidation() {
         String username = "Ola Nordmann";
