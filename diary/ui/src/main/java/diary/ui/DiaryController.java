@@ -150,7 +150,7 @@ public class DiaryController {
 
     /**
      * Stores the login scene to enable switching back to it
-     * 
+     *
      * @param scene the javafx scene to load
      */
     public void setLoginScene(Scene scene) {
@@ -163,7 +163,7 @@ public class DiaryController {
 
     /**
      * Sets the active user.
-     * 
+     *
      * @param user The user to set.
      */
     public void openNewUser(User user) {
@@ -182,14 +182,14 @@ public class DiaryController {
     }
 
     /**
-     * Fills the dropdown menu with registered diaries and selects the first item if it exists      
+     * Fills the dropdown menu with registered diaries and selects the first item if it exists
      */
     private void updateDiaryList() {
         try {
             title.getItems().clear();
             title.setValue(null);
 
-            HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
+            HashMap<String, HashMap<String, Entry>> diaries = RetrieveDiaries.findDiaries(user);
             for (String name : diaries.keySet()) {
                 title.getItems().add(name);
             }
@@ -199,7 +199,7 @@ public class DiaryController {
             if (title.getValue() == null) {
                 title.setValue(user.getUserName() + "'s diary");
             }
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException f)  {
@@ -209,7 +209,7 @@ public class DiaryController {
 
     /**
      * Updates the page to show a date thats offset from curretly selected date by increment.
-     * 
+     *
      * @param increment how many pages to move.
      */
     private void incrementDate(int increment) {
@@ -283,7 +283,7 @@ public class DiaryController {
 
     /**
      * Sets the date value displayed on the datepicker.
-     * 
+     *
      * @param date The date to display. A String in the format dd-MM-yyyy
      */
     private void setDatePickerValue(String date) {
