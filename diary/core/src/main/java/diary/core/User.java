@@ -1,12 +1,24 @@
 package diary.core;
 
+import java.io.IOException;
+import java.util.HashMap;
+import diary.json.RetrieveDiaries;
+
 public class User {
     private String userName;
     private String userPin;
+    private HashMap<String, HashMap<String, Entry>> userDiaries;
 
     public User(final String name, final String pin) {
         validateUserName(name);
         validateUserPin(pin);
+
+        try {
+            userDiaries = RetrieveDiaries.findDiaries(this);
+        } catch (IOException e) {
+            System.out.println("Could not find any local diaries.");
+            userDiaries = new HashMap<String, HashMap<String, Entry>>();
+        }
     }
 
     /**
@@ -49,7 +61,7 @@ public class User {
      * @param str the string to check
      * @return True if the string only contains digits. False otherwise
      */
-    public static boolean isNumeric(String str) {
+    private boolean isNumeric(String str) {
         for (char c : str.toCharArray()) {
             if (!Character.isDigit(c)) {
                 return false;
@@ -83,5 +95,14 @@ public class User {
      */
     public String getUserID() {
         return this.userName + "+" + String.valueOf(getUserPin());
+    }
+
+    public HashMap<String, Entry> getDiary(String diaryName) {
+        return new HashMap<String, Entry>(this.userDiaries.get(diaryName));
+    }
+
+    public Entry getEntryFromDate(String diaryName, String date) {
+        HashMap<String, Entry> selectedDiary = this.userDiaries.get(diaryName);
+        return selectedDiary.get(date);
     }
 }
