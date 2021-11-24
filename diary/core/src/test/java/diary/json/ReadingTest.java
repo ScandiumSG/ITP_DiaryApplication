@@ -16,6 +16,11 @@ public class ReadingTest {
     private final static File testFilePath =
         PersistanceUtil.getJsonFile(user, testFileName);
 
+    /**
+     * Prepare for test.
+     * Remove file if it exists, as each test will use existance of file as
+     * indication of method validity.
+     */
     @BeforeAll
     public static void deleteFileIfExists() {
         if (testFilePath.exists()) {
@@ -74,6 +79,9 @@ public class ReadingTest {
         Assertions.assertTrue(retrievedJson.contains(entry.getDate()));
     }
 
+    /**
+     * Clean up testfiles after the method is ran.
+     */
     @AfterAll
     public static void deleteIfStillExists() {
         if (testFilePath.exists()) {
