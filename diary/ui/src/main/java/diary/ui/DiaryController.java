@@ -3,9 +3,7 @@ package diary.ui;
 import diary.core.Entry;
 import diary.core.User;
 import diary.frontend.Client;
-import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
-import diary.json.RetrieveDiaries;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +11,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -84,7 +81,7 @@ public class DiaryController {
             return;
         }
 
-        Entry entry = EntryFromJSON.read(user, title.getValue(), getDateInput());
+        Entry entry = user.getEntryByDate(title.getValue(), getDateInput());
 
         if (entry == null) {
             entry = new Entry("", getDateInput());
@@ -103,6 +100,8 @@ public class DiaryController {
         Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
+            // Pushing entry to both user and update the written file with EntryToJSON
+            user.setEntryInDiary(title.getValue(), entry);
             EntryToJSON.write(user, title.getValue(), entry);
             if (!title.getItems().contains(title.getValue())) {
                 title.getItems().add(title.getValue());
@@ -189,7 +188,7 @@ public class DiaryController {
             title.getItems().clear();
             title.setValue(null);
 
-            HashMap<String, HashMap<String, Entry>> diaries = RetrieveDiaries.findDiaries(user);
+            HashMap<String, HashMap<String, Entry>> diaries = user.getAllDiaries();
             for (String name : diaries.keySet()) {
                 title.getItems().add(name);
             }
@@ -200,8 +199,6 @@ public class DiaryController {
                 title.setValue(user.getUserName() + "'s diary");
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (NullPointerException f)  {
             f.printStackTrace();
         }

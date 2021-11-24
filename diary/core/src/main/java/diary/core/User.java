@@ -1,8 +1,9 @@
 package diary.core;
 
+import diary.json.RetrieveDiaries;
 import java.io.IOException;
 import java.util.HashMap;
-import diary.json.RetrieveDiaries;
+
 
 public class User {
     private String userName;
@@ -97,12 +98,21 @@ public class User {
         return this.userName + "+" + String.valueOf(getUserPin());
     }
 
+    public HashMap<String,HashMap<String,Entry>> getAllDiaries() {
+        return new HashMap<String,HashMap<String,Entry>>(this.userDiaries);
+    }
+
     public HashMap<String, Entry> getDiary(String diaryName) {
         return new HashMap<String, Entry>(this.userDiaries.get(diaryName));
     }
 
-    public Entry getEntryFromDate(String diaryName, String date) {
+    public Entry getEntryByDate(String diaryName, String date) {
         HashMap<String, Entry> selectedDiary = this.userDiaries.get(diaryName);
         return selectedDiary.get(date);
+    }
+
+    public void setEntryInDiary(String diaryName, Entry entry) {
+        HashMap<String, Entry> selectedDairy = this.userDiaries.get(diaryName);
+        selectedDairy.put(entry.getDate(), entry);
     }
 }
