@@ -66,15 +66,12 @@ public class LoginController {
         try {
             String name = usernameField.getValue();
             String pin = pinField.getText();
-
             User user = new User(name, pin);
             diaryController.openNewUser(user);
             usernameField.setValue("");
             pinField.clear();
-
             Stage stage = (Stage) pane.getScene().getWindow();
             stage.setScene(diaryScene);
-
         } catch (Exception e) {
             if (!isTesting) {
                 System.out.println("invalid username or password");

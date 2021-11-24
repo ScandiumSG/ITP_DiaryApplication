@@ -21,10 +21,10 @@ public class User {
         validateUserName(name);
         validateUserPin(pin);
 
+        // Catch potential IOExceptions, make new HashMap if exception.
         try {
             userDiaries = RetrieveDiaries.findDiaries(this);
-        } catch (IOException e) {
-            System.out.println("Could not find any local diaries.");
+        } catch (Exception e) {
             userDiaries = new HashMap<String, HashMap<String, Entry>>();
         }
     }
@@ -129,8 +129,13 @@ public class User {
      * @return
      */
     public Entry getEntryByDate(String diaryName, String date) {
-        HashMap<String, Entry> selectedDiary = this.userDiaries.get(diaryName);
-        return selectedDiary.get(date);
+        try {      
+            HashMap<String, Entry> selectedDiary = this.userDiaries.get(diaryName);
+            return selectedDiary.get(date);
+        } catch (NullPointerException e) {
+            return null;
+        }
+
     }
 
     /**
@@ -139,6 +144,9 @@ public class User {
      * @param entry The new Entry to override the previous date-specific Entry.
      */
     public void setEntryInDiary(String diaryName, Entry entry) {
+        if (!this.userDiaries.keySet().contains(diaryName)) {
+            this.userDiaries.put(diaryName, new HashMap<String, Entry>());
+        } 
         HashMap<String, Entry> selectedDairy = this.userDiaries.get(diaryName);
         selectedDairy.put(entry.getDate(), entry);
     }

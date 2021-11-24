@@ -80,13 +80,10 @@ public class DiaryController {
         if (title.getValue() == null) {
             return;
         }
-
         Entry entry = user.getEntryByDate(title.getValue(), getDateInput());
-
         if (entry == null) {
             entry = new Entry("", getDateInput());
         }
-
         dateId.setText("Current date: " + entry.getDate());
         textEntry.setText(entry.getContent());
     }
@@ -172,11 +169,8 @@ public class DiaryController {
             //SendGET to retrieve all user's diaries from server
             Client.getDiaries(user.getUserID());
         }
-
         updateDiaryList();
-
         setDatePickerValue(Entry.parseCurrentTime());
-
         updateGraphics();
     }
 
@@ -187,18 +181,17 @@ public class DiaryController {
         try {
             title.getItems().clear();
             title.setValue(null);
-
             HashMap<String, HashMap<String, Entry>> diaries = user.getAllDiaries();
+            if (!diaries.isEmpty()) {
+                return;
+            }   
             for (String name : diaries.keySet()) {
                 title.getItems().add(name);
             }
-
             title.getSelectionModel().selectFirst();
-
             if (title.getValue() == null) {
                 title.setValue(user.getUserName() + "'s diary");
             }
-
         } catch (NullPointerException f)  {
             f.printStackTrace();
         }
