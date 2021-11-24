@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-public final class RetrieveDiaries {
+public class RetrieveDiaries {
 
     /**
-     * A method to return all diary files, in the form of List of Entry, that
+     * A method to return all diary files, in the form of HashMap of Entry, that
      * is associated with the provided User object.
      * @param user The user object that is used to name associated files
      * @return HashMap Hashmap with diary name as key and a list of all entry's
