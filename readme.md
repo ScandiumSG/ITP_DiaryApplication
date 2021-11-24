@@ -78,19 +78,22 @@
 Class diagram:
 </p>
 <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
-<img src="docs/Class_diagram.png" alt="Class diagram" width="630" height="400">
+<img src="docs/resources/Class_diagram.png" alt="Class diagram" width="630" height="400">
 </a>
+<br>
+We decided to combine the class and package diagrams into a single diagram because we felt it better illustrated how everything fit together.
+<br>
 <p>
 Sequence diagram:
 </p>
 <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
-<img src="docs/Sequence_diagram.png" alt="Sequence diagram" width="450" height="450">
+<img src="docs/resources/Sequence_diagram.png" alt="Sequence diagram" width="450" height="450">
 </a>
 <p>
 Interface:
 </p>
 <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
-<img src="docs/Illustrasjon_1.jpg" alt="Illustration" width="450" height="450">
+<img src="docs/resources/Illustrasjon_1.jpg" alt="Illustration" width="450" height="450">
 </a>
 </div>
 
