@@ -8,6 +8,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 
+/**
+ * Integration test for client/server
+ * Located in the backend directory so it runs after server is started
+ * Frontend directory is core/../resources while Backend directory is
+ * just diary/
+ */
 public class ClientIT {
     public static final String testFileName = "Bernt+1324+Dagbok";
     public static final String testFileContent = "[{\"entryDate\": " + 
@@ -19,6 +25,11 @@ public class ClientIT {
     public static final File frontEndPath = new File(
         PersistancePaths.makeResourcesPathString(testFileName));
 
+    /**
+     * Creates a file
+     * @param frontEnd Wether to use frontend or backend directory
+     * @return true if the file was successfully created
+     */
     public boolean createFile(boolean frontEnd) {
         try {
             EntryToJSON.write(testFileName, testFileContent, frontEnd);
@@ -30,6 +41,11 @@ public class ClientIT {
         return false;
     }
 
+    /**
+     * Checks that a file exists with the correct content
+     * @param frontEnd Wether to check frontend or backend directory
+     * @return true if the file was found with correct content
+     */
     public boolean checkFile(boolean frontEnd) {
         if (frontEnd && !frontEndPath.exists()) {
             System.out.println("File not on frontEnd in ClientIT");
@@ -48,6 +64,11 @@ public class ClientIT {
         return false;
     }
 
+    /**
+     * Deletes a file
+     * @param frontEnd Wether to use frontend or backend directory
+     * @return true if the file was successfully deleted
+     */
     public boolean deleteFile(boolean frontEnd) {
         if (frontEnd) {
             if (frontEndPath.exists()) {
@@ -62,6 +83,11 @@ public class ClientIT {
         return false;
     }
 
+    /**
+     * Creates a file on backend directory, uses the api to retrieve it, and 
+     * checks that the file appears with the same content in the frontend
+     * directory
+     */
     @Test
     public void getDiaries() {
         //Lag fila i backend(i diary/)
@@ -70,7 +96,7 @@ public class ClientIT {
         //Kjør controller.getDiaries() med starten på filnavnet
         Client.getDiaries(testFileName);
 
-        //Sjekk at fila har dukka opp på frontent(core/../resources), med identisk innhold
+        //Sjekk at fila har dukka opp på frontent(core/../resources), identisk
         Assertions.assertTrue(checkFile(true));
 
         //Slett fila på frontend og backend
@@ -78,6 +104,10 @@ public class ClientIT {
         Assertions.assertTrue(deleteFile(false));
     }
 
+    /**
+     * Creates a file on frontend directory, uses the api to send it, checks 
+     * that the file appears with the same content in the backend directory. 
+     */
     @Test
     public void postDiary() {
         //Lag fila i frontent(core/../resources)

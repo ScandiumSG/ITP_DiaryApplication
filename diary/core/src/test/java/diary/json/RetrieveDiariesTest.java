@@ -22,6 +22,11 @@ public class RetrieveDiariesTest {
     private static File testFile2;
     private static File testFile3;
 
+    /**
+     * Generate some Entry's, Users, File objects, and writes the Entrys to file. To be used
+     * in the other methods of this test class.
+     * @throws IOException
+     */
     @BeforeAll
     public static void generateUserAndDiaries() throws IOException {
         diary1 = "testDiary1";
@@ -56,6 +61,11 @@ public class RetrieveDiariesTest {
         EntryToJSON.write(user2, diary3, entry6);
     }
 
+    /**
+     * Test that the RetrieveDiaries.findDiaries functions and manages to find the
+     * files previously created in {@link generateUserAndDiaries()}.
+     * @throws IOException When issue with {@link EntryToJSON.write()} occur.
+     */
     @Test
     public void testRetrieveAllDiaries() throws IOException {
         HashMap<String, HashMap<String, Entry>> retrievedEntries =
@@ -70,6 +80,9 @@ public class RetrieveDiariesTest {
         Assertions.assertTrue(retrievedEntries.get(diary2).size() == 2);
     }
 
+    /**
+     *
+     */
     @Test
     public void testListFilesStartingWith() {
         List<String> foundFiles = PersistanceUtil.getFilesStartingWith(user.getUserID(), true);
@@ -79,6 +92,11 @@ public class RetrieveDiariesTest {
         Assertions.assertTrue(foundFiles.get(1).contains(diary1) || foundFiles.get(1).contains(diary2));
     }
 
+    /**
+     * Makes a new file that should then be found with PersistanceUtil.getFilesStartingWith when
+     * using the root dir and check that only 1 file was found with this method.
+     * @throws IOException When issue with {@link EntryToJSON.write()} occur.
+     */
     @Test
     public void testListFilesStartingWithRoot() throws IOException {
         String fileName = "rootFilesStartingWithFile";
@@ -92,6 +110,11 @@ public class RetrieveDiariesTest {
         new File(PersistancePaths.makeCurrentDirectoryPathString(fileName+fileFluff)).delete();
     }
 
+    /**
+     * Test that IllegalArgumentException is thrown instead of reading in a file with invalid
+     * format; an additional "+"" in the name.
+     * @throws IOException When issue with {@link EntryToJSON.write()} occur.
+     */
     @Test
     public void testInvalidUser() throws IOException {
         User invalidUser = new User("S+K", "1234");
@@ -105,6 +128,9 @@ public class RetrieveDiariesTest {
         PersistanceUtil.getJsonFile(invalidUser, invalidUserFileName).delete();
     }
 
+    /**
+     * Clean up testfiles after the method is ran.
+     */
     @AfterAll
     public static void deleteTestFiles() throws Exception {
         testFile1.delete();
