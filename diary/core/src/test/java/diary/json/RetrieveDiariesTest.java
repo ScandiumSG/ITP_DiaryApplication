@@ -68,7 +68,7 @@ public class RetrieveDiariesTest {
      */
     @Test
     public void testRetrieveAllDiaries() throws IOException {
-        HashMap<String, List<Entry>> retrievedEntries =
+        HashMap<String, HashMap<String, Entry>> retrievedEntries =
             RetrieveDiaries.findDiaries(user);
 
         Assertions.assertTrue(retrievedEntries.keySet().size() == 2);
