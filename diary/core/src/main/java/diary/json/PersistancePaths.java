@@ -2,7 +2,6 @@ package diary.json;
 
 import diary.core.User;
 import java.io.File;
-import java.util.Arrays;
 
 public class PersistancePaths {
 
@@ -13,42 +12,53 @@ public class PersistancePaths {
      * @return String A string of the file directory path.
      */
     public static String resourcesFilePath() {
-        String appendResources = "src/main/resources/";
-        String rscPath = curDirFilePath() + appendResources;
-        String[] modules = {"/api/", "/core/", "/ui/"};
-        if (Arrays.stream(modules).anyMatch(rscPath::contains)) {
-            return rscPath;
-        } else if (curDirFilePath().contains("/diary/")) {
-            rscPath = curDirFilePath() 
-                + "core/" 
-                + appendResources;
-            return rscPath;
-        } else {
-            rscPath = curDirFilePath() 
-                + "diary/" 
-                + "core/" 
-                + appendResources;
-            return rscPath;
-        }
+        String appendResources = String.join(File.separator, "core",
+            "src", "main", "resources", "");
+        return rootDirFilePath() + appendResources;
     }
 
     private static String curDirFilePath() {
         File curDirFile = new File("");
-        return curDirFile.getAbsolutePath() + "/";
+
+        String sep = File.separator;
+        String curDirPath = curDirFile.getAbsolutePath();
+
+        // If installed use user.home instead, check each OS
+        String userHomeDir = System.getProperty("user.home") + sep;
+        // Windows
+        if (curDirPath.toLowerCase().contains(
+            sep + "program files" + sep + "diary")) {
+            return userHomeDir;
+        // Linux
+        } else if (curDirPath.toLowerCase().contains(
+            sep + "opt" + sep + "diary")) {
+            return userHomeDir;
+        // macOs
+        } else if (curDirPath.toLowerCase().contains(
+            sep + "application" + sep + "diaryapplication")) {
+            return userHomeDir;
+        // No OS specific, user is using direct java code.
+        } else {
+            return curDirPath + sep;
+        }
     }
 
     /**
      * Constructs a string directing towards the root-directory
-     * path. Intended to be used to contruct File objects with correct
+     * path(diary/). Intended to be used to contruct File objects with correct
      * file directory.
      * @return String A string of the file directory path.
      */
     public static String rootDirFilePath() {
         String curDirString = curDirFilePath();
-        String fileDirSelect = "diary/";
-        String rootDirString = curDirString.substring(
-            0, curDirString.indexOf(fileDirSelect) + fileDirSelect.length());
-        return rootDirString;
+        String fileDirSelect = "diary" + File.separator;
+        if (curDirString.contains(fileDirSelect)) {
+            String rootDirString = curDirString.substring(
+                0, curDirString.indexOf(fileDirSelect) + fileDirSelect.length());
+            return rootDirString;
+        } else {
+            return curDirString + fileDirSelect;
+        }
     }
 
     /**
@@ -116,5 +126,9 @@ public class PersistancePaths {
     private static String sanitizeFilename(final String fileName) {
         String sanString = fileName.replace(" ", "_");
         return sanString;
+    }
+
+    public static void main(String[] args) {
+        resourcesFilePath();
     }
 }

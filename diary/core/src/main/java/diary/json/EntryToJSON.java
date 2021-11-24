@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public final class EntryToJSON {
         File writeLocation = new File(
             PersistancePaths.makeResourcesPathString(user, fileName));
 
+        PersistanceUtil.checkDirExistance(writeLocation.getAbsolutePath());
+
         fileWrite(user, fileName, entry, writeLocation);
     }
 
@@ -68,22 +71,21 @@ public final class EntryToJSON {
             writeLocation = new File(
                 PersistancePaths.makeCurrentDirectoryPathString(fileName));
         }
-        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-        // FileWriter fw = new FileWriter(jsonFile, false);
-        FileOutputStream sm = new FileOutputStream(writeLocation);
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
-        gson.toJson(content, bw);
-        sm.flush();
-        bw.flush();
-        sm.close();
-        bw.close();
+
+        PersistanceUtil.checkDirExistance(writeLocation.getAbsolutePath());
+
+        PrintWriter out = new PrintWriter(writeLocation, StandardCharsets.UTF_8);
+        out.print(content);
+        out.close();
     }
 
     // Delete boolean not used, suppressing warning.
-    @SuppressWarnings("unused") 
+    @SuppressWarnings("unused")
     private static void fileWrite(final User user, final String fileName,
         final Entry entry, final File writeLocation) throws IOException {
         List<Entry> entries = new ArrayList<Entry>();
+
+        PersistanceUtil.checkDirExistance(writeLocation.getAbsolutePath());
         if (!writeLocation.exists()) {
             if (!writeLocation.createNewFile()) {
                 throw new IOException("Could not find chosen path to "
@@ -100,7 +102,6 @@ public final class EntryToJSON {
         entries.add(entry);
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-        // FileWriter fw = new FileWriter(jsonFile, false);
         FileOutputStream sm = new FileOutputStream(writeLocation);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sm, StandardCharsets.UTF_8));
         gson.toJson(entries, bw);

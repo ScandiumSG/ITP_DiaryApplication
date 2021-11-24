@@ -45,14 +45,15 @@ public final class RetrieveDiaries {
      * Method to retrieve a String array with every fileName found locally.
      * @return String[] A String[] with the full name of all locally stored
      * .json files in the default storage path.
+     * @throws IOException when dir is not found
      */
-    public static String[] getAllLocalDiaries() {
+    public static String[] getAllLocalDiaries() throws IOException {
         File fileDir = new File(PersistancePaths.resourcesFilePath());
-
+        PersistanceUtil.checkDirExistance(fileDir.getAbsolutePath());
         // File.list() returns a String array of all filenames within a dir.
         String[] allLocalDiaries = fileDir.list();
         if (allLocalDiaries == null) {
-            return null;
+            return new String[0];
         }
 
         return allLocalDiaries;

@@ -12,7 +12,7 @@
     <artifactId>ui</artifactId>
 
     <properties>
-        <skipUiTests>True</skipUiTests>
+        <skipUiTests>false</skipUiTests>
     </properties>
 
 
@@ -20,7 +20,12 @@
         <dependency>
             <groupId>diary</groupId>
             <artifactId>core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>diary</groupId>
+            <artifactId>frontend</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
@@ -47,6 +52,12 @@
 		<dependency>
     		<groupId>org.testfx</groupId>
 			<artifactId>testfx-junit5</artifactId>
+        </dependency>
+        <!-- JAVA servlet -->
+        <!-- Dunno why this is needed here, but trust me, it is -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
     </dependencies>
 
@@ -114,9 +125,25 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>headless</id>
+            <properties>
+                <headlessTests>true</headlessTests>
+            </properties>
+            <dependencies>
+                <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>jdk-12.0.1+2</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 
     <build>
+
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -124,10 +151,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
                 <configuration>
                     <skipTests>${skipUiTests}</skipTests>
+                    <systemPropertyVariables>
+                        <headless>${headlessTests}</headless>
+                    </systemPropertyVariables>
                     <argLine>
-                    --add-opens diary.ui/diary.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        @{jaCoCoArgLine}
+                        --add-opens diary.ui/diary.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+                        --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
@@ -136,7 +170,37 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.6</version>
                 <configuration>
-                    <mainClass>diary.ui.DiaryApp</mainClass>
+                    <mainClass>diary.ui/diary.ui.DiaryApp</mainClass>
+
+                    <!-- Jlink config -->
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <stripDebug>true</stripDebug>
+                    <noManPages>true</noManPages>
+                    <launcher>diary</launcher>
+                    <jlinkImageName>diary</jlinkImageName>
+                    <jlinkZipName>diary</jlinkZipName>
+                </configuration>
+            </plugin>
+
+            <!-- Need additional packages for linux, see link: https://github.com/jgneff/openjdk#java-platform -->
+            <!-- config above and below taken from https://dev.to/cherrychain/javafx-jlink-and-jpackage-h9 -->
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <name>diaryApplication</name>
+                    <appVersion>1.0.0</appVersion>
+                    <vendor>it1901</vendor>
+                    <destination>target/dist</destination>
+                    <module>diary.ui/diary.ui.DiaryApp</module>
+                    <runtimeImage>target/diary</runtimeImage>
+                    <linuxShortcut>true</linuxShortcut>
+                    <icon>src/main/resources/diary/ui/img/thumb2.ico</icon>
+                    <javaOptions>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions>
                 </configuration>
             </plugin>
 
@@ -156,6 +220,9 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <propertyName>jaCoCoArgLine</propertyName>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -10,16 +10,42 @@ import javafx.stage.Stage;
 
 public class DiaryApp extends Application {
 
-    private static DiaryApp instance;
-
-    private Stage stage;
-
+    /**
+     * Configuration of values that allows headless run of ui tests
+     */
+    public static void supportHeadless() {
+        if (Boolean.getBoolean("headless")) {
+            System.setProperty("testfx.robot", "glass");
+            System.setProperty("testfx.headless", "true");
+            System.setProperty("prism.order", "sw");
+            System.setProperty("prism.text", "t2k");
+            System.setProperty("java.awt.headless", "true");   
+        }
+    }
+    
     @Override
     public final void start(final Stage stage) throws IOException {
-        setStage(stage);
-        setDiaryApp(this);
+        FXMLLoader loginLoader = new FXMLLoader(
+            this.getClass().getResource("Login.fxml"));
+        Parent loginPane = loginLoader.load();
+        Scene loginScene = new Scene(loginPane);
 
-        changeScene("Login.fxml");
+        FXMLLoader diaryLoader = new FXMLLoader(
+            this.getClass().getResource("Diary.fxml"));
+        Parent diaryPane = diaryLoader.load();
+        Scene diaryScene = new Scene(diaryPane);
+
+        LoginController loginController = (LoginController) loginLoader.getController();
+        loginController.setDiaryScene(diaryScene);
+
+        DiaryController diaryController = (DiaryController) diaryLoader.getController();
+        diaryController.setLoginScene(loginScene);
+
+        loginController.setDiaryController(diaryController);
+        diaryController.setLoginController(loginController);
+
+        stage.setTitle("Diary - Login");
+        stage.setScene(loginScene);
 
         // Image credit:
         // Photo by Annie Spratt - Unsplash
@@ -35,31 +61,5 @@ public class DiaryApp extends Application {
      */
     public static void main(final String[] args) {
         launch();
-    }
-
-    /**
-     * Method that loads in a new scene in the current stage based on provided
-     * scene name.
-     * @param sceneName A string of the scene that is to be displayed.
-     * @throws IOException If an error occur during loading of the new scene.
-     */
-    public static void changeScene(String sceneName) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-            instance.getClass().getResource(sceneName));
-        Parent parent = fxmlLoader.load();
-        instance.stage.setScene(new Scene(parent));
-
-        String title = sceneName.equals("Login.fxml") ? "Diary - Login" : "Diary";
-        instance.stage.setTitle(title);
-    }
-
-    //Setter for the DiaryApp
-    private static void setDiaryApp(final DiaryApp app) {
-        instance = app;
-    }
-
-    //Setter for the stage
-    private void setStage(Stage stage) {
-        this.stage = stage;
     }
 }

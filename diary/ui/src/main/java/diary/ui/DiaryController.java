@@ -2,6 +2,7 @@ package diary.ui;
 
 import diary.core.Entry;
 import diary.core.User;
+import diary.frontend.Client;
 import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
 import diary.json.RetrieveDiaries;
@@ -14,15 +15,28 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 public class DiaryController {
-    private static User user;
+
+    public Scene loginScene;
+
+    public LoginController loginController;
+
+    private User user;
+
+    private boolean isTesting;
+
+    @FXML
+    private Pane pane;
 
     @FXML
     private TextArea textEntry;
@@ -58,17 +72,7 @@ public class DiaryController {
      */
     @FXML
     public void initialize() {
-        createDiaryList();
         setDateConverter();
-
-        title.getSelectionModel().selectFirst();
-
-        if (title.getValue() == null) {
-            title.setValue(user.getUserName() + " 's diary");
-        }
-        setDatePickerValue(Entry.parseCurrentTime());
-
-        updateGraphics();
     }
 
     /**
@@ -76,6 +80,10 @@ public class DiaryController {
      */
     @FXML
     private void updateGraphics() {
+        if (title.getValue() == null) {
+            return;
+        }
+
         Entry entry = EntryFromJSON.read(user, title.getValue(), getDateInput());
 
         if (entry == null) {
@@ -102,6 +110,10 @@ public class DiaryController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if (!isTesting) {
+            Client.postDiary(user.getUserID() + "+" + title.getValue().replace(" ", "_"));
+        }
     }
 
     /**
@@ -127,7 +139,26 @@ public class DiaryController {
     */
     @FXML
     public void logout() throws IOException {
-        DiaryApp.changeScene("Login.fxml");
+        Stage stage = (Stage) pane.getScene().getWindow();
+        stage.setScene(loginScene);
+        loginController.updateUserList();
+    }
+
+    public void setTesting() {
+        this.isTesting = true;
+    }
+
+    /**
+     * Stores the login scene to enable switching back to it
+     * 
+     * @param scene the javafx scene to load
+     */
+    public void setLoginScene(Scene scene) {
+        loginScene = scene;
+    }
+
+    public void setLoginController(LoginController controller) {
+        loginController = controller;
     }
 
     /**
@@ -135,22 +166,44 @@ public class DiaryController {
      * 
      * @param user The user to set.
      */
-    public static void setUser(User user) {
-        DiaryController.user = user;
+    public void openNewUser(User user) {
+        this.user = user;
+
+        if (!isTesting) {
+            //SendGET to retrieve all user's diaries from server
+            Client.getDiaries(user.getUserID());
+        }
+
+        updateDiaryList();
+
+        setDatePickerValue(Entry.parseCurrentTime());
+
+        updateGraphics();
     }
 
     /**
-     * Fills the dropdown menu with registered diaries.
+     * Fills the dropdown menu with registered diaries and selects the first item if it exists      
      */
-    private void createDiaryList() {
+    private void updateDiaryList() {
         try {
+            title.getItems().clear();
+            title.setValue(null);
+
             HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
             for (String name : diaries.keySet()) {
                 title.getItems().add(name);
             }
 
+            title.getSelectionModel().selectFirst();
+
+            if (title.getValue() == null) {
+                title.setValue(user.getUserName() + "'s diary");
+            }
+            
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException f)  {
+            f.printStackTrace();
         }
     }
 

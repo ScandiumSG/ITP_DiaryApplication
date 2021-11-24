@@ -2,6 +2,7 @@ package diary.json;
 
 import diary.core.User;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,5 +57,22 @@ public final class PersistanceUtil {
     public static File getJsonFile(final String fileName) {
         return new File(
             PersistancePaths.makeResourcesPathString(fileName));
+    }
+
+    /**
+     * Checks if the provided filePath has existing parent directories, 
+     * if not the required folders/directories to make the filePath valid is
+     * attempted to be created.
+     * @throws IOException Can't create the required directories.
+     */
+    public static void checkDirExistance(String filePath) throws IOException {
+        File writeDir = new File(filePath.substring(
+            0, filePath.lastIndexOf(File.separator)));
+        if (!writeDir.exists()) {
+            if (!writeDir.mkdirs()) {
+                throw new IOException(
+                    "Could not create directory " + writeDir.getAbsolutePath());
+            }
+        }
     }
 }
