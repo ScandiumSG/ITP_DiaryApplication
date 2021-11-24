@@ -37,7 +37,8 @@ public final class EntryFromJSON {
      * @return List of all found Entry's stored under the provided username.
      * @throws IOException If filepath to resources is nonexistant.
      */
-    public static HashMap<String, Entry> read(final User user, final String fileName) throws IOException {
+    public static HashMap<String, Entry> read(final User user, final String fileName) throws
+        IOException {
 
         HashMap<String, Entry> readEntries = new HashMap<String, Entry>();
         File chosenFile = new File(

@@ -10,6 +10,13 @@ public class User {
     private String userPin;
     private HashMap<String, HashMap<String, Entry>> userDiaries;
 
+    /**
+     * Constructor of the user obejct. Takes a user chosen name and pin, validates these, then
+     * retrieves any found diary associated with the chosen name and pin.
+     *
+     * @param name A string of the selected username.
+     * @param pin A 4-digit numerical pin number chosen by the user.
+     */
     public User(final String name, final String pin) {
         validateUserName(name);
         validateUserPin(pin);
@@ -98,19 +105,39 @@ public class User {
         return this.userName + "+" + String.valueOf(getUserPin());
     }
 
-    public HashMap<String,HashMap<String,Entry>> getAllDiaries() {
-        return new HashMap<String,HashMap<String,Entry>>(this.userDiaries);
+    /**
+     * @return HashMap With diary name as the key and a HashMap of all entries as value.
+     * See {@link #getDiary() getDiary} for the format of the HashMap value contained in the
+     * returned HashMap.
+     */
+    public HashMap<String, HashMap<String, Entry>> getAllDiaries() {
+        return new HashMap<String, HashMap<String, Entry>>(this.userDiaries);
     }
 
+    /**
+     * @return HashMap With entry date as the key and corresponding Entry for each date av
+     * the value.
+     */
     public HashMap<String, Entry> getDiary(String diaryName) {
         return new HashMap<String, Entry>(this.userDiaries.get(diaryName));
     }
 
+    /**
+     * Return a specified Entry from the provided date, from the diary.
+     * @param diaryName String name of the diary to find Entry in.
+     * @param date String date to retrieve corresponding Entry.
+     * @return
+     */
     public Entry getEntryByDate(String diaryName, String date) {
         HashMap<String, Entry> selectedDiary = this.userDiaries.get(diaryName);
         return selectedDiary.get(date);
     }
 
+    /**
+     * Update a specific Entry in a specified diary.
+     * @param diaryName String name of the diary to place the Entry in.
+     * @param entry The new Entry to override the previous date-specific Entry.
+     */
     public void setEntryInDiary(String diaryName, Entry entry) {
         HashMap<String, Entry> selectedDairy = this.userDiaries.get(diaryName);
         selectedDairy.put(entry.getDate(), entry);
