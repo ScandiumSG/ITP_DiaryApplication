@@ -7,7 +7,7 @@ import java.io.File;
 import diary.core.Entry;
 import diary.core.User;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 import org.junit.jupiter.api.BeforeAll;
 
 public class ReadingTest {
@@ -26,9 +26,9 @@ public class ReadingTest {
     @Test
     public void testReading() throws IOException {
         // Check if a non-existant filepath will return a empty list object
-        List<Entry> output = EntryFromJSON.read(user, testFileName);
+        HashMap<String, Entry> output = EntryFromJSON.read(user, testFileName);
         Assertions.assertTrue(output.isEmpty());
-        Assertions.assertTrue(output instanceof List<Entry>);
+        Assertions.assertTrue(output instanceof HashMap<String, Entry>);
 
         // Check if entry's can be successfully written and read
         Entry entry = new Entry("Testinnhold_B", "11-11-2011");
