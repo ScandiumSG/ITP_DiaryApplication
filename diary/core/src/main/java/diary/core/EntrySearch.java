@@ -29,7 +29,7 @@ public final class EntrySearch {
             searchWords.add(word);
         }
         // Retrieve every entry from the specified diary
-        HashMap<String, Entry> fullDiary = EntryFromJSON.read(user, diaryName);
+        HashMap<String, Entry> fullDiary = user.getDiary(diaryName);
 
         double matchFit = 0;
         // Check each entry in the retrieved diary
