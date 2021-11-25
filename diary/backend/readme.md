@@ -6,11 +6,11 @@ To run the backend server, simply navigate into the diary directory using `cd di
 
 ## The client server message format
 
-Due to our requirements, the server expects and accepts very specific messages. For both GET and POST requests the server uses a url of \*/api/diary/filename, where filename is the name of the file, without the .json ending. For POST requests, the body of the requests is simply the content of the diary named in the url, represented as a string, though no validation is performed by the server. For GET requests, the body of the server reponse consists of several diarynames intertwined with several such diary strings(again, no validation), all separated by the string `%%NEXT%%`. For example it could be `DiaryName1%%NEXT%%DiaryContent1%%NEXT%%DiaryName2%%NEXT%%DiaryContent2`.
+Due to our requirements, the server expects and accepts very specific messages. For both GET and POST requests the server uses a url of \*/api/diary/filename, where filename is the name of the file, without the .json ending. For POST requests, the body of the requests is simply the content of the diary named in the url, represented as a string, though no validation is performed by the server. For GET requests, the body of the response server reponse is the diary represented as a string. We also added an optional querystring of `getFileNames`, which instead of the diary content corresponding to that filename returns a json array of the files beginnig with that filename, which is central to our way of storing and retrieving diaries. 
 
 ## Testing of the API
 
-In this project we have implemented an integrationtest to test the API. In our case, we felt this was enough, as the API merely stores and retrieves static data, and is not stateful. The integration test is ofcourse run as part of mvn clean install.
+In this project we have implemented an integration test to test the API. In our case, we felt this would, as the API merely stores and retrieves static data, and is not stateful. The integration test is ofcourse run as part of mvn clean install.
 
 ## Storing local files
 
