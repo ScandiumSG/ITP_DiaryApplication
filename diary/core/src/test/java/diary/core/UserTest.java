@@ -132,8 +132,6 @@ public class UserTest {
 
         Entry retrievedEntry = user.getEntryByDate(testDiaryName, testEntryDate2);
         // Make sure the retrieved Entry is not the original object.
-        System.out.println(entry2);
-        System.out.println(retrievedEntry);
         Assertions.assertNotEquals(retrievedEntry, entry2);
 
         Assertions.assertEquals(retrievedEntry.getContent(), entry2.getContent());

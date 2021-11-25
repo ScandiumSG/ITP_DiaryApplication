@@ -29,6 +29,20 @@ public class User {
     }
 
     /**
+     * Refresh the diaries and entries associated with the user by re-reading in all
+     * entries using the RetrieveDiaried.findDiaries method.
+     */
+    public void updateUserEntries() {
+        try {
+            userDiaries = RetrieveDiaries.findDiaries(this);
+        } catch (Exception e) {
+            if (userDiaries.size() == 0) {
+                userDiaries = new HashMap<String, HashMap<String, Entry>>();
+            }
+        }
+    }
+
+    /**
      * Validation method to allow for quick update of nameing requirements
      * for the diary users.
      * @param name A string with the users chosen username

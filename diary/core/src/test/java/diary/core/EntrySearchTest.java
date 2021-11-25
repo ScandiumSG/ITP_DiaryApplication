@@ -32,6 +32,7 @@ public class EntrySearchTest {
         EntryToJSON.write(user, fileName, entry3);
         Entry entry4 = new Entry("tomato tornado tobago", "04-01-2011");
         EntryToJSON.write(user, fileName, entry4);
+        user.updateUserEntries();
     }
 
     /**
@@ -43,7 +44,7 @@ public class EntrySearchTest {
         String keyword1 = "tomato";
         String keyword2 = "potato";
         String keyword3 = "tornado";
-        String keyword4 = "	cato";
+        String keyword4 = "cat";
 
         Assertions.assertTrue(
             EntrySearch.searchEntries(
