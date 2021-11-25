@@ -14,6 +14,11 @@ public class EntrySearchTest {
     private File Testfile;
     private User user = new User("TestPerson", "4252");
 
+    /**
+     * Prepares tests.
+     * Write 4 entries to a file with a single provided user.
+     * @throws IOException When issue with {@link EntryToJSON.write()} occur.
+     */
     @BeforeEach
     public void makeFile() throws IOException {
         String fileName = "SearchTest";
@@ -29,8 +34,12 @@ public class EntrySearchTest {
         EntryToJSON.write(user, fileName, entry4);
     }
 
+    /**
+     * Test that the searchWords actually return appropriate number of Entry results.
+     * @throws IOException When issue with {@link EntryToJSON.write()} occur.
+     */
     @Test
-    public void singleKeywordTest() throws IOException {
+    public void keywordSearchTest() throws IOException {
         String keyword1 = "tomato";
         String keyword2 = "potato";
         String keyword3 = "tornado";
@@ -50,6 +59,9 @@ public class EntrySearchTest {
                 user, fileName, keyword4).size() == 0);
     }
 
+    /**
+     * Clean up testfiles after the method is ran.
+     */
     @AfterEach
     public void deleteFile() {
         Testfile.delete();

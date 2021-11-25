@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Classes containing static methods to read and write to/from JSON.
  *
@@ -93,7 +92,8 @@ public final class EntryToJSON {
             }
         }
 
-        entries.addAll(EntryFromJSON.read(user, fileName));
+        entries.addAll(EntryFromJSON.read(user, fileName).values());
+
         Boolean del = writeLocation.delete();
 
         if (entries.size() > 0) {

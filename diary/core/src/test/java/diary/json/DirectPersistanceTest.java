@@ -6,7 +6,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class DirectPersistanceTest {
-    
+
+    /**
+     * Test that the direct to String persistance methods funcitons when using the
+     * src/main/resources pathway.
+     * @throws IOException When issue with {@link EntryToJSON.write()} occur.
+     */
     @Test
     public void testDirectInResources() throws IOException {
         String content = "test";
@@ -21,6 +26,11 @@ public class DirectPersistanceTest {
         directWriteFile.delete();
     }
 
+    /**
+     * Test that the direct to String persistance methods funcitons when using the
+     * root pathway.
+     * @throws IOException When issue with {@link EntryToJSON.write()} occur.
+     */
     @Test
     public void testDirectInRoot() throws IOException {
         String content = "test file, should auto-delete";

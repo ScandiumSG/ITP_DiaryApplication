@@ -3,9 +3,7 @@ package diary.ui;
 import diary.core.Entry;
 import diary.core.User;
 import diary.frontend.Client;
-import diary.json.EntryFromJSON;
 import diary.json.EntryToJSON;
-import diary.json.RetrieveDiaries;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +11,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -83,13 +80,10 @@ public class DiaryController {
         if (title.getValue() == null) {
             return;
         }
-
-        Entry entry = EntryFromJSON.read(user, title.getValue(), getDateInput());
-
+        Entry entry = user.getEntryByDate(title.getValue(), getDateInput());
         if (entry == null) {
             entry = new Entry("", getDateInput());
         }
-
         dateId.setText("Current date: " + entry.getDate());
         textEntry.setText(entry.getContent());
     }
@@ -103,6 +97,8 @@ public class DiaryController {
         Entry entry = new Entry(textEntry.getText(), getDateInput());
 
         try {
+            // Pushing entry to both user and update the written file with EntryToJSON
+            user.setEntryInDiary(title.getValue(), entry);
             EntryToJSON.write(user, title.getValue(), entry);
             if (!title.getItems().contains(title.getValue())) {
                 title.getItems().add(title.getValue());
@@ -150,7 +146,7 @@ public class DiaryController {
 
     /**
      * Stores the login scene to enable switching back to it
-     * 
+     *
      * @param scene the javafx scene to load
      */
     public void setLoginScene(Scene scene) {
@@ -163,7 +159,7 @@ public class DiaryController {
 
     /**
      * Sets the active user.
-     * 
+     *
      * @param user The user to set.
      */
     public void openNewUser(User user) {
@@ -173,35 +169,29 @@ public class DiaryController {
             //SendGET to retrieve all user's diaries from server
             Client.getDiaries(user.getUserID());
         }
-
         updateDiaryList();
-
         setDatePickerValue(Entry.parseCurrentTime());
-
         updateGraphics();
     }
 
     /**
-     * Fills the dropdown menu with registered diaries and selects the first item if it exists      
+     * Fills the dropdown menu with registered diaries and selects the first item if it exists
      */
     private void updateDiaryList() {
         try {
             title.getItems().clear();
             title.setValue(null);
-
-            HashMap<String, List<Entry>> diaries = RetrieveDiaries.findDiaries(user);
+            HashMap<String, HashMap<String, Entry>> diaries = user.getAllDiaries();
+            if (!diaries.isEmpty()) {
+                return;
+            }   
             for (String name : diaries.keySet()) {
                 title.getItems().add(name);
             }
-
             title.getSelectionModel().selectFirst();
-
             if (title.getValue() == null) {
                 title.setValue(user.getUserName() + "'s diary");
             }
-            
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (NullPointerException f)  {
             f.printStackTrace();
         }
@@ -209,7 +199,7 @@ public class DiaryController {
 
     /**
      * Updates the page to show a date thats offset from curretly selected date by increment.
-     * 
+     *
      * @param increment how many pages to move.
      */
     private void incrementDate(int increment) {
@@ -283,7 +273,7 @@ public class DiaryController {
 
     /**
      * Sets the date value displayed on the datepicker.
-     * 
+     *
      * @param date The date to display. A String in the format dd-MM-yyyy
      */
     private void setDatePickerValue(String date) {

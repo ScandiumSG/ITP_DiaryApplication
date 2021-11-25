@@ -10,9 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -39,9 +37,10 @@ public final class EntryFromJSON {
      * @return List of all found Entry's stored under the provided username.
      * @throws IOException If filepath to resources is nonexistant.
      */
-    public static List<Entry> read(final User user, final String fileName) throws IOException {
+    public static HashMap<String, Entry> read(final User user, final String fileName) throws
+        IOException {
 
-        List<Entry> readEntries = new ArrayList<Entry>();
+        HashMap<String, Entry> readEntries = new HashMap<String, Entry>();
         File chosenFile = new File(
             PersistancePaths.makeResourcesPathString(user, fileName));
 
@@ -57,7 +56,9 @@ public final class EntryFromJSON {
         Gson gson = new GsonBuilder().setLenient().create();
         Entry[] entries = gson.fromJson(bufferedReader, Entry[].class);
         if (entries != null) {
-            readEntries = Arrays.asList(entries);
+            for (Entry entry : entries) {
+                readEntries.put(entry.getDate(), entry);
+            }
         }
         bufferedReader.close();
         return readEntries;
@@ -74,15 +75,12 @@ public final class EntryFromJSON {
      */
     public static Entry read(final User user, final String fileName, final String date) {
         try {
-            List<Entry> entries = read(user, fileName);
-            if (entries != null) {
-                for (Entry entry : entries) {
-                    if (entry.getDate().equals(date)) {
-                        return entry;
-                    }
-                }
+            HashMap<String, Entry> entries = read(user, fileName);
+            if (entries.keySet().contains(date)) {
+                return entries.get(date);
+            } else {
+                return new Entry("", date);
             }
-            return new Entry("", date);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

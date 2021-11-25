@@ -5,13 +5,12 @@ import diary.core.User;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 
-public final class RetrieveDiaries {
+public class RetrieveDiaries {
 
     /**
-     * A method to return all diary files, in the form of List of Entry, that
+     * A method to return all diary files, in the form of HashMap of Entry, that
      * is associated with the provided User object.
      * @param user The user object that is used to name associated files
      * @return HashMap Hashmap with diary name as key and a list of all entry's
@@ -19,9 +18,9 @@ public final class RetrieveDiaries {
      * @throws IOException If filePath is non-existant while loading entries
      * with EntryFromJSON.read().
      */
-    public static HashMap<String, List<Entry>> findDiaries(final User user)
+    public static HashMap<String, HashMap<String, Entry>> findDiaries(final User user)
         throws IOException {
-        HashMap<String, List<Entry>> foundDiaries = new HashMap<>();
+        HashMap<String, HashMap<String, Entry>> foundDiaries = new HashMap<>();
 
         String[] allLocalDiaries = getAllLocalDiaries();
 
@@ -55,10 +54,8 @@ public final class RetrieveDiaries {
         if (allLocalDiaries == null) {
             return new String[0];
         }
-
         return allLocalDiaries;
     }
-
 
     private static String getDiaryName(final String fileName) {
         int signOccurance = 0;

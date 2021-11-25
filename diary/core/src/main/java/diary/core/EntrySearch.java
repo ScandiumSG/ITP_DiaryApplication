@@ -3,7 +3,9 @@ package diary.core;
 import diary.json.EntryFromJSON;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
 
 
 public final class EntrySearch {
@@ -27,11 +29,11 @@ public final class EntrySearch {
             searchWords.add(word);
         }
         // Retrieve every entry from the specified diary
-        List<Entry> fullDiary = EntryFromJSON.read(user, diaryName);
+        HashMap<String, Entry> fullDiary = EntryFromJSON.read(user, diaryName);
 
         double matchFit = 0;
         // Check each entry in the retrieved diary
-        for (Entry entry : fullDiary) {
+        for (Entry entry : fullDiary.values()) {
             matchFit = 0;
             // Check how many of the search words match the entry content.
             for (String word : searchWords) {
