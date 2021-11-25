@@ -14,7 +14,6 @@ import java.util.Scanner;
 public final class Client {
     private static final Charset charset = StandardCharsets.UTF_8;
     private static final String url = "http://localhost:8080/api/diary/";
-    private static final String separator = "%%NEXT%%";
     private static final Boolean writeLocal = true;
     //This one determines wether we write in core/../resources or user.dir
     //User.dir defaults to diary/, which we use in the tests
@@ -32,16 +31,15 @@ public final class Client {
      * Sends a get request to localhost with urlEnd at the end of the url
      * Gets called by getDiaries()
      * @param urlEnd String to append to url, the start of the filename
-     * @return The string the server returns, otherwise an empty string
+     * @return The string the server returns, null if there is an error
      */
     public static String sendGET(String urlEnd) {
         try {
             URLConnection connection = new URL(url + urlEnd).openConnection();
             connection.setRequestProperty("Accept-Charset", charset.toString());
             return inputStreamToString(connection.getInputStream());
-
         } catch (IOException e) {
-            System.out.println("Couldn't connect to server with get");
+            System.out.println("Couldn't connect to server with get, urlEnd: " + urlEnd);
         }
         return "";
     }
@@ -52,23 +50,25 @@ public final class Client {
      * @param startOfDiaryNames Diaries starting with this(without .json) gets retrieved
      */
     public static void getDiaries(String startOfDiaryNames) {
-        String[] nameContentPairs = sendGET(startOfDiaryNames).split(separator);
-        if (nameContentPairs.length == 1 || nameContentPairs.length % 2 == 1) {
-            System.out.println("Error getting diaries.");
+        //Get string json list of diaryNames
+        String names = sendGET(startOfDiaryNames + "?getFileNames");
+        if (names.equals("") || names.equals("[]")) {
+            //No diaries found, return to controller
             return;
         }
+        //Convert to actual list
+        String[] diaryNames = names.substring(1, names.length() - 1).split(", ");
 
-        for (int i = 0; i < nameContentPairs.length; i += 2) {
-            String fileName = nameContentPairs[i];
-            String fileContent = nameContentPairs[i + 1];
-            
+        //Get every diary
+        for (String diaryName : diaryNames) {
+            String diaryContent = sendGET(diaryName);
             try {
-                EntryToJSON.write(fileName, fileContent, writeLocal);
+                //Write to local
+                EntryToJSON.write(diaryName, diaryContent, writeLocal);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
     }
 
     /**

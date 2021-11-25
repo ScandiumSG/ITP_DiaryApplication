@@ -130,7 +130,8 @@ public class User {
     public Entry getEntryByDate(String diaryName, String date) {
         try {
             HashMap<String, Entry> selectedDiary = this.userDiaries.get(diaryName);
-            return selectedDiary.get(date);
+            Entry retrieved = selectedDiary.get(date);
+            return new Entry(retrieved.getContent(), retrieved.getDate());
         } catch (NullPointerException e) {
             return null;
         }
