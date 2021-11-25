@@ -34,7 +34,7 @@ public class RetrieveDiaries {
                 .equals(desiredFileString)) {
                 foundDiaries.put(
                     getDiaryName(file),
-                    EntryFromJSON.read(user, getDiaryName(file)));
+                    user.getDiary(getDiaryName(file)));
             }
         }
         return foundDiaries;
