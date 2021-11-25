@@ -36,7 +36,7 @@ public class User {
         try {
             userDiaries = RetrieveDiaries.findDiaries(this);
         } catch (Exception e) {
-            if (userDiaries.size() == 0) {
+            if (userDiaries == null) {
                 userDiaries = new HashMap<String, HashMap<String, Entry>>();
             }
         }
