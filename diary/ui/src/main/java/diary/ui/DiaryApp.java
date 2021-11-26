@@ -12,9 +12,11 @@ public class DiaryApp extends Application {
 
     private Scene loginScene;
     private Scene diaryScene;
+    
     /**
      * Configuration of values that allows headless run of ui tests
      */
+
     public static void supportHeadless() {
         if (Boolean.getBoolean("headless")) {
             System.setProperty("testfx.robot", "glass");
