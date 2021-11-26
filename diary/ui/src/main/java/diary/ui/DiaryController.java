@@ -248,10 +248,18 @@ public class DiaryController {
         loginController.updateUserList();
     }
 
+    /**
+     * Gets the amount of items in the TableViewer.
+     * @return the amount of items in the table.
+     */
     public int getTableItemAmount() {
         return entryTable.getItems().size();
     }
 
+    /**
+     * Tells the application know that tests are getting run.
+     * Prevents the application from sending entries to the server.
+     */
     public void setTesting() {
         this.isTesting = true;
     }
@@ -265,6 +273,10 @@ public class DiaryController {
         loginScene = scene;
     }
 
+    /**
+     * Setter for the loginController.
+     * @param controller the controller to use.
+     */
     public void setLoginController(LoginController controller) {
         loginController = controller;
     }
