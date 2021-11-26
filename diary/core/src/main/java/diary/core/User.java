@@ -32,7 +32,7 @@ public class User {
      * Refresh the diaries and entries associated with the user by re-reading in all
      * entries using the RetrieveDiaried.findDiaries method.
      */
-    public void updateUserEntries() {
+    public void updateUserDiaries() {
         try {
             userDiaries = RetrieveDiaries.findDiaries(this);
         } catch (Exception e) {
