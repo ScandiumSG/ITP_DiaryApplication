@@ -1,5 +1,8 @@
 package diary.core;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -51,20 +54,17 @@ public class Entry {
      * @return Boolean
      */
     private Boolean validateDateInput(final String input) {
-        final int splitAmount = 3;
-        final int dayAndMonthLength = 2;
-        final int maxDayMonthLength = 4;
-
-        String[] date = input.split("-", splitAmount);
-
-        // Check to make sure numerical value and 2 digits
-        for (int i = 0; i < dayAndMonthLength; i++) {
-            if (!isNumerical(date[i]) || date[i].length() != dayAndMonthLength) {
-                return false;
-            }
+        if (input.length() != 10) {
+            return false;
         }
 
-        if (!isNumerical(date[2]) || date[2].length() != maxDayMonthLength) {
+        String pattern = "dd-mm-yyyy";
+        DateFormat dateFormatter = new SimpleDateFormat(pattern);
+        dateFormatter.setLenient(false);
+
+        try {
+            dateFormatter.parse(input);
+        } catch (ParseException e) {
             return false;
         }
 
@@ -72,19 +72,17 @@ public class Entry {
     }
 
     /**
-     * Verify is input string is numerical
-     * @param input The string to check
-     * @return Boolean true if inputstring only contains numbers,
-     * else returns false.
+     * Getter for the entry content
+     * @return the entry content
      */
-    private Boolean isNumerical(final String input) {
-        return input.matches("[0-9]+");
-    }
-
     public final String getContent() {
         return (this.entryContent);
     }
 
+    /**
+     * Getter for the entry date
+     * @return the entry date
+     */
     public final String getDate() {
         return (this.entryDate);
     }

@@ -38,8 +38,8 @@ public class ReadingTest {
         // Check if entry's can be successfully written and read
         Entry entry = new Entry("Testinnhold_B", "11-11-2011");
         EntryToJSON.write(user, testFileName, entry);
-        Entry readEntry = EntryFromJSON.read(
-            user, testFileName, entry.getDate());
+        HashMap<String, Entry> mapInnholdB = EntryFromJSON.read(user, testFileName);
+        Entry readEntry = mapInnholdB.get("11-11-2011");
         Assertions.assertEquals(entry.getContent(), readEntry.getContent());
         Assertions.assertEquals(entry.getDate(), readEntry.getDate());
 
@@ -47,8 +47,8 @@ public class ReadingTest {
         // overwrites
         Entry overwriteEntry = new Entry("Testinnhold_C", "11-11-2011");
         EntryToJSON.write(user, testFileName, overwriteEntry);
-        Entry readOverwriteEntry = EntryFromJSON.read(
-            user, testFileName, overwriteEntry.getDate());
+        HashMap<String, Entry> mapInnholdC = EntryFromJSON.read(user, testFileName);
+        Entry readOverwriteEntry = mapInnholdC.get("11-11-2011");
         Assertions.assertEquals(
             overwriteEntry.getContent(), readOverwriteEntry.getContent());
         Assertions.assertEquals(
@@ -57,7 +57,8 @@ public class ReadingTest {
 
     @Test
     public void testReadEmptyFile() throws IOException {
-        Entry emptyFile = EntryFromJSON.read(user, testFileName, "15-10-1990");
+        user.updateUserEntries();
+        Entry emptyFile = user.getEntryByDate(testFileName, "15-10-1990");
         Assertions.assertEquals("", emptyFile.getContent());
         Assertions.assertEquals("15-10-1990", emptyFile.getDate());
     }

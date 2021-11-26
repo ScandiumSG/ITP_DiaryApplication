@@ -24,5 +24,25 @@
       <Button fx:id="logoutButton" layoutX="534.0" layoutY="12.0" mnemonicParsing="false" onAction="#logout" text="Log out" />
       <ComboBox fx:id="title" editable="true" layoutX="117.0" layoutY="6.0" onAction="#updateGraphics" prefHeight="37.0" prefWidth="260.0" promptText="select dairy" />
       <Button fx:id="loadDiaryButton" layoutX="393.0" layoutY="12.0" mnemonicParsing="false" onAction="#updateGraphics" prefHeight="25.0" prefWidth="71.0" text="load dairy" textAlignment="CENTER" />
+      <Button fx:id="searchButton" layoutX="393.0" layoutY="506.0" mnemonicParsing="false" onAction="#toggleEntrySearch" prefHeight="25.0" prefWidth="86.0" text="Find entry" />
+      <Pane fx:id="searchBackground" disable="true" onMouseClicked="#toggleEntrySearch" prefHeight="557.0" prefWidth="600.0" visible="false">
+        <children>
+            <Pane opacity="0.5" prefHeight="557.0" prefWidth="600.0" style="-fx-background-color: #000000;" />
+            <Pane layoutX="50.0" layoutY="50.0" prefHeight="461.0" prefWidth="500.0" style="-fx-background-color: #000000;">
+               <children>
+                 <TableView fx:id="entryTable" layoutY="38.0" onMouseClicked="#registerTableClick" prefHeight="423.0" prefWidth="500.0">
+                   <columns>
+                     <TableColumn fx:id="dateColumn" prefWidth="108.0" text="Date" />
+                     <TableColumn fx:id="entryColumn" editable="false" prefWidth="391.0" text="Entry" />
+                   </columns>
+                 </TableView>
+                  <TextField fx:id="searchField" onAction="#searchEntries" prefHeight="37.0" prefWidth="260.0" promptText="Search keywords" />
+                  <Button fx:id="entrySearchButton" layoutX="260.0" mnemonicParsing="false" onAction="#searchEntries" prefHeight="37.0" prefWidth="71.0" text="Search" />
+                  <Button fx:id="closeSearch" layoutX="443.0" mnemonicParsing="false" onAction="#toggleEntrySearch" prefHeight="37.0" prefWidth="57.0" text="Close" />
+                  <Button fx:id="openEntryButton" layoutX="330.0" mnemonicParsing="false" onAction="#openSelectedEntry" prefHeight="37.0" prefWidth="113.0" text="Open selected" />
+               </children>
+            </Pane>
+        </children>
+     </Pane>
     </children>
 </Pane>
