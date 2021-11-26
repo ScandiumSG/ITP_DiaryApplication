@@ -9,10 +9,10 @@
 
 ## Links
 
-[Root readme](../readme.md)  
-[Backend readme](backend/readme.md)  
-[Core readme](core/readme.md)  
-[Frontend readme](frontend/readme.md)  
+[Root readme](../readme.md)
+[Backend readme](backend/readme.md)
+[Core readme](core/readme.md)
+[Frontend readme](frontend/readme.md)
 
 <br/>
 
@@ -20,7 +20,7 @@
 
 </br>
 
-The diary should be easy to use. First you pick username and pin code. Then open the application which will start a page at the current date. After writing your diary content, remember to submit the edited page by pushing the "Save entry" button in order to save it, there is no auto-save. The button for submitting is shown below as a screenshot. 
+The diary should be easy to use. First you pick username and pin code. Then open the application which will start a page at the current date. After writing your diary content, remember to submit the edited page by pushing the "Save entry" button in order to save it, there is no auto-save. The button for submitting is shown below as a screenshot.
 
 </br>
 
@@ -53,7 +53,7 @@ For more infomration of the project, plrease refer to the [Documentation](https:
 During this project multiple standards and templates have been used. Firstly, have all commit messages been written with the topic of concern, as “documentation”, “ui” or “testing”, followed by the specific changes or features added. By doing it like this it has been easier to keep track of what the different commits regard.
 
 When issues are created have, we strived to make them short and consise. This is to make them easier to read and understand for all team members.
-Methods and variables are named in such a way that they may be used by other members in the future without necessarily have to asking or read the method or class to understand. Javadocs also helps here. Getters and setter are obviously called “getter” or “setter” followed by what it sets or gets. Methods in general are called what they do as short as possible. Variables are named after what they are used as. 
+Methods and variables are named in such a way that they may be used by other members in the future without necessarily have to asking or read the method or class to understand. Javadocs also helps here. Getters and setter are obviously called “getter” or “setter” followed by what it sets or gets. Methods in general are called what they do as short as possible. Variables are named after what they are used as.
 In all datasets are some deviations, this beeing no exception. Some commits, methods, issues, or variables might therefore not follow these guidelines strictly, though we attempted to minimize the ammount of exceptions.
 
 <br/>
@@ -89,7 +89,7 @@ The adviced procedure is as follows:
 
 Unit test coverage is measured using [jacoco](https://github.com/jacoco/jacoco). Each modules test coverage is measured and aggregated into a common report available in `diary/testing/target/site/jacoco-aggregate/index.html`.
 
-The project is expected to have test coverage above 70% for each module, except for frontend and backend. 
+The project is expected to have test coverage above 70% for each module, except for frontend and backend.
 For gitlab the aggregate test coverage in the main branch is shown as both a project badge as well as a badge in the root-directory readme.md file.
 The UI module will however not be included in the aggregate report, due to javafx tests not working as a headless gitlab pipeline. The aggregate coverage for the overall project is therefore set at 50% minimum.
 The test regarding the back and frontend folders aren’t written as unit tests but as integration tests. This causes the coverage to not be included in the Jacoco report.
@@ -110,9 +110,9 @@ The maven spotbugs plugin, spotbugs-maven-plugin, is used to detect well known b
 
 This project use a spotbugs exclusion list, which contains any spotbugs error that is allowed within the project. This exclusion list is located in `diary/config/spotbugs_exclude.xml`.
 
-Currently two bugs is excluded from bugspot tests. `DLS_DEAD_LOCAL_STORE` is excluded due to usage of `File.delete()` in the persistance layer. The `File.delete()` method returns a boolean value, however currently the project design just needs the file to delete without a return value, which is why the `DLS_DEAD_LOCAL_STORE` is on the exclusion list.
+Currently three bugs is excluded from bugspot tests. `DLS_DEAD_LOCAL_STORE` is excluded due to usage of `File.delete()` in the persistance layer. The `File.delete()` method returns a boolean value, however currently the project design just needs the file to delete without a return value, which is why the `DLS_DEAD_LOCAL_STORE` is on the exclusion list.
 
-`EI_EXPOSE_REP2` is excluded due to our method of swapping between controllers in the UI module. We intended to limit exposing objects as much as possible, but found no reliable workaround for the UI controller swapping methods. The UI controllers is only location this "bug" is allowed, any other places required workaround to preserve encapsulation.
+`EI_EXPOSE_REP` and `EI_EXPOSE_REP2` is excluded due to our method of swapping between controllers in the UI module. We intended to limit exposing objects as much as possible, but found no reliable workaround for the UI controller swapping methods. The UI controllers is only location the `EI_EXPOSE_REP2` "bug" is allowed, DiaryApp is the only location the `EI_EXPOSE_REP` bug is allowed. These bugs should not be allowed to occur outside of these specific classes in the UI module.
 
 ### How to run test
 
