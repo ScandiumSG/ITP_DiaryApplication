@@ -32,7 +32,7 @@ public class EntrySearchTest {
         EntryToJSON.write(user, fileName, entry3);
         Entry entry4 = new Entry("tomato tornado tobago", "04-01-2011");
         EntryToJSON.write(user, fileName, entry4);
-        user.updateUserEntries();
+        user.updateUserDiaries();
     }
 
     /**

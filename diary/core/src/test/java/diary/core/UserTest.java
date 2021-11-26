@@ -179,7 +179,7 @@ public class UserTest {
             e.printStackTrace();
         }
 
-        user.updateUserEntries();
+        user.updateUserDiaries();
         Assertions.assertTrue(user.getDiary(testDiaryName).size() == 2);
         PersistanceUtil.getJsonFile(user, testDiaryName).delete();
     }
