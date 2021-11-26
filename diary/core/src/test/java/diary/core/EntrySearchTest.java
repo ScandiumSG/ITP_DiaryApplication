@@ -2,6 +2,7 @@ package diary.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,16 +49,16 @@ public class EntrySearchTest {
 
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                user, fileName, keyword1).size() == 4);
+                user, fileName, Arrays.asList(keyword1)).size() == 4);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                user, fileName, keyword1, keyword2).size() == 2);
+                user, fileName, Arrays.asList(keyword2)).size() == 2);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                user, fileName, keyword1, keyword2, keyword3).size() == 3);
+                user, fileName, Arrays.asList(keyword1, keyword2, keyword3)).size() == 3);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                user, fileName, keyword4).size() == 0);
+                user, fileName, Arrays.asList(keyword4)).size() == 0);
     }
 
     /**

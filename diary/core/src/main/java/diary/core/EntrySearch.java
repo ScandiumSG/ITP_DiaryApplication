@@ -20,13 +20,9 @@ public final class EntrySearch {
      * @throws IOException If EntryFromJSON cannot access storage device.
      */
     public static List<Entry> searchEntries(final User user, final String diaryName,
-        String... keywords) throws IOException {
+        List<String> keywords) throws IOException {
         List<Entry> matchingEntries = new ArrayList<Entry>();
-        // Add all searchWords into a separate list
-        List<String> searchWords = new ArrayList<String>();
-        for (String word : keywords) {
-            searchWords.add(word);
-        }
+
         // Retrieve every entry from the specified diary
         HashMap<String, Entry> fullDiary = user.getDiary(diaryName);
 
@@ -35,13 +31,13 @@ public final class EntrySearch {
         for (Entry entry : fullDiary.values()) {
             matchFit = 0;
             // Check how many of the search words match the entry content.
-            for (String word : searchWords) {
+            for (String word : keywords) {
                 if (entry.getContent()
                     .toLowerCase().contains(word.toLowerCase())) {
                     matchFit++;
                 }
             }
-            matchFit = matchFit / searchWords.size();
+            matchFit = matchFit / keywords.size();
             if (matchFit > matchCriteria) {
                 matchingEntries.add(entry);
             }

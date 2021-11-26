@@ -183,4 +183,16 @@ public class UserTest {
         Assertions.assertTrue(user.getDiary(testDiaryName).size() == 2);
         PersistanceUtil.getJsonFile(user, testDiaryName).delete();
     }
+
+    @Test
+    public void testGettersWhenEmptyUser() {
+        User emptyUser = new User("NoUserOfThisNameExists", "1234");
+        String nonExistantDiaryName = "NoDiaryOfThisNameShouldExist";
+
+        Assertions.assertTrue(emptyUser.getAllDiaries() != null);
+        Assertions.assertTrue(emptyUser.getAllDiaries().size() == 0);
+
+        Assertions.assertTrue(emptyUser.getDiary(nonExistantDiaryName) != null);
+        Assertions.assertTrue(emptyUser.getDiary(nonExistantDiaryName).size() == 0);
+    }
 }
