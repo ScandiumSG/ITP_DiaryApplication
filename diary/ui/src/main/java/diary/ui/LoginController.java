@@ -34,10 +34,18 @@ public class LoginController {
     @FXML
     private Text title;
 
+    /**
+     * Setter for the diary scene
+     * @param scene the scene to use
+     */
     public void setDiaryScene(Scene scene) {
         diaryScene = scene;
     }
 
+    /**
+     * Setter for the diary controller
+     * @param controller the controller to use
+     */
     public void setDiaryController(DiaryController controller) {
         diaryController = controller;
     }
@@ -99,6 +107,10 @@ public class LoginController {
         }
     }
 
+    /**
+     * Tells the application that tests are being run.
+     * Only affects whether the application prints to console when login fails.
+     */
     public void setTesting() {
         isTesting = true;
     }

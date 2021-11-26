@@ -1,10 +1,14 @@
 package diary.core;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import diary.json.EntryToJSON;
+import diary.json.PersistanceUtil;
 
 public class UserTest {
 
@@ -132,8 +136,6 @@ public class UserTest {
 
         Entry retrievedEntry = user.getEntryByDate(testDiaryName, testEntryDate2);
         // Make sure the retrieved Entry is not the original object.
-        System.out.println(entry2);
-        System.out.println(retrievedEntry);
         Assertions.assertNotEquals(retrievedEntry, entry2);
 
         Assertions.assertEquals(retrievedEntry.getContent(), entry2.getContent());
@@ -145,7 +147,52 @@ public class UserTest {
         String testUserName = "Jimmy";
         String testUserPin = "1234";
 
+
         User user = new User(testUserName, testUserPin);
         Assertions.assertTrue(user.getAllDiaries().isEmpty());
+    }
+
+    /**
+     * Test that the updateUserEntires method actually retrieve new entries.
+     */
+    @Test
+    public void testUpdateUserEntries() {
+        String testUserName = "SomeGuy";
+        String testUserPin = "1234";
+
+        String testDiaryName = "TestDiary";
+        String testEntryContent1 = "Test123";
+        String testEntryDate1 = "10-10-2010";
+        Entry entry1 = new Entry(testEntryContent1, testEntryDate1);
+
+        String testEntryContent2 = "Test123";
+        String testEntryDate2 = "20-10-2010";
+        Entry entry2 = new Entry(testEntryContent2, testEntryDate2);
+
+        User user = new User(testUserName, testUserPin);
+        user.setEntryInDiary(testDiaryName, entry1);
+        Assertions.assertTrue(user.getDiary(testDiaryName).size() == 1);
+        try {
+            EntryToJSON.write(user, testDiaryName, entry1);
+            EntryToJSON.write(user, testDiaryName, entry2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        user.updateUserDiaries();
+        Assertions.assertTrue(user.getDiary(testDiaryName).size() == 2);
+        PersistanceUtil.getJsonFile(user, testDiaryName).delete();
+    }
+
+    @Test
+    public void testGettersWhenEmptyUser() {
+        User emptyUser = new User("NoUserOfThisNameExists", "1234");
+        String nonExistantDiaryName = "NoDiaryOfThisNameShouldExist";
+
+        Assertions.assertTrue(emptyUser.getAllDiaries() != null);
+        Assertions.assertTrue(emptyUser.getAllDiaries().size() == 0);
+
+        Assertions.assertTrue(emptyUser.getDiary(nonExistantDiaryName) != null);
+        Assertions.assertTrue(emptyUser.getDiary(nonExistantDiaryName).size() == 0);
     }
 }

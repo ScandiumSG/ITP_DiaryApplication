@@ -2,6 +2,7 @@ package diary.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import diary.json.PersistanceUtil;
 
 public class EntrySearchTest {
     private String fileName;
-    private File Testfile;
+    private File testfile;
     private User user = new User("TestPerson", "4252");
 
     /**
@@ -22,7 +23,7 @@ public class EntrySearchTest {
     @BeforeEach
     public void makeFile() throws IOException {
         String fileName = "SearchTest";
-        Testfile = PersistanceUtil.getJsonFile(user, fileName);
+        testfile = PersistanceUtil.getJsonFile(user, fileName);
         this.fileName = fileName;
         Entry entry1 = new Entry("potato tomato", "01-01-2011");
         EntryToJSON.write(user, fileName, entry1);
@@ -32,6 +33,7 @@ public class EntrySearchTest {
         EntryToJSON.write(user, fileName, entry3);
         Entry entry4 = new Entry("tomato tornado tobago", "04-01-2011");
         EntryToJSON.write(user, fileName, entry4);
+        user.updateUserDiaries();
     }
 
     /**
@@ -43,20 +45,20 @@ public class EntrySearchTest {
         String keyword1 = "tomato";
         String keyword2 = "potato";
         String keyword3 = "tornado";
-        String keyword4 = "	cato";
+        String keyword4 = "cat";
 
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                user, fileName, keyword1).size() == 4);
+                user, fileName, Arrays.asList(keyword1)).size() == 4);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                user, fileName, keyword1, keyword2).size() == 2);
+                user, fileName, Arrays.asList(keyword2)).size() == 2);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                user, fileName, keyword1, keyword2, keyword3).size() == 3);
+                user, fileName, Arrays.asList(keyword1, keyword2, keyword3)).size() == 3);
         Assertions.assertTrue(
             EntrySearch.searchEntries(
-                user, fileName, keyword4).size() == 0);
+                user, fileName, Arrays.asList(keyword4)).size() == 0);
     }
 
     /**
@@ -64,6 +66,6 @@ public class EntrySearchTest {
      */
     @AfterEach
     public void deleteFile() {
-        Testfile.delete();
+        testfile.delete();
     }
 }

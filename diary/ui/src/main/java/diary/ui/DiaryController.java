@@ -1,6 +1,7 @@
 package diary.ui;
 
 import diary.core.Entry;
+import diary.core.EntrySearch;
 import diary.core.User;
 import diary.frontend.Client;
 import diary.json.EntryToJSON;
@@ -9,15 +10,24 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -62,14 +72,112 @@ public class DiaryController {
     @FXML
     private Button loadDiaryButton;
 
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private Pane searchBackground;
+
+    @FXML
+    private TableView<Entry> entryTable;
+
+    @FXML
+    private TableColumn<Entry, String> dateColumn;
+
+    @FXML
+    private TableColumn<Entry, String> entryColumn;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button entrySearchButton;
+
+    @FXML
+    private Button closeSearchButton;
+
+    @FXML
+    private Button openEntryButton;
+
     /**
-     * Sets the DatePickers date format and initializes the diary to display todays
-     * date.
-     * If the user has several diaries, it loads the top item in the dropdown menu
+     * Sets the DatePickers date format.
+     * Creates cellvalue facories for the TableView.
      */
     @FXML
     public void initialize() {
         setDateConverter();
+
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Entry, String>("Date"));
+        entryColumn.setCellValueFactory(new PropertyValueFactory<Entry, String>("Content"));
+    }
+
+    /**
+     * Turns the entrySearch window on and off.
+     * Also clears the TableViews items.
+     *
+     * <p>Runs when:
+     *  the searchButton is clicked,
+     *  the user clicks outside the entrySearch window,
+     *  the closeSearchButton is clicked.
+     */
+    @FXML
+    public void toggleEntrySearch() {
+        searchBackground.setVisible(!searchBackground.isVisible());
+        searchBackground.setDisable(!searchBackground.isDisabled());
+        entryTable.setItems(null);
+    }
+
+    /**
+     * Opens the entry currently selected on the TableView.
+     * Does nothing if no elements are selected.
+     *
+     * <p>Runs when:
+     *  the openEntryButton is clicked.
+     */
+    @FXML
+    public void openSelectedEntry() {
+        if (entryTable.getSelectionModel().getSelectedItem() != null) {
+            String date = entryTable.getSelectionModel().getSelectedItem().getDate();
+            setDatePickerValue(date);
+            updateGraphics();
+            toggleEntrySearch();
+        }
+    }
+
+    /**
+     * Fills the TableView with entries belonging to the current diary
+     * if it matches the search terms.
+     *
+     * <p>Runs when:
+     *  the entrySearchButton is clicked.
+     */
+    @FXML
+    public void searchEntries() {
+        ObservableList<Entry> data = FXCollections.<Entry>observableArrayList();
+        try {
+            List<Entry> entries = EntrySearch.searchEntries(
+                user, title.getValue(), Arrays.asList(searchField.getText().split(" ")));
+            data.addAll(entries);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        entryTable.setItems(data);
+    }
+
+    /**
+     * Runs openSelectedEntry if the event registers a double click.
+     *
+     * <p>Runs when:
+     *  tableView is clicked.
+     *
+     * @param event the ui mouse event.
+     */
+    @FXML
+    public void registerTableClick(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            openSelectedEntry();
+        }
     }
 
     /**
@@ -140,6 +248,18 @@ public class DiaryController {
         loginController.updateUserList();
     }
 
+    /**
+     * Gets the amount of items in the TableViewer.
+     * @return the amount of items in the table.
+     */
+    public int getTableItemAmount() {
+        return entryTable.getItems().size();
+    }
+
+    /**
+     * Tells the application know that tests are getting run.
+     * Prevents the application from sending entries to the server.
+     */
     public void setTesting() {
         this.isTesting = true;
     }
@@ -153,6 +273,10 @@ public class DiaryController {
         loginScene = scene;
     }
 
+    /**
+     * Setter for the loginController.
+     * @param controller the controller to use.
+     */
     public void setLoginController(LoginController controller) {
         loginController = controller;
     }
@@ -182,16 +306,15 @@ public class DiaryController {
             title.getItems().clear();
             title.setValue(null);
             HashMap<String, HashMap<String, Entry>> diaries = user.getAllDiaries();
-            if (!diaries.isEmpty()) {
+            if (diaries.isEmpty()) {
+                title.setValue(user.getUserName() + "'s diary");
                 return;
-            }   
+            }
             for (String name : diaries.keySet()) {
                 title.getItems().add(name);
             }
             title.getSelectionModel().selectFirst();
-            if (title.getValue() == null) {
-                title.setValue(user.getUserName() + "'s diary");
-            }
+
         } catch (NullPointerException f)  {
             f.printStackTrace();
         }

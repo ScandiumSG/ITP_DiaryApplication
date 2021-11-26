@@ -66,7 +66,8 @@ public class RetrieveDiaries {
                 signOccurance++;
             }
         }
-
+        // Filename should ONLY have 2 "+", if any more or less there is
+        // something wrong with the format of the file we are getting.
         if (signOccurance != 2) {
             throw new IllegalArgumentException(
                 "Unsuspected filename detected. Exiting to prevent errors.");

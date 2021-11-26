@@ -28,6 +28,10 @@ public class Server extends HttpServlet {
         return responseBody.trim();
     }
 
+    /**
+     * Method gets called when a get request is recieved
+     * Uses EntryFromJSON to read local diaries
+     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) 
         throws IOException, ServletException {
@@ -56,6 +60,10 @@ public class Server extends HttpServlet {
         }
     }
 
+    /**
+     * Method gets called when a post request is recieved
+     * Uses EntryToJSON to write local diaries
+     */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException {

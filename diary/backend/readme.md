@@ -1,24 +1,28 @@
 # REST-API
 
-## How to run backend server
+[Diary readme](../readme.md)
 
-To run the backend server, simply navigate into the diary directory using `cd diary`, and then run `mvn jetty:run -f backend/pom.xml` to start the server. In gitpod this is done automatically, in the second terminal tab.
+## How to run backend server
+To run the backend server, simply navigate into the diary directory using `cd diary`, and then run `mvn jetty:run -f backend/pom.xml` to start the server. In gitpod this is done automatically after `maven clean install` completes, in the second terminal tab.
 
 ## The client server message format
+For both GET and POST requests the server uses the url `*/api/diary/filename`, where filename is the name of the file, without the .json ending. For POST requests, the body of the requests is simply the content of the diary named in the url, represented as a json string, though the server does not require it to be valid json. For GET requests, the body of the server reponse is the diary represented as a json string. 
 
-Due to our requirements, the server expects and accepts very specific messages. For both GET and POST requests the server uses a url of \*/api/diary/filename, where filename is the name of the file, without the .json ending. For POST requests, the body of the requests is simply the content of the diary named in the url, represented as a string, though no validation is performed by the server. For GET requests, the body of the response server reponse is the diary represented as a string. We also added an optional querystring of `getFileNames`, which instead of the diary content corresponding to that filename returns a json array of the files beginnig with that filename, which is central to our way of storing and retrieving diaries. 
+We also added an optional querystring of `getFileNames` to be used on GET requests, which instead returns a json array of the files beginnig with the given fileName, which is essential to retrieving diaries. The complete url would then be `*/api/diary/filename?getFileNames`
 
 ## Testing of the API
-
-In this project we have implemented an integration test to test the API. In our case, we felt this would, as the API merely stores and retrieves static data, and is not stateful. The integration test is ofcourse run as part of mvn clean install.
+In this project we have implemented an integrationtest to test the API. In our case, we felt this was enough, as the API merely stores and retrieves static data, and is not stateful. The integration test is of course run as part of mvn clean install. Because the server needs to run while the integration test runs, it is placed in the backend module. The test covers most parts related to the rest-API. The test is placed in the backend but covers frontend as well, as the test runs from back to frontend. However, the exact coverage isn’t certain. The test runs as an integration test, which we find more convenient. This means it won’t be included in the Jacoco-report. Without being able to refer to a report can we assure you we are testing all modules properly. 
 
 ## Storing local files
+In our application we never delete local files, and the reason for this is twofold. First, we use the files stored to autocomplete filling in the username, so the user doesn't have to do so manually for every startup. Secondly, as we pull from the server every time the user logs in, the local diaries will never be in danger of being outdated, and since we write to the server every time we save, newer files will never get overwritten by older ones. This allows the flexibility of logging in to the app on any computer, while not forgeting the user every logout.
 
-In our application we never delete local files, and the reason for this is twofold. First, we use the files stored to autocomplete filling in the username, so the user doesn't have to do so manually for every startup. Secondly, as we pull from the server every time the user logs in, the local diaries will never be in danger of beeing overwritten, as they only get written to when the user saves(locally and to the server). This allows the flexibility of logging in to the app on any computer, while not forgeting the user every logout.
 
 ## Current backend location
+Currently the backend stores the diaries in the project folder (diary/), as this is the default working directory. We could make them be stored elsewhere, for example in backend/../resources, but this would be subject to change for any actual deployment, and therefore we have let it stay as the project folder.
 
-Currently the backend stores the diaries in the diary folder(the one this readme is in), as this is the default working directory. We could make them be stored in backend/../resources, but this would be subject to change for any actual deployment, and therefore we have let it stay user.dir.
 
 ## Security
-As this is just a school project, we knew we didn't have time to implement comprehensive security measures. Despite this, we have managed to implement some fundamental security, which allows several different users to save their diaries to the same location, without being able to view eachothers diaries. Every diary filename is the user's username, pluss their user pin, pluss the diary's name. The client and server are both blissfully unaware that they are transporting usernames and pins, they only see strings, and when the user logs in, the client sends a get request to the server retrieving any files that start with a specific string, which is allways their username pluss pin. This same trick is used to have the user be able to select their username from the dropdown menu, read from any diary filenames stored locally. In an actual project, this would be changed. 
+As this is just a school project, we knew we didn't have time to implement comprehensive security measures. Despite this, we have managed to implement some fundamental security, which allows several different users to save their diaries to the same location, without being able to view eachothers diaries. Every diary filename is the user's username, pluss their user pin, pluss the diary's name. The client and server are both blissfully unaware that they are transporting usernames and pins, they only see filenames. 
+
+## How it actually works
+When the user logs in, the client sends several get requests to the server. The first one uses the `getFileNames` querystring to request a list of the diaries that start with the given filename. Since all filenames start with the userid, this gets a list of all the users diaries on the server. After that, a normal get request is sent for every file, and each reponse is saved locally using EntryToJSON. Saving is far simpler, the client is told which diary was updated, and it sends that diary to the server. 

@@ -65,29 +65,6 @@ public final class EntryFromJSON {
     }
 
     /**
-     * Read any json file with provided username and date from
-     * main/resources/DiaryEntries and returns an Entry object if found.
-     *
-     * @param fileName A string of the name of diary/.json file to be read from.
-     * @param date     The date to check
-     *
-     * @return The Entry object if found, otherwise return a new Entry object
-     */
-    public static Entry read(final User user, final String fileName, final String date) {
-        try {
-            HashMap<String, Entry> entries = read(user, fileName);
-            if (entries.keySet().contains(date)) {
-                return entries.get(date);
-            } else {
-                return new Entry("", date);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
      * Retrieves the content of a JSON file as a un-interpreted string. Method intended
      * to easy integration with REST-API.
      * @param fileName full filename for the json file that is to be read.

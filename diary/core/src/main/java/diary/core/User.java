@@ -29,6 +29,20 @@ public class User {
     }
 
     /**
+     * Refresh the diaries and entries associated with the user by re-reading in all
+     * entries using the RetrieveDiaried.findDiaries method.
+     */
+    public void updateUserDiaries() {
+        try {
+            userDiaries = RetrieveDiaries.findDiaries(this);
+        } catch (Exception e) {
+            if (userDiaries == null) {
+                userDiaries = new HashMap<String, HashMap<String, Entry>>();
+            }
+        }
+    }
+
+    /**
      * Validation method to allow for quick update of nameing requirements
      * for the diary users.
      * @param name A string with the users chosen username
@@ -110,7 +124,12 @@ public class User {
      * returned HashMap.
      */
     public HashMap<String, HashMap<String, Entry>> getAllDiaries() {
-        return new HashMap<String, HashMap<String, Entry>>(this.userDiaries);
+        HashMap<String, HashMap<String, Entry>> returnMap = this.userDiaries;
+        if (returnMap != null) {
+            return new HashMap<String, HashMap<String, Entry>>(returnMap);
+        } else {
+            return new HashMap<String, HashMap<String, Entry>>();
+        }
     }
 
     /**
@@ -118,7 +137,13 @@ public class User {
      * the value.
      */
     public HashMap<String, Entry> getDiary(String diaryName) {
-        return new HashMap<String, Entry>(this.userDiaries.get(diaryName));
+        HashMap<String, Entry> returnMap = this.userDiaries.get(diaryName);
+        if (returnMap != null) {
+            return new HashMap<String, Entry>(returnMap);
+        } else {
+            return new HashMap<String, Entry>();
+        }
+
     }
 
     /**
@@ -133,7 +158,7 @@ public class User {
             Entry retrieved = selectedDiary.get(date);
             return new Entry(retrieved.getContent(), retrieved.getDate());
         } catch (NullPointerException e) {
-            return null;
+            return new Entry("", date);
         }
 
     }

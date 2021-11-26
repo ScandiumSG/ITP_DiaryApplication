@@ -10,9 +10,13 @@ import javafx.stage.Stage;
 
 public class DiaryApp extends Application {
 
+    private Scene loginScene;
+    private Scene diaryScene;
+    
     /**
      * Configuration of values that allows headless run of ui tests
      */
+
     public static void supportHeadless() {
         if (Boolean.getBoolean("headless")) {
             System.setProperty("testfx.robot", "glass");
@@ -28,12 +32,12 @@ public class DiaryApp extends Application {
         FXMLLoader loginLoader = new FXMLLoader(
             this.getClass().getResource("Login.fxml"));
         Parent loginPane = loginLoader.load();
-        Scene loginScene = new Scene(loginPane);
+        loginScene = new Scene(loginPane);
 
         FXMLLoader diaryLoader = new FXMLLoader(
             this.getClass().getResource("Diary.fxml"));
         Parent diaryPane = diaryLoader.load();
-        Scene diaryScene = new Scene(diaryPane);
+        diaryScene = new Scene(diaryPane);
 
         LoginController loginController = (LoginController) loginLoader.getController();
         loginController.setDiaryScene(diaryScene);
@@ -53,6 +57,14 @@ public class DiaryApp extends Application {
         stage.getIcons().add(
             new Image(getClass().getResourceAsStream("img/thumb2.jpg")));
         stage.show();
+    }
+
+    public Scene getLoginScene() {
+        return loginScene;
+    }
+
+    public Scene getDiaryScene() {
+        return diaryScene;
     }
 
     /**
