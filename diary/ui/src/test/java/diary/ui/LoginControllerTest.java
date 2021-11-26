@@ -3,14 +3,11 @@ package diary.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.File;
 import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.junit.jupiter.api.BeforeAll;
-
 import diary.core.Entry;
 import diary.core.User;
 import diary.json.EntryToJSON;
@@ -160,7 +157,7 @@ public class LoginControllerTest extends ApplicationTest{
             EntryToJSON.write(testUser1, testUser1.getUserName() +"'s diary2", testEntry2);
             EntryToJSON.write(testUser2, testUser2.getUserName() +"'s diary", testEntry3);
             EntryToJSON.write(testUser3, testUser3.getUserName() +"'s diary", testEntry4);
-            
+
             loginController.updateUserList();
         } catch (IOException e) {
             e.printStackTrace();

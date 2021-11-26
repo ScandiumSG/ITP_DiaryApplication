@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobotInterface;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.junit.jupiter.api.BeforeAll;
-
 import diary.core.*;
 import diary.json.PersistancePaths;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +16,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,7 +32,7 @@ public class DiaryControllerTest extends ApplicationTest{
 
     /**
      * Creates a javafx stage for the Diary.fxml file.
-     * It then creates a testuser for the diaryController, 
+     * It then creates a testuser for the diaryController,
      * and tells the controller that tests are being run.
      * Deletes testfiles if they exist.
      */
@@ -67,7 +65,7 @@ public class DiaryControllerTest extends ApplicationTest{
         File file2 = new File(PersistancePaths.makeResourcesPathString(user, "TestUser's diary2"));
         file2.delete();
     }
- 
+
     /**
      * Enables headless testing for robot tests
      */
@@ -97,7 +95,7 @@ public class DiaryControllerTest extends ApplicationTest{
      * @return The title UI element.
      */
     @SuppressWarnings("unchecked")
-    private ComboBox<String> getTitleField() {        
+    private ComboBox<String> getTitleField() {
         return (ComboBox<String>) diaryPane.lookup("#title");
     }
 
@@ -108,7 +106,7 @@ public class DiaryControllerTest extends ApplicationTest{
     private Button getSaveButton() {
         return (Button) diaryPane.lookup("#entrySubmit");
     }
-    
+
     /**
      * Gets the ui element responsible for selecting what date to show.
      * @return The DatePicker ui element.
@@ -118,7 +116,7 @@ public class DiaryControllerTest extends ApplicationTest{
     }
 
     /**
-     * Get the button for selecting the entry on day in the future 
+     * Get the button for selecting the entry on day in the future
      * relative to currently selected entry.
      * @return The rightButton ui element.
      */
@@ -127,7 +125,7 @@ public class DiaryControllerTest extends ApplicationTest{
     }
 
     /**
-     * Get the button for selecting the entry on day in the past 
+     * Get the button for selecting the entry on day in the past
      * relative to currently selected entry.
      * @return The leftButton ui element.
      */

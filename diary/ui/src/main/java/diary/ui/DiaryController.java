@@ -170,7 +170,7 @@ public class DiaryController {
      *
      * <p>Runs when:
      *  tableView is clicked.
-     * 
+     *
      * @param event the ui mouse event.
      */
     @FXML
@@ -297,7 +297,7 @@ public class DiaryController {
             if (diaries.isEmpty()) {
                 title.setValue(user.getUserName() + "'s diary");
                 return;
-            }   
+            }
             for (String name : diaries.keySet()) {
                 title.getItems().add(name);
             }
