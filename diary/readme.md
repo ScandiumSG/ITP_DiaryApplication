@@ -219,14 +219,6 @@ Alternatively, if you have just compiled the installer and runtime, the runtime 
 /workspace/gr2172/diary/ui/target/diary/bin/diary
 ```
 
-### macOS
-
-The application once installed using the generated dmg installer is located within
-
-```
-/applications/diaryApplication
-```
-
 <div align="center">
 <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
   <img src="../docs/logo/logo.svg" alt="Logo" width="180" height="180">
