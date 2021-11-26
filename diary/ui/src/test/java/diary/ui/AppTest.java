@@ -1,7 +1,6 @@
 package diary.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,16 +25,25 @@ public class AppTest extends ApplicationTest {
 
     }
 
+    /**
+     * Enables the possibility for headless testing in AppTest
+     */
     @BeforeAll
     public static void supportHeadless() {
         DiaryApp.supportHeadless();
     }
 
+    /**
+     * Makes sure the app starts on the loginScene
+     */
     @Test
     public void testLoginScene() {
         assertEquals(app.getLoginScene(), stage.getScene());
     }
 
+    /**
+     * Makes sure the app lets you log in
+     */
     @Test
     public void testDiaryScene() {
         clickOn(stage.getScene().getRoot().lookup("#usernameField")).write("testUser");
@@ -45,5 +53,4 @@ public class AppTest extends ApplicationTest {
 
         assertEquals(app.getDiaryScene(), stage.getScene());
     }
-
 }
