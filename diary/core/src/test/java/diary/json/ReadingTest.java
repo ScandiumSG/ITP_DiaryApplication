@@ -57,7 +57,7 @@ public class ReadingTest {
 
     @Test
     public void testReadEmptyFile() throws IOException {
-        user.updateUserEntries();
+        user.updateUserDiaries();
         Entry emptyFile = user.getEntryByDate(testFileName, "15-10-1990");
         Assertions.assertEquals("", emptyFile.getContent());
         Assertions.assertEquals("15-10-1990", emptyFile.getDate());
