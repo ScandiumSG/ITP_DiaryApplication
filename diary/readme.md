@@ -50,7 +50,7 @@ For more infomration of the project, plrease refer to the [Documentation](https:
 
 ## Standards
 
-During this project multiple standards and templates been used. Firstly, have all commit messages been written with the topic of concern, as “documentation”, “ui” or “testing”, followed by the specific changes or features added. By doing it like this it has been easier to keep track of what the different commits regard.
+During this project multiple standards and templates have been used. Firstly, have all commit messages been written with the topic of concern, as “documentation”, “ui” or “testing”, followed by the specific changes or features added. By doing it like this it has been easier to keep track of what the different commits regard.
 
 When issues are created have, we strived to make them short and consise. This is to make them easier to read and understand for all team members.
 Methods and variables are named in such a way that they may be used by other members in the future without necessarily have to asking or read the method or class to understand. Javadocs also helps here. Getters and setter are obviously called “getter” or “setter” followed by what it sets or gets. Methods in general are called what they do as short as possible. Variables are named after what they are used as. 
