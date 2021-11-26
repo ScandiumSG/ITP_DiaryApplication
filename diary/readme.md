@@ -1,7 +1,9 @@
 # Links
 
+[Root readme](../readme.md)  
 [Backend readme](backend/readme.md)  
-[Core readme](core/readme.md)
+[Core readme](core/readme.md)  
+[Frontend readme](frontend/readme.md)  
 
 # Testing and code verification
 

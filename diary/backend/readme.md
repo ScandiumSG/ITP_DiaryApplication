@@ -1,5 +1,7 @@
 # REST-API
 
+[Diary readme](../readme.md)
+
 ## How to run backend server
 To run the backend server, simply navigate into the diary directory using `cd diary`, and then run `mvn jetty:run -f backend/pom.xml` to start the server. In gitpod this is done automatically after `maven clean install` completes, in the second terminal tab.
 

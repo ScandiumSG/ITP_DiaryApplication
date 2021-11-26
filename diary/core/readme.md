@@ -1,5 +1,7 @@
 # Persistance - core.json
 
+[Diary readme](../readme.md)
+
 ## Source code for persistance layer
 
 The implentation of persistance is done using [GSON](https://github.com/google/gson). GSON is used to read and write objects to JSON files.
