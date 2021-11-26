@@ -30,7 +30,7 @@ public final class Client {
     /**
      * Sends a get request to localhost with urlEnd at the end of the url
      * Gets called by getDiaries()
-     * @param urlEnd String to append to url, the start of the filename
+     * @param urlEnd String to append to url, normally the filename
      * @return The string the server returns, null if there is an error
      */
     public static String sendGET(String urlEnd) {
@@ -45,9 +45,9 @@ public final class Client {
     }
 
     /**
-     * Retrieves all diaries from the server that start with startOfDiaryNames. 
-     * Uses EntryFromJSON to read backend and EntryToJSON to write frontend.
-     * @param startOfDiaryNames Diaries starting with this(without .json) gets retrieved
+     * Updates all diaries from the server that start with startOfDiaryNames. 
+     * Uses EntryToJSON to save what the server sent.
+     * @param startOfDiaryNames Diaries starting with this(without .json) get retrieved
      */
     public static void getDiaries(String startOfDiaryNames) {
         //Get string json list of diaryNames
@@ -95,7 +95,7 @@ public final class Client {
 
     /**
      * Sends the diary named diaryName to be saved on server. 
-     * Uses EntryFromJSON to read frontend and EntryToJSON to write backend. 
+     * Uses EntryFromJSON to read the local diary to be sent. 
      * @param diaryName Diaries named this(without .json) gets sent
      */
     public static void postDiary(String diaryName) {

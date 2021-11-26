@@ -93,7 +93,7 @@ Sequence diagram:
 Interface:
 </p>
 <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
-<img src="docs/resources/Illustrasjon_1.jpg" alt="Illustration" width="450" height="450">
+<img src="docs/resources/Illustrasjon_1.jpg" alt="Illustration" width="450" height="500">
 </a>
 </div>
 
