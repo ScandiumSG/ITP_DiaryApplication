@@ -12,7 +12,7 @@ import diary.json.PersistanceUtil;
 
 public class EntrySearchTest {
     private String fileName;
-    private File Testfile;
+    private File testfile;
     private User user = new User("TestPerson", "4252");
 
     /**
@@ -23,7 +23,7 @@ public class EntrySearchTest {
     @BeforeEach
     public void makeFile() throws IOException {
         String fileName = "SearchTest";
-        Testfile = PersistanceUtil.getJsonFile(user, fileName);
+        testfile = PersistanceUtil.getJsonFile(user, fileName);
         this.fileName = fileName;
         Entry entry1 = new Entry("potato tomato", "01-01-2011");
         EntryToJSON.write(user, fileName, entry1);
@@ -66,6 +66,6 @@ public class EntrySearchTest {
      */
     @AfterEach
     public void deleteFile() {
-        Testfile.delete();
+        testfile.delete();
     }
 }
