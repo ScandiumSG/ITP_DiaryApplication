@@ -1,5 +1,12 @@
  <div id="top"></div>
 
+<div align="center">
+  <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
+    <img src="../docs/logo/logo.svg" alt="Logo" width="250" height="250">
+  </a>
+ <h1>Diary</h1>
+</div>
+
 ## Links
 
 [Root readme](../readme.md)  
