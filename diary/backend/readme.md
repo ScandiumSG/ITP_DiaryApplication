@@ -11,13 +11,15 @@ For both GET and POST requests the server uses the url `*/api/diary/filename`, w
 We also added an optional querystring of `getFileNames` to be used on GET requests, which instead returns a json array of the files beginnig with the given fileName, which is essential to retrieving diaries. The complete url would then be `*/api/diary/filename?getFileNames`
 
 ## Testing of the API
-In this project we have implemented an integration test to test the API. In our case, we felt this would suffice, as the API is not stateful. The integration test is of course run as part of mvn clean install.
+In this project we have implemented an integrationtest to test the API. In our case, we felt this was enough, as the API merely stores and retrieves static data, and is not stateful. The integration test is of course run as part of mvn clean install. Because the server needs to run while the integration test runs, it is placed in the backend module. 
 
 ## Storing local files
-In our application we never delete local files, and the reason for this is twofold. First, we use the files stored to autocomplete filling in the username, so the user doesn't have to do so manually for every startup. Secondly, as we pull from the server every time the user logs in, the local diaries will never be in danger of beeing overwritten, as they only get written to when the user saves(locally and to the server). This allows the flexibility of logging in to the app on any computer, while not forgeting the user every logout.
+In our application we never delete local files, and the reason for this is twofold. First, we use the files stored to autocomplete filling in the username, so the user doesn't have to do so manually for every startup. Secondly, as we pull from the server every time the user logs in, the local diaries will never be in danger of being outdated, and since we write to the server every time we save, newer files will never get overwritten by older ones. This allows the flexibility of logging in to the app on any computer, while not forgeting the user every logout.
+
 
 ## Current backend location
 Currently the backend stores the diaries in the project folder (diary/), as this is the default working directory. We could make them be stored elsewhere, for example in backend/../resources, but this would be subject to change for any actual deployment, and therefore we have let it stay as the project folder.
+
 
 ## Security
 As this is just a school project, we knew we didn't have time to implement comprehensive security measures. Despite this, we have managed to implement some fundamental security, which allows several different users to save their diaries to the same location, without being able to view eachothers diaries. Every diary filename is the user's username, pluss their user pin, pluss the diary's name. The client and server are both blissfully unaware that they are transporting usernames and pins, they only see filenames. 
