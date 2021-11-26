@@ -16,9 +16,9 @@ import java.io.File;
  */
 public class ClientIT {
     public static final String testFileName = "Bernt+1324+Dagbok";
-    public static final String testFileContent = "[{\"entryDate\": " + 
-    "\"01-01-2011\", \"entryContent\": \"potato tomato tornado\"}, " + 
-    "{\"entryDate\": \"02-01-2011\", \"entryContent\": " + 
+    public static final String testFileContent = "[{\"entryDate\": " +
+    "\"01-01-2011\", \"entryContent\": \"potato tomato tornado\"}, " +
+    "{\"entryDate\": \"02-01-2011\", \"entryContent\": " +
     "\"posghsdhsdhsdrnado\"}}]";
     public static final File backEndPath = new File(
         PersistancePaths.makeCurrentDirectoryPathString(testFileName));
@@ -84,42 +84,42 @@ public class ClientIT {
     }
 
     /**
-     * Creates a file on backend directory, uses the api to retrieve it, and 
+     * Creates a file on backend directory, uses the api to retrieve it, and
      * checks that the file appears with the same content in the frontend
      * directory
      */
     @Test
     public void getDiaries() {
-        //Lag fila i backend(i diary/)
+        // Make file in backend (in diary/)
         Assertions.assertTrue(createFile(false));
 
-        //Kjør controller.getDiaries() med starten på filnavnet
+        // Run controller.getDiaries() with start of fileName
         Client.getDiaries(testFileName);
 
-        //Sjekk at fila har dukka opp på frontent(core/../resources), identisk
+        // Check that file appear on frontent (core/../resources), with identical content.
         Assertions.assertTrue(checkFile(true));
 
-        //Slett fila på frontend og backend
+        // Delete test file from frontend and backend
         Assertions.assertTrue(deleteFile(true));
         Assertions.assertTrue(deleteFile(false));
     }
 
     /**
-     * Creates a file on frontend directory, uses the api to send it, checks 
-     * that the file appears with the same content in the backend directory. 
+     * Creates a file on frontend directory, uses the api to send it, checks
+     * that the file appears with the same content in the backend directory.
      */
     @Test
     public void postDiary() {
-        //Lag fila i frontent(core/../resources)
+        // Make file in backend (core/../resources)
         Assertions.assertTrue(createFile(true));
 
-        //Kjør controller.postDiary() med starten på filnavnet
+        // Run controller.postDiary() with start of filename.
         Client.postDiary(testFileName);
 
-        //Sjekk at fila har dukka opp på backend(i diary/), med identisk innhold
+        // Check that file appear on backend (in diary/), with identical content.
         Assertions.assertTrue(checkFile(false));
 
-        //Slett fila på frontend og backend
+        // Delete file on frontend and backend
         Assertions.assertTrue(deleteFile(true));
         Assertions.assertTrue(deleteFile(false));
     }
