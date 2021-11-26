@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 
 /**
  * This test should run and start the main app class. 
- * The intention with the test is to make sure the app actually runs and not stays freezed when launcing.
- * Even though this practically is tested in both diaryController test and loginController test.
+ * The intention with the test is to make sure the 
+ * DairyApp.start method functions as intended.
 */
 
 public class AppTest extends ApplicationTest {
@@ -38,7 +38,12 @@ public class AppTest extends ApplicationTest {
 
     @Test
     public void testDiaryScene() {
-        assertNotNull(stage);
+        clickOn(stage.getScene().getRoot().lookup("#usernameField")).write("testUser");
+        clickOn(stage.getScene().getRoot().lookup("#pinField")).write("1111");
+
+        clickOn(stage.getScene().getRoot().lookup("#loginButton"));
+
+        assertEquals(app.getDiaryScene(), stage.getScene());
     }
 
 }
