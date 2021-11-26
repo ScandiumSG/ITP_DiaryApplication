@@ -63,6 +63,10 @@ public class DiaryApp extends Application {
         return loginScene;
     }
 
+    public Scene getDiaryScene() {
+        return diaryScene;
+    }
+
     /**
      * Lauch method for DiaryApp.
      * @param args No input parameters
