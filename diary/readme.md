@@ -174,7 +174,6 @@ Generated installers are provided through [folk.ntnu.no](https://folk.ntnu.no/st
 
 -   [Windows](https://folk.ntnu.no/stiankg/IT1901/Installers/Windows/)
 -   [Linux](https://folk.ntnu.no/stiankg/IT1901/Installers/Linux/)
--   [macOS](https://folk.ntnu.no/stiankg/IT1901/Installers/macOS/)
 
 ### Windows
 
