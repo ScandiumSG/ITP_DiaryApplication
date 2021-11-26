@@ -5,11 +5,7 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172)
 
-</b>
-
 [![pipeline status](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/badges/master/pipeline.svg)](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/pipelines)
-
-</b>
 
 [![coverage report](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/badges/master/coverage.svg)](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/graphs/master/charts)
 
@@ -23,7 +19,7 @@
 <!-- PROJECT TITLE -->
 <br />
 <div align="center">
-<a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
+  <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
     <img src="docs/logo/logo.svg" alt="Logo" width="250" height="250">
   </a>
  <h1>Diary</h1>
@@ -93,7 +89,7 @@ Sequence diagram:
 Interface:
 </p>
 <a href="https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172">
-<img src="docs/resources/Illustrasjon_1.jpg" alt="Illustration" width="450" height="500">
+<img src="docs/resources/Illustrasjon_1.jpg" alt="Illustration" width="450" height="450">
 </a>
 </div>
 
@@ -101,9 +97,8 @@ Interface:
 
 </br>
 
--   This project creates a simple diary-application that allows the user to write diary entries, save and load them.
--   The root-folder of the project is the top level of the repository. Because of this we have combined the two README-files.
--   Above you may find two screenshots. The first, an illustration of the interface. The second one is of the architecture
+-   This project creates a diary-application that allows the user to write diary entries, save and load them to the server using login, and search in their entries.
+-   Above you may find three screenshots. The first is an illustration of the architecture, while the second demonstrates the sequence of events that happen when the user logs in. The third is how the application looks for the user. 
 
 </br>
 
@@ -112,15 +107,13 @@ Interface:
 </br>
 
 -   [Maven](https://maven.apache.org/)
--   [Monocle]()
--   [Java]()
--   [JavaFX]()
-
+-   [Monocle](https://monocle.com/)
+-   [Java](https://www.java.com/en/)
+-   [JavaFX](https://openjfx.io/)
 
 <div align="right">
   <a href="#top">back to top</a>
 </div>
-
 
 <!-- GETTING STARTED -->
 
@@ -158,6 +151,7 @@ How to set up the environment to use the application and how to install them.
 ```
 cd diary
 mvn clean install
+mvn jetty:run -f backend/pom.xml
 mvn javafx:run -f ui/pom.xml
 ```
 
@@ -165,7 +159,7 @@ mvn javafx:run -f ui/pom.xml
 
 ### **Build Gitpod**
 
-Gitpod is configured to automatically select the diary directory and run `mvn clean install`, application will run using the following:
+Gitpod is configured to automatically select the diary directory and run `mvn clean install`. After that is completed, the second tab wil open and run the backend server.
 
 </br>
 
@@ -185,19 +179,23 @@ mvn javafx:run -f ui/pom.xml
     <a href="#top">back to top</a>
   </div>
 
-
 <!-- RUN TESTS -->
+
 ## Run Tests
+
 </br>
 
 ### **Regular Tests**
+
 ```
 cd diary/<module>
 mvn test
 ```
 
 ### **Headless Tests**
-Headless testing is only reasonable to do on UI modules. In order to run an headless test, please follow the steps belove.
+
+Headless testing is only reasonable to do on UI modules. In order to run an headless test, please follow the following steps.
+
 ```
 cd diary/ui
 mvn test -P headless
@@ -207,37 +205,17 @@ mvn test -P headless
 
 ## Usage
 
-</br>
-
-The diary sould be easly handled. Open the application and a page for the current date will occur. After writing prefered content, remember to submit the edited page in order to save it. The button for submitting is shown belove.
-</br>
-
-![Button.png](docs/release2/interface.png)
-
-</br>
-
-If reading earlier content is of choise, select the date picker on the left side of the button. It's possible to write date in the text editor with dd-mm-yyyy as form, or by clicking the right mark. The date picker is shown as a screenshot belove.
-
-</br>
-
-![Date.png](docs/release2/datepicker.png)
-
-</br>
-
-For more infomration of the project, plrease refer to the [Documentation](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/tree/master/docs)\_
-
-</br>
+The application is used to write one or more diaries about all topics of the user’s choice. To read more about the usage related to the application, please visit [DiaryReadme](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/blob/master/diary/readme.md). In order to read the user history for the final product, please visit the complete user history at [FinalUserhistory](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/tree/master/docs/userhistories/userhistoryfinaledition.md)
 
 ### **Userhistory**
 
-As an imaginative and thoughtful person, I find it necessary to collect my thoughts somewhere. That's why I need some place where I may write down my thoughts to look back at them in the future. That's why I would like a diary capable of storing my thoughts over extended periods of time, with the option to view and edit them later. I highly value my privacy, which is why I want my diary to be secure. To keep my thoughts, secrete I secure the diary with a pin code.
+To read all user histories, please visit the documentation folder for at [Userhistories](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2172/gr2172/-/tree/master/docs/userhistories)
 
 </br>
 
-
 ### **Important features for the user**
 
--   Login page for security reasons 
+-   Login page for security reasons
 -   The submit button saves your current entry to the selected date. (Today by default)
 -   Use the datepicker to edit or read the entry for a different date.
 
@@ -245,14 +223,13 @@ As an imaginative and thoughtful person, I find it necessary to collect my thoug
     <a href="#top">back to top</a>
   </div>
 
-
 <!-- Work habits -->
 
 ## Work schedule and habits
 
 Developers of this project assign standard issues and bugfixes during meetings that occur on wednesdays and fridays. Assigned issues are worked on independantly by the people assigned to the issue, with a deadline for pushing their work related to the issue.
 
-The wednesday and friday meetings is also the primary time where merge requests and group code review are performed. However, any developer can push their features at any time. For large and significant changes only the group meeting is allowed to approve of changes.
+The wednesday and friday meetings are also the primary time where merge requests and group code review are performed. However, any developer can push their features at any time. For large and significant changes only the group meeting is allowed to approve of changes.
 
 Smaller features or changes can be approved by any other developer, after which they can be merge into intended branch immediatly. If such a minor change is desired to quickly be added the develop is to do the following:
 
@@ -268,12 +245,11 @@ Smaller features or changes can be approved by any other developer, after which 
 
 Intended behaviour is merging other branches into the develop branch, however single-file changes minor changes are approved to be pushed directly to develop. After some features and issues is collected in develop the develop branch is pushed to master during a group meeting, this allows develop to work as a stable experimental branch while the master branch is shielded from unintended effects of new features.
 
-
 ### **Working methods**
 
-The preferred working method is pair-programming or pair-review before attempting to merge into a branch. Assigned pair is not fixed and based on current availability, previous work with the issue or part of the code, and general interest in the assigned change. Preferred communication style for the pair programming or review is through the project specific discord server, however review is also acceptable to perform in the GitLab repository.
+The preferred working method is pair-programming or pair-review before merge. Assigned pair is not fixed and based on current availability, previous work with the issue or part of the code, and general interest in the assigned change. Preferred communication style for the pair programming or review is through the project specific discord server, however review is also acceptable to perform in the GitLab repository.
 
-Information about guidelines for writing tests, compliance with checkstyle, and preferred test coverage can be found in the specific project readme within the diary directory. 
+Information about guidelines for writing tests, compliance with checkstyle, and preferred test coverage can be found in the specific project readme within the diary directory.
 
  <div align="right">
     <a href="#top">back to top</a>
@@ -305,7 +281,6 @@ Information about guidelines for writing tests, compliance with checkstyle, and 
  <div align="right">
     <a href="#top">back to top</a>
   </div>
-
 
 <!-- ACKNOWLEDGMENTS -->
 
