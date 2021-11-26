@@ -92,7 +92,7 @@ Unit test coverage is measured using [jacoco](https://github.com/jacoco/jacoco).
 The project is expected to have test coverage above 70% for each module, except for frontend and backend. 
 For gitlab the aggregate test coverage in the main branch is shown as both a project badge as well as a badge in the root-directory readme.md file.
 The UI module will however not be included in the aggregate report, due to javafx tests not working as a headless gitlab pipeline. The aggregate coverage for the overall project is therefore set at 50% minimum.
-The test regarding the back and frontend folders aren’t written as unit tests but as integration tests. This it to not be included in the Jacoco report.
+The test regarding the back and frontend folders aren’t written as unit tests but as integration tests. This causes the coverage to not be included in the Jacoco report.
 
 ### Checkstyle
 
